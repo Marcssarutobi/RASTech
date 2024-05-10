@@ -48,5 +48,11 @@ class CategoriesController extends Controller
             "cat" => $cat
         ]);
     }
+    public function Categories(){
+        $cat = Categories::orderBy('id','desc')->get();
+        return response()->json([
+            "categories"=>$cat
+        ]);
+    }
 
 }
