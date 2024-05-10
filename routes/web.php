@@ -25,6 +25,7 @@ Route::post('/update', [CategoriesController::class, 'UpdateCat']);
 Route::get('/allcat',[CategoriesController::class, 'AllCat']);
 Route::post('/delcat', [CategoriesController::class, 'DelCate']);
 Route::get('/getcat/{id}', [CategoriesController::class, 'GetCat']);
+Route::get('/Categories',[CategoriesController::class, 'Categories']);
 
 //Produits
 Route::post('/createpro', [ProduitsController::class, 'CreatePro']);
