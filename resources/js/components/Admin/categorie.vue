@@ -33,9 +33,17 @@
                     
                 </tbody>
             </table>
-            <!-- <div class="col-lg-12 justify-content-end">
-                <pagination v-model="currentPage" :records="allCat.data" :per-page="6" @paginate="AllCategorie"/>
-            </div> -->
+            <div class="col-lg-12 justify-content-end">
+                <paginate
+                :page-count="totalPage"
+                :click-handler="AllCategorie"
+                :prev-text="'Prev'"
+                :next-text="'Next'"
+                :container-class="'pagination justify-content-end'"
+                :page-class="'page-item'"
+                >
+                </paginate>
+            </div>
         </div>
 
          <!-- Modal Enrégistrement -->
@@ -93,21 +101,25 @@
 <script>
     import axios from 'axios';
     import Swal from 'sweetalert2'
+    import Paginate from "vuejs-paginate-next";
     
     export default {
+        components:{
+            Paginate
+        },
         data() {
-                return {
-                    addModal: false,
-                    updateModal:false,
-                    data: {
-                        name_cat: ""
-                    },
-                    allCat: {},
-                    currentPage: 1,
-                    totalPage: 0,
-                    catId:{},
-                    Cats:{}
-                }
+            return {
+                addModal: false,
+                updateModal:false,
+                data: {
+                    name_cat: ""
+                },
+                allCat: {},
+                currentPage: 1,
+                totalPage: 0,
+                catId:{},
+                Cats:{}
+            }
         },
         methods: {
             async AddCategorie() {
@@ -128,7 +140,7 @@
 
                         const res = await axios.post('/createCat', this.data)
                         if (res.status === 200) {
-                            this.allCat.unshift(res.data.cat)
+                            this.allCat.data.unshift(res.data.cat)
                             Swal.fire({
                                 toast: true,
                                 position: "top-end",
@@ -193,7 +205,7 @@
                             })
                             const index = this.Cats.findIndex(cat => cat.id === this.catId.id)
                             if (index !== -1) {
-                                this.allCat[index] = this.catId
+                                this.Cats[index] = this.catId
                             }
                             this.catId = {}
                             this.updateModal = false
@@ -210,33 +222,33 @@
                 if (res.status === 200) {
                     this.catId = res.data.cat
                     Swal.fire({
-                    title: "Voulez-vous supprimer ce produits ?",
-                    text: "Vous ne pourrez plus revenir en arrière !",
-                    icon: "warning",
-                    showCancelButton: true,
-                    cancelButtonColor: "#d33",
-                    confirmButtonColor: "#3085d6",
-                    confirmButtonText: "Supprimer",
-                    cancelButtonText: "Fermer"
-                }).then(async (result) => {
-                    if (result.isConfirmed) {
-                        const ress = await axios.post('/delcat', this.catId)
-                        if (ress.status === 200) {
-                            Swal.fire({
-                                position: "center",
-                                icon: "success",
-                                title: "Suppression effectuer",
-                                showConfirmButton: false,
-                                timer: 1500
-                            })
+                        title: "Voulez-vous supprimer ce produits ?",
+                        text: "Vous ne pourrez plus revenir en arrière !",
+                        icon: "warning",
+                        showCancelButton: true,
+                        cancelButtonColor: "#d33",
+                        confirmButtonColor: "#3085d6",
+                        confirmButtonText: "Supprimer",
+                        cancelButtonText: "Fermer"
+                    }).then(async (result) => {
+                        if (result.isConfirmed) {
+                            const ress = await axios.post('/delcat', this.catId)
+                            if (ress.status === 200) {
+                                Swal.fire({
+                                    position: "center",
+                                    icon: "success",
+                                    title: "Suppression effectuer",
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                })
 
-                            const index = this.Cats.findIndex(cat => cat.id === this.catId.id)
-                            if (index !== -1) {
-                                this.Cats.splice(index, 1)
+                                const index = this.Cats.findIndex(cat => cat.id === this.catId.id)
+                                if (index !== -1) {
+                                    this.Cats.splice(index, 1)
+                                }
                             }
                         }
-                    }
-                })
+                    })
                 }
             }
         },

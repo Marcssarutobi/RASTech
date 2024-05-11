@@ -31,7 +31,10 @@ Route::get('/Categories',[CategoriesController::class, 'Categories']);
 Route::post('/createpro', [ProduitsController::class, 'CreatePro']);
 Route::post('/uploadimg', [ProduitsController::class, 'uploadImg']);
 Route::get('/allprod', [ProduitsController::class, 'AllProd']);
-Route::get('/getpro',[ProduitsController::class, 'show']);
+Route::get('/getpro/{id}',[ProduitsController::class, 'show']);
 Route::post('/delimg',[ProduitsController::class, 'deleteImage']);
 Route::post('/updatepro',[ProduitsController::class, 'updateProduits']);
 Route::post('/delpro', [ProduitsController::class, 'delProd']);
+
+//Utilisateur
+Route::post('/createUser',[]);
