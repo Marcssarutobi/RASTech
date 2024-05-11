@@ -14,24 +14,24 @@
                             </div>
                             <div class="form-group mb-3">
                                 <label for="">Username</label>
-                                <input type="text" class="form-control" id="floatingText" placeholder="jhondoe">
+                                <input type="text" class="form-control" id="floatingText" placeholder="jhondoe" v-model="data.username">
                             </div>
                             <div class="form-group mb-3">
                                 <label for="">Email address</label>
-                                <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+                                <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" v-model="data.email">
                             </div>
                             <div class="form-group mb-4">
                                 <label for="">Password</label>
-                                <input type="password" class="form-control"  placeholder="Password">
+                                <input type="password" class="form-control"  placeholder="Password" v-model="data.password">
                             </div>
-                            <div class="d-flex align-items-center justify-content-between mb-4">
+                            <!-- <div class="d-flex align-items-center justify-content-between mb-4">
                                 <div class="form-check">
                                     <input type="checkbox" class="form-check-input" id="exampleCheck1">
                                     <label class="form-check-label" for="exampleCheck1">Check me out</label>
                                 </div>
                                 <a href="">Forgot Password</a>
-                            </div>
-                            <button type="submit" class="btn btn-primary py-3 w-100 mb-4">Sign Up</button>
+                            </div> -->
+                            <button type="submit" class="btn btn-primary py-3 w-100 mb-4" @click="Singnup">Sign Up</button>
                             <p class="text-center mb-0">Already have an Account? <router-link to="/signin">Sign In</router-link></p>
                         </div>
                     </div>
@@ -42,8 +42,63 @@
 </template>
 
 <script>
+    import axios from 'axios';
+    import Swal from 'sweetalert2'
     export default {
-        
+        data(){
+            return {
+                data:{
+                    username: "",
+                    email: "",
+                    password: "",
+                    role:"client"
+                },
+                
+            }
+        },
+        methods: {
+            async Singnup(){
+                try {
+                    
+                    if (this.data.username.trim() == "" || this.data.email.trim() == "" || this.data.password.trim() == "" || this.data.role.trim() == "") {
+                        
+                        Swal.fire({
+                            toast: true,
+                            position: "top-end",
+                            icon: "error",
+                            title: "Les champs ne doit pas être vide",
+                            timer: 3000,
+                            timerProgressBar: true,
+                            showConfirmButton: false
+                        })
+
+                    } else {
+                        
+                        const res = await axios.post('/createUser',this.data)
+                        if (res.status === 200) {
+                            Swal.fire({
+                                toast: true,
+                                position: "top-end",
+                                icon: "success",
+                                title: "Inscription éffectuer avec succès",
+                                timer: 3000,
+                                timerProgressBar: true,
+                                showConfirmButton: false
+                            })
+                            this.data.username = ""
+                            this.data.email = ""
+                            this.data.password = ""
+                            this.data.role = ""
+                            this.$route.push('/signin')
+                        }
+
+                    }
+
+                } catch (error) {
+                    console.error('Erreur ici :',error)
+                }
+            }
+        },
     }
 </script>
 

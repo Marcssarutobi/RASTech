@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\ProduitsController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,4 +38,7 @@ Route::post('/updatepro',[ProduitsController::class, 'updateProduits']);
 Route::post('/delpro', [ProduitsController::class, 'delProd']);
 
 //Utilisateur
-Route::post('/createUser',[]);
+Route::post('/createUser',[UserController::class, 'signup']);
+Route::post('/login',[UserController::class, 'Login']);
+Route::get('/currentUser',[UserController::class, 'CurrentUser'])->middleware('auth');
+Route::post('/logout',[UserController::class, 'Logout'])->middleware('auth');
