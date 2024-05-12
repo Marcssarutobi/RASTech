@@ -13,12 +13,14 @@ class UserController extends Controller
             "username"=>"required",
             "email"=>["required","email","unique:users,email"],
             "password"=>["required","string","min:8","max:30"],
+            "role"=>"required",
             
         ]);
         $user = User::create([
             "username"=>$request->username,
             "email"=>$request->email,
             "password"=>bcrypt($request->password),
+            "role"=>$request->role,
         ]);
         return response()->json([
             "user"=>$user
@@ -36,9 +38,12 @@ class UserController extends Controller
     }
     public function CurrentUser(){
         $user = Auth::user();
-        return response()->json([
-            "User"=>$user
-        ]);
+        
+        if ($user) {
+            return response()->json([
+                'user' => $user
+            ]);
+        }
     }
     public function Logout(Request $request){
         Auth::logout();

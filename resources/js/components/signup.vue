@@ -89,7 +89,7 @@
                             this.data.email = ""
                             this.data.password = ""
                             this.data.role = ""
-                            this.$route.push('/signin')
+                            this.$router.push('/signin')
                         }
 
                     }

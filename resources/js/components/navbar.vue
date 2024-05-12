@@ -16,8 +16,10 @@
                         <div class="btn-group">
                             <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">My Account</button>
                             <div class="dropdown-menu dropdown-menu-right">
-                                <router-link to="/signin" class="dropdown-item" type="button">Sign in</router-link>
-                                <router-link to="/signup" class="dropdown-item" type="button">Sign up</router-link>
+                                <router-link to="/signin" class="dropdown-item" v-if="!logger" type="button">Sign in</router-link>
+                                <router-link to="/signup" class="dropdown-item" v-if="!logger" type="button">Sign up</router-link>
+                                <a href="#" class="dropdown-item" v-if="logger">Profils</a>
+                                <span style="cursor: pointer;" @click="Logout" class="dropdown-item" v-if="logger">Logout</span>
                             </div>
                         </div>
                         <div class="btn-group mx-2">
@@ -149,7 +151,34 @@
 </template>
 
 <script >
-
+    import axios from 'axios';
+    export default{
+        data(){
+            return{
+                user:{},
+                logger:false
+            }
+        },
+        methods:{
+            async Logout(){
+                const res = await axios.post('/logout',null)
+                if (res.status === 200) {
+                    window.location.reload();
+                }
+            }
+        },
+        async created(){
+            const users = await axios.get('/currentUser')
+            if (users.status === 200) {
+                this.user = users.data.user
+                if (this.user) {
+                    this.logger = true
+                }else{
+                    this.logger = false
+                }
+            }
+        }
+    }
 </script>
 
 <style>
