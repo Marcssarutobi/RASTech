@@ -76,17 +76,9 @@
                                     </div>
                                 </div>
                                 <div class="text-center py-4">
-                                    <router-link class="h6 text-decoration-none text-truncate" to="/shopDetail">Product Name Goes Here</router-link>
+                                    <router-link class="h6 text-decoration-none text-truncate" :to="'/shopDetail/'+prod.id">{{ prod.name_prod }}</router-link>
                                     <div class="d-flex align-items-center justify-content-center mt-2">
-                                        <h5>$123.00</h5><h6 class="text-muted ml-2"><del>$123.00</del></h6>
-                                    </div>
-                                    <div class="d-flex align-items-center justify-content-center mb-1">
-                                        <small class="fa fa-star text-primary mr-1"></small>
-                                        <small class="fa fa-star text-primary mr-1"></small>
-                                        <small class="fa fa-star text-primary mr-1"></small>
-                                        <small class="fa fa-star text-primary mr-1"></small>
-                                        <small class="fa fa-star text-primary mr-1"></small>
-                                        <small>(99)</small>
+                                        <h5>{{ prod.PVente }} FCFA</h5>
                                     </div>
                                 </div>
                             </div>

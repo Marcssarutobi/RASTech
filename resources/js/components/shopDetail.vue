@@ -18,7 +18,7 @@
         <div class="container-fluid pb-5">
             <div class="row px-xl-5">
                 <div class="col-lg-5 mb-30">
-                    <div id="product-carousel" class="carousel slide" data-ride="carousel">
+                    <!-- <div id="product-carousel" class="carousel slide" data-ride="carousel">
                         <div class="carousel-inner bg-light">
                             <div class="carousel-item active">
                                 <img class="w-100 h-100" src="../../../public/img/product-1.jpg" alt="Image">
@@ -39,26 +39,18 @@
                         <a class="carousel-control-next" href="#product-carousel" data-slide="next">
                             <i class="fa fa-2x fa-angle-right text-dark"></i>
                         </a>
+                    </div> -->
+                    <div class="images w-100 h-100 d-flex align-items-center justify-content-center">
+                        <img class="" :src="getid.image" alt="Image" style="max-width: 100%; max-height: 100%; width: 100%; height: 100%; object-fit: cover;">
                     </div>
                 </div>
 
                 <div class="col-lg-7 h-auto mb-30">
                     <div class="h-100 bg-light p-30">
-                        <h3>Product Name Goes Here</h3>
-                        <div class="d-flex mb-3">
-                            <div class="text-primary mr-2">
-                                <small class="fas fa-star"></small>
-                                <small class="fas fa-star"></small>
-                                <small class="fas fa-star"></small>
-                                <small class="fas fa-star-half-alt"></small>
-                                <small class="far fa-star"></small>
-                            </div>
-                            <small class="pt-1">(99 Reviews)</small>
-                        </div>
-                        <h3 class="font-weight-semi-bold mb-4">$150.00</h3>
-                        <p class="mb-4">Volup erat ipsum diam elitr rebum et dolor. Est nonumy elitr erat diam stet sit
-                            clita ea. Sanc ipsum et, labore clita lorem magna duo dolor no sea
-                            Nonumy</p>
+                        <h3 class="mb-4">{{ getid.name_prod }}</h3>
+                        
+                        <h3 class="font-weight-semi-bold mb-4">{{ getid.PVente }} FCFA</h3>
+                        <p class="mb-4" >{{ getid.description }}</p>
                         
                         <div class="d-flex align-items-center mb-4 pt-2">
                             <div class="input-group quantity mr-3" style="width: 130px;">
@@ -172,7 +164,26 @@
 </template>
 
 <script>
-    
+    import axios from 'axios';
+    export default{
+        data(){
+            return{
+                getid:{}
+            }
+        },
+        methods:{
+            async GetProduits(){
+                const res = await axios.get('/getpro/'+ this.$route.params.id)
+               if (res.status === 200) {
+                    this.getid = res.data.prod
+                    console.log(this.getid)
+               }
+            }
+        },
+        created(){
+            this.GetProduits()
+        }
+    }
 </script>
 
 <style>
