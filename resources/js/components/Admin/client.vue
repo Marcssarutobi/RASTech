@@ -23,11 +23,14 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <th>1</th>
-                    <th>2</th>
-                    <th>3</th>
-                    <th>3</th>
+                <tr v-for="user in alluser" :key="user.id">
+                    <th>{{ user.username }}</th>
+                    <th>{{ user.email }}</th>
+                    <th>{{ user.role }}</th>
+                    <th>
+                        <button class="btn btn-primary mr-3" ><i class="fas fa-eye"></i></button>
+                        <button class="btn btn-danger" ><i class="fas fa-trash"></i></button>
+                    </th>
                 </tr>
             </tbody>
         </table>
@@ -37,8 +40,26 @@
 </template>
 
 <script>
-export default {
+import axios from 'axios';
 
+export default {
+    data(){
+        return{
+            alluser:{}
+        }
+    },
+    methods:{
+        async GetAllUser(){
+            const res = await axios.get('/alluser')
+            if (res.status === 200) {
+                this.alluser = res.data.users.data
+                console.log(this.alluser)
+            }
+        }
+    },
+    created(){
+        this.GetAllUser()
+    }
 }
 </script>
 
