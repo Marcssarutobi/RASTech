@@ -49,4 +49,10 @@ class UserController extends Controller
         Auth::logout();
         return response()->json(['message' => 'Déconnexion réussie']);
     }
+    public function AllUser(){
+        $user = User::orderBy('id','desc')->paginate(6);
+        return response()->json([
+            "users"=>$user
+        ]);
+    }
 }

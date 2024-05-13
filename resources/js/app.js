@@ -53,6 +53,10 @@ const routes = [
                 path: "produit",
                 component:()=>import('./components/Admin/produit.vue')
             },
+            {
+                path: "client",
+                component:()=>import('./components/Admin/client.vue')
+            },
         ]
     },
 ]

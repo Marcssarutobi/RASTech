@@ -24,7 +24,7 @@
         },
         computed:{
             navFoo(){
-                return this.$route.path === "/signin" || this.$route.path === "/signup" || this.$route.path === "/dashbord" || this.$route.path === "/dashbord/accuiel"  || this.$route.path === "/dashbord/categorie" || this.$route.path === "/dashbord/produit"
+                return this.$route.path === "/signin" || this.$route.path === "/signup" || this.$route.path === "/dashbord" || this.$route.path === "/dashbord/accuiel"  || this.$route.path === "/dashbord/categorie" || this.$route.path === "/dashbord/produit" || this.$route.path === "/dashbord/client"
            }
         }   
     }
