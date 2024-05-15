@@ -35,6 +35,16 @@ class ContactController extends Controller
     }
 
     public function  GetContact($id) {
-        
+        $ctn = Contact::where('id', $id)->first();
+        return response()->json([
+            "ctn"=>$ctn
+        ]);
+    }
+
+    public function DelContact(Request $request){
+        $ctn = Contact::where('id',$request->id)->delete();
+        return response()->json([
+            "delctn"=>$ctn
+        ]);
     }
 }
