@@ -8,6 +8,7 @@ use App\Http\Controllers\ProduitsController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserinfoController;
+use App\Http\Controllers\UtilisateurController;
 
 /*
 |--------------------------------------------------------------------------
@@ -67,3 +68,10 @@ Route::get('/allrole',[RoleController::class, 'AllRole']);
 Route::get('/getrole/{id}',[RoleController::class, 'GetRole']);
 Route::post('/updaterole',[RoleController::class, 'UpdateRole']);
 Route::post('/delrole',[RoleController::class], 'DeleteRole');
+
+//Utilisateur
+Route::post('/createutili',[UtilisateurController::class, 'CreateUtlisateur']);
+Route::get('/getUtili/{id}',[UtilisateurController::class, 'GetUtilisateur']);
+Route::get('/allutili',[UtilisateurController::class, 'AllUtilisateur']);
+Route::post('/updateutili',[UtilisateurController::class, 'UpdateUtlisateur']);
+Route::post('/delutili',[UtilisateurController::class, 'DeleteUtilisateur']);
