@@ -2,8 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\ProduitsController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserinfoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,9 +41,29 @@ Route::post('/delimg',[ProduitsController::class, 'deleteImage']);
 Route::post('/updatepro',[ProduitsController::class, 'updateProduits']);
 Route::post('/delpro', [ProduitsController::class, 'delProd']);
 
-//Utilisateur
+//UtilisateurClient
 Route::post('/createUser',[UserController::class, 'signup']);
 Route::post('/login',[UserController::class, 'Login']);
 Route::get('/currentUser',[UserController::class, 'CurrentUser'])->middleware('auth');
 Route::post('/logout',[UserController::class, 'Logout'])->middleware('auth');
 Route::get('/alluser',[UserController::class, 'AllUser']);
+Route::post('/usercreateinfo',[UserinfoController::class, 'CreateInfoUser']);
+
+//Newsletter
+Route::post('/createnew',[NewsletterController::class, 'CreateNew']);
+Route::get('/allnew',[NewsletterController::class, 'AllNew']);
+Route::get('/getnew/{id}',[NewsletterController::class, 'GetNew']);
+Route::post('/delnew',[NewsletterController::class, 'DelNew']);
+
+//Contacts
+Route::post('/createcontact',[ContactController::class, 'CreateContact']);
+Route::get('/allContact',[ContactController::class], 'AllContact');
+Route::get('/getcontact/{id}',[ContactController::class, 'GetContact']);
+Route::post('/delcontact', [ContactController::class, 'DelContact']);
+
+//Role
+Route::post('/createrole',[RoleController::class, 'CreateRole']);
+Route::get('/allrole',[RoleController::class, 'AllRole']);
+Route::get('/getrole/{id}',[RoleController::class, 'GetRole']);
+Route::post('/updaterole',[RoleController::class, 'UpdateRole']);
+Route::post('/delrole',[RoleController::class], 'DeleteRole');

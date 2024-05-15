@@ -67,7 +67,7 @@
                         <div class="col-lg-4 col-md-6 col-sm-6 pb-1" v-for="prod in prods" :key="prod.id">
                             <div class="product-item bg-light mb-4">
                                 <div class="product-img position-relative overflow-hidden">
-                                    <img class="img-fluid" :src="prod.image" alt="" style="max-width: 330.23px; max-height: 330.23px; height: 330.23px; width: 330.23px; object-fit: cover;">
+                                    <img class="img-fluid" :src="prod.image" alt="" style="max-width: 100%; max-height: 100%; height: 330.23px; width: 100%; object-fit: cover;">
                                     <div class="product-action">
                                         <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
                                         <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
