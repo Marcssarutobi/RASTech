@@ -20,7 +20,7 @@ class NewsletterController extends Controller
     }
 
     public function AllNew(){
-        $news = Newsletter::orderBy('id','desc');
+        $news = Newsletter::orderBy('id','desc')->paginate(6);
         return response()->json([
             "News"=>$news
         ]);

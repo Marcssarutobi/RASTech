@@ -28,7 +28,7 @@ class ContactController extends Controller
     }
 
     public function AllContact(){
-        $ctns = Contact::orderBy('id','desc')->get();
+        $ctns = Contact::orderBy('id','desc')->paginate(6);
         return response()->json([
             "allCtns"=>$ctns
         ]);

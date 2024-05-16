@@ -49,6 +49,8 @@ Route::get('/currentUser',[UserController::class, 'CurrentUser'])->middleware('a
 Route::post('/logout',[UserController::class, 'Logout'])->middleware('auth');
 Route::get('/alluser',[UserController::class, 'AllUser']);
 Route::post('/usercreateinfo',[UserinfoController::class, 'CreateInfoUser']);
+Route::post('/uploadimgC', [UserinfoController::class, 'uploadImgC']);
+Route::post('/delimgC',[UserinfoController::class, 'deleteImageC']);
 
 //Newsletter
 Route::post('/createnew',[NewsletterController::class, 'CreateNew']);
