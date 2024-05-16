@@ -18,7 +18,7 @@
                             <div class="dropdown-menu dropdown-menu-right">
                                 <router-link to="/signin" class="dropdown-item" v-if="!logger" type="button">Sign in</router-link>
                                 <router-link to="/signup" class="dropdown-item" v-if="!logger" type="button">Sign up</router-link>
-                                <a href="#" class="dropdown-item" v-if="logger">Profils</a>
+                                <router-link to="/profil" class="dropdown-item" v-if="logger">Profils</router-link>
                                 <span style="cursor: pointer;" @click="Logout" class="dropdown-item" v-if="logger">Logout</span>
                             </div>
                         </div>

@@ -34,6 +34,10 @@ const routes = [
         component: ()=>import('./components/signin.vue')
     },
     {
+        path: "/profil",
+        component: ()=>import('./components/profil.vue')
+    },
+    {
         path: "/signup",
         component: ()=>import('./components/signup.vue')
     },
