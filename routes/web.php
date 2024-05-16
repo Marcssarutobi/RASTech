@@ -48,9 +48,12 @@ Route::post('/login',[UserController::class, 'Login']);
 Route::get('/currentUser',[UserController::class, 'CurrentUser'])->middleware('auth');
 Route::post('/logout',[UserController::class, 'Logout'])->middleware('auth');
 Route::get('/alluser',[UserController::class, 'AllUser']);
+//UserinfoClient
 Route::post('/usercreateinfo',[UserinfoController::class, 'CreateInfoUser']);
 Route::post('/uploadimgC', [UserinfoController::class, 'uploadImgC']);
 Route::post('/delimgC',[UserinfoController::class, 'deleteImageC']);
+Route::get('/getuserinfo/{id}',[UserinfoController::class, 'GetUserInfo']);
+Route::post('/delUserInfo', [UserinfoController::class, 'DelUserInfo']);
 
 //Newsletter
 Route::post('/createnew',[NewsletterController::class, 'CreateNew']);

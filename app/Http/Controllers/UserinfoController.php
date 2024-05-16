@@ -66,4 +66,27 @@ class UserinfoController extends Controller
 
         return 'done';
     }
+    public function GetUserInfo($id){
+        $user = Userinfo::where('user_id',$id)->first();
+        return response()->json([
+            "info"=>$user
+        ]);
+    }
+    public function DelUserInfo(Request $request,$hasFullPath = false){
+        //Premièrement effacer le fichier originel du server
+        if(!$hasFullPath){
+            $filePath = public_path() . $request->image;
+        }
+
+        if(file_exists($filePath)){
+            @unlink($filePath);
+        }
+
+        $user = Userinfo::where('id',$request->id)->delete();
+
+        return response()->json([
+            "deluserinfo"=>$user
+        ]);
+    }
+    
 }
