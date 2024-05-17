@@ -17,6 +17,7 @@
         "v-pagination-3": "^0.1.7",
         "vue": "^3.4.26",
         "vue-router": "^4.3.2",
+        "vue-tel-input": "^9.1.2",
         "vuejs-paginate-next": "^1.0.2"
     }
 }
