@@ -8,13 +8,15 @@
                     <div class="col-lg-4">
                         
                         <div class="containers mx-auto">
-                            <input type="file" id="file" accept="image/*" hidden>
+                            <input type="file" id="file" accept="image/*" hidden @change="handleFileImg">
                             <div class="img-area">
                                 <i class="fas fa-cloud-arrow-up icon mb-2"></i>
                                 <h3 class="mb-3">Upload Image</h3>
                                 <p>Image size must be less than <span>2MB</span></p>
+                                <img v-if="data.profil != ''" :src="data.profil" alt="">
                             </div>
-                            <button class="select-image mt-3 btn btn-primary w-100 btn-lg rounded-2 ">Select Image</button>
+                            <button v-if="data.profil ==''" class="select-image mt-3 btn btn-primary w-100 btn-lg rounded-2 ">Select Image</button>
+                            <button v-else @click="DelImage" class="btn btn-danger w-100 btn-lg rounded-2 mt-3">Supprimer</button>
                         </div>
 
                     </div>
@@ -79,7 +81,7 @@
         data(){
             return {
                 data:{
-                    photo:"",
+                    profil:"",
                     nom:"",
                     prenom:"",
                     phone:"",
@@ -99,16 +101,15 @@
             })
             InputFile.addEventListener('change',()=>{
                 const image = InputFile.files[0]
-                console.log(image)
 
-                const reader = new FileReader()
-                reader.onload = ()=>{
-                    const imgUrl = reader.result
-                    const img = document.createElement('img')
-                    img.src = imgUrl
-                    Block.appendChild(img)
-                }
-                reader.readAsDataURL(image)
+                // const reader = new FileReader()
+                // reader.onload = ()=>{
+                //     const imgUrl = reader.result
+                //     const img = document.createElement('img')
+                //     img.src = imgUrl
+                //     Block.appendChild(img)
+                // }
+                // reader.readAsDataURL(image)
             })
         },
         methods:{
@@ -123,20 +124,26 @@
                 const selectImg = event.target.files[0]
                 if (selectImg && selectImg.type.startsWith('image/')) {
                     const formData = new FormData()
-                    formData.append('photo',selectImg)
+                    formData.append('profil',selectImg)
 
                     try {
                         
                         const res = await axios.post('/uploadimgC',formData)
 
                         if (res.status === 200) {
-                            this.data.phone = res.data.image_url
+                            this.data.profil = res.data.image_url
                         }
 
                     } catch (error) {
                         console.error('Erreur ici :' , error)
                     }
 
+                }
+            },
+            async DelImage(){
+                const res = await axios.post('/delimgC',{profil: this.data.profil})
+                if (res.status === 200) {
+                    this.data.profil = ""
                 }
             },
         },
@@ -189,7 +196,7 @@
         width: 100%;
         height: 100%;
         object-fit: cover;
-        object-position: center;
+        object-position: top;
         z-index: 100;
     }
     
