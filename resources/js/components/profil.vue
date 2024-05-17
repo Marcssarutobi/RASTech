@@ -28,31 +28,31 @@
                                     <div class="col-12 col-sm-6">
                                         <div class="form-group">
                                             <label for="">Nom :</label>
-                                            <input type="text" class="form-control">
+                                            <input type="text" class="form-control" v-model="data.nom">
                                         </div>
                                     </div>
                                     <div class="col-12 col-sm-6">
                                         <div class="form-group">
                                             <label for="">Prénom :</label>
-                                            <input type="text" class="form-control">
+                                            <input type="text" class="form-control" v-model="data.prenom">
                                         </div>
                                     </div>
                                     <div class="col-12 ">
                                         <div class="form-group">
                                             <label for="">Téléphone :</label>
-                                            <vue-tel-input v-model="phone" mode="international" class="form-control"></vue-tel-input>
+                                            <vue-tel-input v-model="data.phone" mode="international" class="form-control"></vue-tel-input>
                                         </div>
                                     </div>
                                     <div class="col-12 col-sm-6">
                                         <div class="form-group">
                                             <label for="">Ville :</label>
-                                            <input type="text" class="form-control">
+                                            <input type="text" class="form-control" v-model="data.ville">
                                         </div>
                                     </div>
                                     <div class="col-12 col-sm-6">
                                         <div class="form-group">
                                             <label for="">Quartier :</label>
-                                            <input type="text" class="form-control">
+                                            <input type="text" class="form-control" v-model="data.quartier">
                                         </div>
                                     </div>
                                 </div>
@@ -76,6 +76,19 @@
         components: {
             VueTelInput,
         },
+        data(){
+            return {
+                data:{
+                    photo:"",
+                    nom:"",
+                    prenom:"",
+                    phone:"",
+                    ville:"",
+                    quartier:"",
+                    user_id:""
+                }
+            }
+        },
         mounted(){
             const SelectImage = document.querySelector('.select-image')
             const InputFile = document.querySelector('#file')
@@ -98,6 +111,38 @@
                 reader.readAsDataURL(image)
             })
         },
+        methods:{
+            async CurrentUser(){
+                const users = await axios.get('/currentUser')
+                if (users.status === 200) {
+                    this.user = users.data.user
+                    console.log(this.user)
+                }
+            },
+            async handleFileImg(event){
+                const selectImg = event.target.files[0]
+                if (selectImg && selectImg.type.startsWith('image/')) {
+                    const formData = new FormData()
+                    formData.append('photo',selectImg)
+
+                    try {
+                        
+                        const res = await axios.post('/uploadimgC',formData)
+
+                        if (res.status === 200) {
+                            this.data.phone = res.data.image_url
+                        }
+
+                    } catch (error) {
+                        console.error('Erreur ici :' , error)
+                    }
+
+                }
+            },
+        },
+        created(){
+            this.CurrentUser()
+        }
     }
 </script>
 
