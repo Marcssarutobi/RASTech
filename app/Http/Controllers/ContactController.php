@@ -30,7 +30,7 @@ class ContactController extends Controller
     public function AllContact(){
         $ctns = Contact::orderBy('id','desc')->paginate(6);
         return response()->json([
-            "allCtns"=>$ctns
+            "allctns"=>$ctns
         ]);
     }
 
@@ -38,6 +38,26 @@ class ContactController extends Controller
         $ctn = Contact::where('id', $id)->first();
         return response()->json([
             "ctn"=>$ctn
+        ]);
+    }
+
+    public function UpdateContact(Request $request){
+        $request->validate([
+            "name"=>"required",
+            "email"=>"required",
+            "subject"=>"required",
+            "message"=>"required",
+            "status"=>"required",
+        ]);
+        $ctn = Contact::where('id',$request->id)->update([
+            "name"=>$request->name,
+            "email"=>$request->email,
+            "subject"=>$request->subject,
+            "message"=>$request->message,
+            "status"=>$request->status,
+        ]);
+        return response()->json([
+            "update"=>$ctn
         ]);
     }
 

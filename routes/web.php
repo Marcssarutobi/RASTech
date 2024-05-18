@@ -63,7 +63,8 @@ Route::post('/delnew',[NewsletterController::class, 'DelNew']);
 
 //Contacts
 Route::post('/createcontact',[ContactController::class, 'CreateContact']);
-Route::get('/allContact',[ContactController::class], 'AllContact');
+Route::post('/updatecontact',[ContactController::class, 'UpdateContact']);
+Route::get('/allContact',[ContactController::class, 'AllContact']);
 Route::get('/getcontact/{id}',[ContactController::class, 'GetContact']);
 Route::post('/delcontact', [ContactController::class, 'DelContact']);
 
@@ -72,10 +73,12 @@ Route::post('/createrole',[RoleController::class, 'CreateRole']);
 Route::get('/allrole',[RoleController::class, 'AllRole']);
 Route::get('/getrole/{id}',[RoleController::class, 'GetRole']);
 Route::post('/updaterole',[RoleController::class, 'UpdateRole']);
-Route::post('/delrole',[RoleController::class], 'DeleteRole');
+Route::post('/delrole',[RoleController::class, 'DeleteRole']);
 
 //Utilisateur
 Route::post('/createutili',[UtilisateurController::class, 'CreateUtlisateur']);
+Route::post('/uploadimgU', [UtilisateurController::class, 'uploadImgU']);
+Route::post('/delimgU',[UtilisateurController::class, 'deleteImageU']);
 Route::get('/getUtili/{id}',[UtilisateurController::class, 'GetUtilisateur']);
 Route::get('/allutili',[UtilisateurController::class, 'AllUtilisateur']);
 Route::post('/updateutili',[UtilisateurController::class, 'UpdateUtlisateur']);

@@ -15,10 +15,10 @@
                     <router-link to="/dashbord/produit" class="nav-item nav-link active"><i class="fas fa-cubes me-2"></i>Produits</router-link>
                     <router-link to="/dashbord/client" class="nav-item nav-link active"><i class="fas fa-user-tie me-2"></i>Clients</router-link>
                     <a href="widget.html" class="nav-item nav-link active"><i class="fas fa-users me-2"></i>Partenaire</a>
-                    <a href="form.html" class="nav-item nav-link active"><i class="fas fa-at me-2"></i>Newsletter</a>
-                    <a href="table.html" class="nav-item nav-link active"><i class="fas fa-envelope me-2"></i>Contact</a>
-                    <a href="chart.html" class="nav-item nav-link active"><i class="fas fa-user-tag me-2"></i>Role</a>
-                    <a href="chart.html" class="nav-item nav-link active"><i class="fas fa-user-gear me-2"></i>Utilisateur</a>
+                    <router-link to="/dashbord/newsletter" class="nav-item nav-link active"><i class="fas fa-at me-2"></i>Newsletter</router-link>
+                    <router-link to="/dashbord/contact" class="nav-item nav-link active"><i class="fas fa-envelope me-2"></i>Contact</router-link>
+                    <router-link to="/dashbord/role" class="nav-item nav-link active"><i class="fas fa-user-tag me-2"></i>Role</router-link>
+                    <router-link to="/dashbord/user" class="nav-item nav-link active"><i class="fas fa-user-gear me-2"></i>Utilisateur</router-link>
                 </div>
             </nav>
         </div>

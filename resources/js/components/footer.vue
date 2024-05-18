@@ -38,14 +38,14 @@
                         <div class="col-md-4 mb-5">
                             <h5 class="text-secondary text-uppercase mb-4">Newsletter</h5>
                             <p>Duo stet tempor ipsum sit amet magna ipsum tempor est</p>
-                            <form action="">
-                                <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Your Email Address">
-                                    <div class="input-group-append">
-                                        <button class="btn btn-primary">Sign Up</button>
-                                    </div>
+                            
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Your Email Address" v-model="data.email">
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary" @click="AddNewsletter">Sign Up</button>
                                 </div>
-                            </form>
+                            </div>
+                            
                             <h6 class="text-secondary text-uppercase mt-4 mb-3">Follow Us</h6>
                             <div class="d-flex">
                                 <a class="btn btn-primary btn-square mr-2" href="#"><i class="fab fa-twitter"></i></a>
@@ -77,7 +77,53 @@
 </template>
 
 <script>
+import axios from 'axios';
+import Swal from 'sweetalert2'
 
+    export default{
+        data(){
+            return{
+                data:{
+                    email:""
+                }
+            }
+        },
+        methods:{
+            async AddNewsletter(){
+                try {
+                    if (this.data.email.trim() == "") {
+                        Swal.fire({
+                            toast: true,
+                            position: "top-end",
+                            icon: "error",
+                            title: "Le champ ne doit pas etre vide",
+                            timer: 3000,
+                            timerProgressBar: true,
+                            showConfirmButton: false
+                        })
+                    } else {
+                        
+                        const res = await axios.post('/createnew',this.data)
+                        if (res.status === 200) {
+                            Swal.fire({
+                                toast: true,
+                                position: "top-end",
+                                icon: "success",
+                                title: "Abonnement effectuer avec succès",
+                                timer: 3000,
+                                timerProgressBar: true,
+                                showConfirmButton: false
+                            })
+                            this.data.email = ""
+                        }
+
+                    }
+                } catch (error) {
+                    console.error('Erruer ici:', error)
+                }
+            }
+        }
+    }
 </script>
 
 <style>

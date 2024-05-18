@@ -7,28 +7,20 @@
                 <div class="row g-5">
                     <div class="col-lg-4">
                         
-                        <div class="containers mx-auto" v-if="userinfo == null">
+                        <div class="containers mx-auto" >
                             <input type="file" id="file" accept="image/*" hidden @change="handleFileImg">
                             <div class="img-area">
                                 <i class="fas fa-cloud-arrow-up icon mb-2"></i>
                                 <h3 class="mb-3">Upload Image</h3>
                                 <p>Image size must be less than <span>2MB</span></p>
-                                <img v-if="data.profil != ''" :src="data.profil" alt="">
+                                <img v-if="userinfo && userinfo.profil !== null && userinfo.profil !== ''" :src="userinfo.profil" alt="">
+                                <img v-else-if="!userinfo && data.profil != ''" :src="data.profil" alt="Placeholder Image">
+                                
                             </div>
-                            <button v-if="data.profil ==''" class="select-image mt-3 btn btn-primary w-100 btn-lg rounded-2 ">Select Image</button>
+                            <button v-if="userinfo && !userinfo.profil && !data.profil" class="select-image mt-3 btn btn-primary w-100 btn-lg rounded-2 ">Select Image</button>
                             <button v-else @click="DelImage" class="btn btn-danger w-100 btn-lg rounded-2 mt-3">Supprimer</button>
                         </div>
-                        <div class="containers mx-auto" v-else>
-                            <input type="file" id="file" accept="image/*" hidden @change="handleFileImg">
-                            <div class="img-area">
-                                <i class="fas fa-cloud-arrow-up icon mb-2"></i>
-                                <h3 class="mb-3">Upload Image</h3>
-                                <p>Image size must be less than <span>2MB</span></p>
-                                <img v-if="userinfo.profil != ''" :src="userinfo.profil" alt="">
-                            </div>
-                            <button v-if="userinfo.profil ==''" class="select-image mt-3 btn btn-primary w-100 btn-lg rounded-2 ">Select Image</button>
-                            <button v-else @click="DelImage" class="btn btn-danger w-100 btn-lg rounded-2 mt-3">Supprimer</button>
-                        </div>
+                       
 
                     </div>
                     <div class="col-lg-8">
@@ -36,76 +28,64 @@
                             <div class="card-header h2">
                                 Vos information personnelle
                             </div>
-                            <div class="card-body" v-if="userinfo == null">
+                            <div class="card-body" >
                                 <div class="row g-3">
                                     <div class="col-12 col-sm-6">
-                                        <div class="form-group">
+                                        <div class="form-group" v-if="userinfo !== null">
+                                            <label for="">Nom :</label>
+                                            <input type="text" class="form-control" v-model="userinfo.nom">
+                                        </div>
+                                        <div class="form-group" v-else>
                                             <label for="">Nom :</label>
                                             <input type="text" class="form-control" v-model="data.nom">
                                         </div>
                                     </div>
                                     <div class="col-12 col-sm-6">
-                                        <div class="form-group">
+                                        <div class="form-group" v-if="userinfo !== null">
+                                            <label for="">Prénom :</label>
+                                            <input type="text" class="form-control" v-model="userinfo.prenom">
+                                        </div>
+                                        <div class="form-group" v-else>
                                             <label for="">Prénom :</label>
                                             <input type="text" class="form-control" v-model="data.prenom">
                                         </div>
                                     </div>
                                     <div class="col-12 ">
-                                        <div class="form-group">
+                                        <div class="form-group" v-if="userinfo !== null">
+                                            <label for="">Téléphone :</label>
+                                            <vue-tel-input v-model="userinfo.phone" mode="international" class="form-control"></vue-tel-input>
+                                        </div>
+                                        <div class="form-group" v-else>
                                             <label for="">Téléphone :</label>
                                             <vue-tel-input v-model="data.phone" mode="international" class="form-control"></vue-tel-input>
                                         </div>
                                     </div>
                                     <div class="col-12 col-sm-6">
-                                        <div class="form-group">
+                                        <div class="form-group" v-if="userinfo !== null">
+                                            <label for="">Ville :</label>
+                                            <input type="text" class="form-control" v-model="userinfo.ville">
+                                        </div>
+                                        <div class="form-group" v-else>
                                             <label for="">Ville :</label>
                                             <input type="text" class="form-control" v-model="data.ville">
                                         </div>
                                     </div>
                                     <div class="col-12 col-sm-6">
-                                        <div class="form-group">
+                                        <div class="form-group" v-if="userinfo !== null">
+                                            <label for="">Quartier :</label>
+                                            <input type="text" class="form-control" v-model="userinfo.quartier">
+                                        </div>
+                                        <div class="form-group" v-else>
                                             <label for="">Quartier :</label>
                                             <input type="text" class="form-control" v-model="data.quartier">
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="card-body" v-else>
-                                <div class="row g-3">
-                                    <div class="col-12 col-sm-6">
-                                        <div class="form-group">
-                                            <label for="">Nom :</label>
-                                            <input type="text" class="form-control" v-model="userinfo.nom">
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-sm-6">
-                                        <div class="form-group">
-                                            <label for="">Prénom :</label>
-                                            <input type="text" class="form-control" v-model="userinfo.prenom">
-                                        </div>
-                                    </div>
-                                    <div class="col-12 ">
-                                        <div class="form-group">
-                                            <label for="">Téléphone :</label>
-                                            <vue-tel-input v-model="userinfo.phone" mode="international" class="form-control"></vue-tel-input>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-sm-6">
-                                        <div class="form-group">
-                                            <label for="">Ville :</label>
-                                            <input type="text" class="form-control" v-model="userinfo.ville">
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-sm-6">
-                                        <div class="form-group">
-                                            <label for="">Quartier :</label>
-                                            <input type="text" class="form-control" v-model="userinfo.quartier">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                           
                             <div class="card-footer">
-                                <button class="btn btn-primary btn-lg" >Modifier</button>
+                                <button class="btn btn-primary btn-lg" v-if="userinfo ===null"  @click="AddUserinfo">Enrégistrer</button>
+                                <button class="btn btn-primary btn-lg" v-else  >Modifier</button>
                             </div>
                         </div>
                     </div>
@@ -138,7 +118,8 @@
                 },
                 userinfo:{},
                 user:{},
-                logger:false
+                logger:false,
+                
             }
         },
         mounted(){
@@ -202,9 +183,13 @@
                 }
             },
             async UserInfoCurrent(id){
-                const res = await axios.get('/getuserinfo/'+id)
-                if (res.status === 200) {
-                    this.userinfo = res.data.userCurrent
+                try {
+                    const res = await axios.get('/getuserinfo/'+id)
+                    if (res.status === 200) {
+                        this.userinfo = res.data.userCurrent
+                    }
+                } catch (error) {
+                    console.error('Erreur ici :', error)
                 }
             },
             async AddUserinfo(){

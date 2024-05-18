@@ -22,27 +22,27 @@
                        
                         <div class="control-group">
                             <input type="text" class="form-control" id="name" placeholder="Your Name"
-                                required="required" data-validation-required-message="Please enter your name" />
+                                required="required" data-validation-required-message="Please enter your name" v-model="data.name"/>
                             <p class="help-block text-danger"></p>
                         </div>
                         <div class="control-group">
                             <input type="email" class="form-control" id="email" placeholder="Your Email"
-                                required="required" data-validation-required-message="Please enter your email" />
+                                required="required" data-validation-required-message="Please enter your email" v-model="data.email"/>
                             <p class="help-block text-danger"></p>
                         </div>
                         <div class="control-group">
                             <input type="text" class="form-control" id="subject" placeholder="Subject"
-                                required="required" data-validation-required-message="Please enter a subject" />
+                                required="required" data-validation-required-message="Please enter a subject" v-model="data.subject"/>
                             <p class="help-block text-danger"></p>
                         </div>
                         <div class="control-group">
                             <textarea class="form-control" rows="8" id="message" placeholder="Message"
                                 required="required"
-                                data-validation-required-message="Please enter your message"></textarea>
+                                data-validation-required-message="Please enter your message" v-model="data.message"></textarea>
                             <p class="help-block text-danger"></p>
                         </div>
                         <div>
-                            <button class="btn btn-primary py-2 px-4" type="submit" id="sendMessageButton">Send Message</button>
+                            <button class="btn btn-primary py-2 px-4" type="submit" id="sendMessageButton" @click="CreateContact">Send Message</button>
                         </div>
                     </div>
                 </div>
@@ -65,7 +65,62 @@
 </template>
 
 <script>
-    
+import axios from 'axios';
+import Swal from 'sweetalert2';
+
+    export default{
+        data(){
+            return{
+                data:{
+                    name:"",
+                    email:"",
+                    subject:"",
+                    message:"",
+                    status: null,
+                }
+            }
+        },
+        methods:{
+            async CreateContact(){
+                try {
+                    
+                    if (this.data.name.trim() == "" || this.data.email.trim() == "" || this.data.subject.trim() == "" || this.data.message.trim() == "") {
+                        Swal.fire({
+                            toast: true,
+                            position: "top-end",
+                            icon: "error",
+                            title: "Veuillez remplir tous les champs",
+                            timer: 3000,
+                            timerProgressBar: true,
+                            showConfirmButton: false
+                        })
+                    } else {
+                        this.data.status = 0
+                        const res = await axios.post('/createcontact',this.data)
+                        if (res.status === 200) {
+                            Swal.fire({
+                                toast: true,
+                                position: "top-end",
+                                icon: "success",
+                                title: "Message envoyé avec succès",
+                                timer: 3000,
+                                timerProgressBar: true,
+                                showConfirmButton: false
+                            })
+                            this.data.name = ""
+                            this.data.email = ""
+                            this.data.subject = ""
+                            this.data.message = ""
+                            this.data.status = ""
+                        }
+                    }
+
+                } catch (error) {
+                    console.error('Erreur ici :', error)
+                }
+            }
+        }
+    }
 </script>
 
 <style>

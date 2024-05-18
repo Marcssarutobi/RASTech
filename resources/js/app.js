@@ -61,6 +61,22 @@ const routes = [
                 path: "client",
                 component:()=>import('./components/Admin/client.vue')
             },
+            {
+                path: "newsletter",
+                component:()=>import('./components/Admin/newsletter.vue')
+            },
+            {
+                path: "contact",
+                component:()=>import('./components/Admin/contact.vue')
+            },
+            {
+                path: "role",
+                component:()=>import('./components/Admin/role.vue')
+            },
+            {
+                path: "user",
+                component:()=>import('./components/Admin/user.vue')
+            },
         ]
     },
 ]

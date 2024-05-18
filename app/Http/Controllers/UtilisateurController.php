@@ -72,4 +72,42 @@ class UtilisateurController extends Controller
             "delUser"=>$utilisateur
         ]);
     }
+    public function uploadImgU(Request $request){
+
+        $request->validate([
+            'photo' => 'required|image|mimes:jpeg,png,jpg,gif'
+        ]);
+
+        if ($request->hasFile('photo')) {
+
+            // Génération d'un nom unique pour l'image
+            $picName = time() . '.' . $request->file('photo')->extension();
+    
+            // Déplacement du fichier vers le répertoire public/images
+            $request->file('photo')->move(public_path('images'), $picName);
+    
+            // Retourner l'URL de l'image téléchargée
+            return response()->json(['image_url' => "/images/$picName"]);
+    
+        } else {
+            // Aucun fichier image n'a été téléchargé, retourner une erreur
+            return response()->json(['error' => "Aucune image n'a été téléchargée."], 400);
+        }
+
+    }
+    public function deleteImageU(Request $request, $hasFullPath = false){
+        $request->validate([
+            'photo'=>'required'
+        ]);
+
+        if (!$hasFullPath) {
+            $filePath = public_path() .$request->photo;
+        }
+
+        if(file_exists($filePath)){
+            @unlink($filePath);
+        }
+
+        return 'done';
+    }
 }
