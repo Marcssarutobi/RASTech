@@ -67,9 +67,11 @@ class UserinfoController extends Controller
         return 'done';
     }
     public function GetUserInfo($id){
-        $user = Userinfo::where('user_id',$id)->first();
+        $user = Userinfo::orderBy('id','desc')->first();
+        $userCurrent = Userinfo::where('user_id',$id)->first();
         return response()->json([
-            "info"=>$user
+            "info"=>$user,
+            "userCurrent"=>$userCurrent
         ]);
     }
     public function DelUserInfo(Request $request,$hasFullPath = false){

@@ -7,7 +7,7 @@
                 <div class="row g-5">
                     <div class="col-lg-4">
                         
-                        <div class="containers mx-auto">
+                        <div class="containers mx-auto" v-if="userinfo == null">
                             <input type="file" id="file" accept="image/*" hidden @change="handleFileImg">
                             <div class="img-area">
                                 <i class="fas fa-cloud-arrow-up icon mb-2"></i>
@@ -18,6 +18,17 @@
                             <button v-if="data.profil ==''" class="select-image mt-3 btn btn-primary w-100 btn-lg rounded-2 ">Select Image</button>
                             <button v-else @click="DelImage" class="btn btn-danger w-100 btn-lg rounded-2 mt-3">Supprimer</button>
                         </div>
+                        <div class="containers mx-auto" v-else>
+                            <input type="file" id="file" accept="image/*" hidden @change="handleFileImg">
+                            <div class="img-area">
+                                <i class="fas fa-cloud-arrow-up icon mb-2"></i>
+                                <h3 class="mb-3">Upload Image</h3>
+                                <p>Image size must be less than <span>2MB</span></p>
+                                <img v-if="userinfo.profil != ''" :src="userinfo.profil" alt="">
+                            </div>
+                            <button v-if="userinfo.profil ==''" class="select-image mt-3 btn btn-primary w-100 btn-lg rounded-2 ">Select Image</button>
+                            <button v-else @click="DelImage" class="btn btn-danger w-100 btn-lg rounded-2 mt-3">Supprimer</button>
+                        </div>
 
                     </div>
                     <div class="col-lg-8">
@@ -25,7 +36,7 @@
                             <div class="card-header h2">
                                 Vos information personnelle
                             </div>
-                            <div class="card-body">
+                            <div class="card-body" v-if="userinfo == null">
                                 <div class="row g-3">
                                     <div class="col-12 col-sm-6">
                                         <div class="form-group">
@@ -59,8 +70,42 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="card-body" v-else>
+                                <div class="row g-3">
+                                    <div class="col-12 col-sm-6">
+                                        <div class="form-group">
+                                            <label for="">Nom :</label>
+                                            <input type="text" class="form-control" v-model="userinfo.nom">
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6">
+                                        <div class="form-group">
+                                            <label for="">Prénom :</label>
+                                            <input type="text" class="form-control" v-model="userinfo.prenom">
+                                        </div>
+                                    </div>
+                                    <div class="col-12 ">
+                                        <div class="form-group">
+                                            <label for="">Téléphone :</label>
+                                            <vue-tel-input v-model="userinfo.phone" mode="international" class="form-control"></vue-tel-input>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6">
+                                        <div class="form-group">
+                                            <label for="">Ville :</label>
+                                            <input type="text" class="form-control" v-model="userinfo.ville">
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6">
+                                        <div class="form-group">
+                                            <label for="">Quartier :</label>
+                                            <input type="text" class="form-control" v-model="userinfo.quartier">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="card-footer">
-                                <button class="btn btn-primary btn-lg">Enrégistrer</button>
+                                <button class="btn btn-primary btn-lg" >Modifier</button>
                             </div>
                         </div>
                     </div>
@@ -74,6 +119,8 @@
 <script>
     import { VueTelInput } from 'vue-tel-input';
     import 'vue-tel-input/vue-tel-input.css';
+    import axios from 'axios';
+    import Swal from 'sweetalert2'
     export default{
         components: {
             VueTelInput,
@@ -88,7 +135,10 @@
                     ville:"",
                     quartier:"",
                     user_id:""
-                }
+                },
+                userinfo:{},
+                user:{},
+                logger:false
             }
         },
         mounted(){
@@ -117,7 +167,12 @@
                 const users = await axios.get('/currentUser')
                 if (users.status === 200) {
                     this.user = users.data.user
-                    console.log(this.user)
+                    this.UserInfoCurrent(this.user.id)
+                    if (this.user) {
+                        this.logger = true
+                    }else{
+                        this.logger = false
+                    }
                 }
             },
             async handleFileImg(event){
@@ -146,6 +201,27 @@
                     this.data.profil = ""
                 }
             },
+            async UserInfoCurrent(id){
+                const res = await axios.get('/getuserinfo/'+id)
+                if (res.status === 200) {
+                    this.userinfo = res.data.userCurrent
+                }
+            },
+            async AddUserinfo(){
+                this.data.user_id = this.user.id
+                const res = await axios.post('/usercreateinfo', this.data)
+                if (res.status === 200) {
+                    Swal.fire({
+                        toast: true,
+                        position: "top-end",
+                        icon: "success",
+                        title: "Enrégistrement effectuer avec succès",
+                        timer: 3000,
+                        timerProgressBar: true,
+                        showConfirmButton: false
+                    })
+                }
+            }
         },
         created(){
             this.CurrentUser()
