@@ -59,16 +59,53 @@
                                         <h3 class="mb-3">Upload Image</h3>
                                         <p>Image size must be less than <span>2MB</span></p>
                                     </div>
-                                    <button class="select-image mt-3 btn btn-primary w-100 btn-lg rounded-2 ">Select Image</button>
+                                    <button class="select-image mt-3 btn btn-primary w-100 btn-lg rounded-2 " @click="SelectImage">Select Image</button>
                                 </div>
 
                             </div>
 
                             <div class="col-lg-8">
+                                <div class="row g-3">
 
-                                <div class="form-group mb-3">
-                                    <label for="">Nom :</label>
-                                    <input type="text" class="form-control" v-model="data.nom">
+                                    <div class="col-12 col-sm-6">
+                                        <div class="form-group mb-3">
+                                            <label for="">Nom :</label>
+                                            <input type="text" class="form-control" >
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6">
+                                        <div class="form-group mb-3">
+                                            <label for="">Prénom :</label>
+                                            <input type="text" class="form-control" >
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6">
+                                        <div class="form-group">
+                                            <label for="">Téléphone :</label>
+                                            <vue-tel-input  mode="international" class="form-control"></vue-tel-input>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6">
+                                        <div class="form-group mb-3">
+                                            <label for="">Email :</label>
+                                            <input type="email" class="form-control" >
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6">
+                                        <div class="form-group mb-3">
+                                            <label for="">Password :</label>
+                                            <input type="password" class="form-control" >
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6">
+                                        <div class="form-group mb-3">
+                                            <label for="">Role :</label>
+                                            <select class="form-control">
+                                                <option selected disabled>Selectionnez un role</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
                                 </div>
 
                             </div>
@@ -88,7 +125,14 @@
 </template>
 
 <script>
+    import { VueTelInput } from 'vue-tel-input';
+    import 'vue-tel-input/vue-tel-input.css';
+    import axios from 'axios';
+    import Swal from 'sweetalert2'
     export default {
+        components: {
+            VueTelInput,
+        },
         data(){
             return{
                 data:{
@@ -104,28 +148,13 @@
             }
         },
         mounted(){
-            const SelectImage = document.querySelector('.select-image')
-            const InputFile = document.querySelector('#file')
-            const Block = document.querySelector('.img-area')
-
-            SelectImage.addEventListener('click',()=>{
-                InputFile.click();
-            })
-            InputFile.addEventListener('change',()=>{
-                const image = InputFile.files[0]
-
-                const reader = new FileReader()
-                reader.onload = ()=>{
-                    const imgUrl = reader.result
-                    const img = document.createElement('img')
-                    img.src = imgUrl
-                    Block.appendChild(img)
-                }
-                reader.readAsDataURL(image)
-            })
+            
         },
         methods:{
-            
+            SelectImage(){
+                const InputFile = document.querySelector('#file')
+                InputFile.click()
+            },
         }
     }
 </script>

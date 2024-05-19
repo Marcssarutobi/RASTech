@@ -17,8 +17,14 @@
                                 <img v-else-if="!userinfo && data.profil != ''" :src="data.profil" alt="Placeholder Image">
                                 
                             </div>
-                            <button v-if="userinfo && !userinfo.profil && !data.profil" class="select-image mt-3 btn btn-primary w-100 btn-lg rounded-2 ">Select Image</button>
-                            <button v-else @click="DelImage" class="btn btn-danger w-100 btn-lg rounded-2 mt-3">Supprimer</button>
+                            <div class="w-100" v-if="userinfo === null">
+                                <button v-if=" data.profil === '' "  @click="SelectImage" class="select-image mt-3 btn btn-primary w-100 btn-lg rounded-2 ">Select Image</button>
+                                <button v-else @click="DelImage" class="btn btn-danger w-100 btn-lg rounded-2 mt-3">Supprimer</button>
+                            </div>
+                            <div class="w-100" v-else>
+                                <button v-if="!userinfo.profil " @click="SelectImage"  class="select-image mt-3 btn btn-primary w-100 btn-lg rounded-2 ">Select Image</button>
+                                <button v-else @click="DelImageP" class="btn btn-danger w-100 btn-lg rounded-2 mt-3">Supprimer</button>
+                            </div>
                         </div>
                        
 
@@ -123,27 +129,31 @@
             }
         },
         mounted(){
-            const SelectImage = document.querySelector('.select-image')
-            const InputFile = document.querySelector('#file')
-            const Block = document.querySelector('.img-area')
+            // const SelectImage = document.querySelector('.select-image')
+            // const InputFile = document.querySelector('#file')
+            // const Block = document.querySelector('.img-area')
 
-            SelectImage.addEventListener('click',()=>{
-                InputFile.click();
-            })
-            InputFile.addEventListener('change',()=>{
-                const image = InputFile.files[0]
+            // SelectImage.addEventListener('click',()=>{
+            //     InputFile.click();
+            // })
+            // InputFile.addEventListener('change',()=>{
+            //     const image = InputFile.files[0]
 
-                // const reader = new FileReader()
-                // reader.onload = ()=>{
-                //     const imgUrl = reader.result
-                //     const img = document.createElement('img')
-                //     img.src = imgUrl
-                //     Block.appendChild(img)
-                // }
-                // reader.readAsDataURL(image)
-            })
+            //     const reader = new FileReader()
+            //     reader.onload = ()=>{
+            //         const imgUrl = reader.result
+            //         const img = document.createElement('img')
+            //         img.src = imgUrl
+            //         Block.appendChild(img)
+            //     }
+            //     reader.readAsDataURL(image)
+            // })
         },
         methods:{
+            SelectImage(){
+                const InputFile = document.querySelector('#file')
+                InputFile.click()
+            },
             async CurrentUser(){
                 const users = await axios.get('/currentUser')
                 if (users.status === 200) {
@@ -180,6 +190,12 @@
                 const res = await axios.post('/delimgC',{profil: this.data.profil})
                 if (res.status === 200) {
                     this.data.profil = ""
+                }
+            },
+            async DelImageP(){
+                const res = await axios.post('/delimgC',{profil: this.userinfo.profil})
+                if (res.status === 200) {
+                    this.userinfo.profil = ""
                 }
             },
             async UserInfoCurrent(id){
