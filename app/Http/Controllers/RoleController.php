@@ -19,9 +19,11 @@ class RoleController extends Controller
         ]);
     }
     public function AllRole(){
-        $roles = Role::orderBy('id','desc')->paginate(6);
+        $roles6 = Role::orderBy('id','desc')->paginate(6);
+        $roles = Role::orderBy('id','desc')->get();
         return response()->json([
-            "roles"=>$roles
+            "roles"=>$roles6,
+            "rolesT"=> $roles
         ]);
     }
     public function GetRole($id){

@@ -50,7 +50,7 @@ class UserController extends Controller
         return response()->json(['message' => 'Déconnexion réussie']);
     }
     public function AllUser(){
-        $user = User::orderBy('id','desc')->paginate(6);
+        $user = User::where('role','client')->where('role','Client')->orderBy('id','desc')->paginate(6);
         return response()->json([
             "users"=>$user
         ]);
