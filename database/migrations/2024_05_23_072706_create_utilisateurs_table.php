@@ -18,10 +18,8 @@ return new class extends Migration
             $table->string('nom');
             $table->string('prenom');
             $table->string('photo');
-            $table->string('tel');
-            $table->string('email');
-            $table->string('password');
-            $table->string('role');
+            $table->string('phone');
+            $table->foreignId('user_id')->constrained('users');
             $table->timestamps();
         });
     }

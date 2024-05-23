@@ -12,19 +12,15 @@ class UtilisateurController extends Controller
             "nom"=>"required",
             "prenom"=>"required",
             "photo"=>"required",
-            "tel"=>"required",
-            "email"=>"required",
-            "password"=>"required",
-            "role"=>"required",
+            "phone"=>"required",
+            "user_id"=>"required",
         ]);
         $utilisateur = Utilisateur::create([
             "nom"=>$request->nom,
             "prenom"=>$request->prenom,
             "photo"=>$request->photo,
-            "tel"=>$request->tel,
-            "email"=>$request->email,
-            "password"=>$request->password,
-            "role"=>$request->role,
+            "phone"=>$request->phone,
+            "user_id"=>$request->user_id,
         ]);
         return response()->json([
             "User"=>$utilisateur
@@ -48,19 +44,15 @@ class UtilisateurController extends Controller
             "nom"=>"required",
             "prenom"=>"required",
             "photo"=>"required",
-            "tel"=>"required",
-            "email"=>"required",
-            "password"=>"required",
-            "role"=>"required",
+            "phone"=>"required",
+            "user_id"=>"required",
         ]);
         $utilisateur = Utilisateur::where('id',$request->id)->update([
             "nom"=>$request->nom,
             "prenom"=>$request->prenom,
             "photo"=>$request->photo,
-            "tel"=>$request->tel,
-            "email"=>$request->email,
-            "password"=>$request->password,
-            "role"=>$request->role,
+            "phone"=>$request->phone,
+            "user_id"=>$request->user_id,
         ]);
         return response()->json([
             "updateUser"=>$utilisateur
