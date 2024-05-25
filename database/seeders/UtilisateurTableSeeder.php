@@ -22,7 +22,9 @@ class UtilisateurTableSeeder extends Seeder
                 'email'=>'client@gmail.com',
                 'password'=>bcrypt('123456789'),
                 'role'=>'Client'
-            ],
+            ]
+        );
+        User::insert(
             [
                 'username'=> 'Admin',
                 'email'=> 'admin@gmail.com',

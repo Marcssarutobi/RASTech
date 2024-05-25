@@ -107,7 +107,7 @@
                         <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
                             <a href="#" class="dropdown-item">My Profile</a>
                             <a href="#" class="dropdown-item">Settings</a>
-                            <a href="#" class="dropdown-item">Log Out</a>
+                            <span style="cursor: pointer;" @click="Logout" class="dropdown-item">Log Out</span>
                         </div>
                     </div>
                 </div>
@@ -124,8 +124,19 @@
 </template>
 
 <script>
+    import axios from 'axios';
     export default {
-        
+        methods:{
+            async Logout(){
+                await axios.post('/logout',null,{
+                    headers:{
+                        Authorization: `Bearer ${localStorage.getItem('token')}`
+                    }
+                })
+                localStorage.removeItem('token')
+                this.$router.push("/signin")
+            }
+        }
     }
 </script>
 

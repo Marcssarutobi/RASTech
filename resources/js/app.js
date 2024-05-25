@@ -35,7 +35,8 @@ const routes = [
     },
     {
         path: "/profil",
-        component: ()=>import('./components/profil.vue')
+        component: ()=>import('./components/profil.vue'),
+        meta: { requiresAuth: true }
     },
     {
         path: "/signup",
@@ -47,35 +48,43 @@ const routes = [
         children:[
             {
                 path: "accuiel",
-                component:()=>import('./components/Admin/accueil.vue')
+                component:()=>import('./components/Admin/accueil.vue'),
+                meta: { requiresAuth: true }
             },
             {
                 path: "categorie",
-                component:()=>import('./components/Admin/categorie.vue')
+                component:()=>import('./components/Admin/categorie.vue'),
+                meta: { requiresAuth: true }
             },
             {
                 path: "produit",
-                component:()=>import('./components/Admin/produit.vue')
+                component:()=>import('./components/Admin/produit.vue'),
+                meta: { requiresAuth: true }
             },
             {
                 path: "client",
-                component:()=>import('./components/Admin/client.vue')
+                component:()=>import('./components/Admin/client.vue'),
+                meta: { requiresAuth: true }
             },
             {
                 path: "newsletter",
-                component:()=>import('./components/Admin/newsletter.vue')
+                component:()=>import('./components/Admin/newsletter.vue'),
+                meta: { requiresAuth: true }
             },
             {
                 path: "contact",
-                component:()=>import('./components/Admin/contact.vue')
+                component:()=>import('./components/Admin/contact.vue'),
+                meta: { requiresAuth: true }
             },
             {
                 path: "role",
-                component:()=>import('./components/Admin/role.vue')
+                component:()=>import('./components/Admin/role.vue'),
+                meta: { requiresAuth: true }
             },
             {
                 path: "user",
-                component:()=>import('./components/Admin/user.vue')
+                component:()=>import('./components/Admin/user.vue'),
+                meta: { requiresAuth: true }
             },
         ]
     },
@@ -84,6 +93,23 @@ const routes = [
 const router = createRouter({
     history: createWebHashHistory(),
     routes
+})
+
+function requireAuth(to, from, next){
+    const isAuthenticated = localStorage.getItem('token')
+    if (isAuthenticated) {
+        next();
+    } else {
+        next('/signin');
+    }
+}
+
+router.beforeEach((to, from, next) => {
+    if (to.meta.requiresAuth) {
+        requireAuth(to, from, next);
+    } else {
+        next()
+    }
 })
 
 app.use(router)

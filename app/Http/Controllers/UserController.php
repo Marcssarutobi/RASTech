@@ -27,27 +27,50 @@ class UserController extends Controller
         ]);
     }
     public function Login(Request $request){
-        $login = $request->only('email','password');
+        $login = $request->validate([
+            "email"=> ["required","email"],
+            "password"=> ["required","string","min:3","max:30"]
+        ]);
+
+        $user = User::where("email",$login["email"])->first();
+
         if (Auth::attempt($login)) {
+            $token = $user->createToken("CLE_SECRETE")->plainTextToken;
             return response()->json([
-                "login"=>$login
-            ]);
+                "User" => $user,
+                "Token" => $token      
+            ],200);
         }else{
-            return response()->json(['message' => 'Échec de la connexion'], 401);
+            return response()->json([
+                "message"=> "Adresse email ou mot de passe incorrect"
+            ],401);
         }
+
+        
     }
     public function CurrentUser(){
         $user = Auth::user();
         
         if ($user) {
             return response()->json([
-                'user' => $user
+                'user' => $user,
+                'role' => $user->role
             ]);
         }
     }
     public function Logout(Request $request){
-        Auth::logout();
-        return response()->json(['message' => 'Déconnexion réussie']);
+        $user = Auth::user();
+        
+        if ($user) {
+            Auth::logout();
+            $user->tokens->each(function($token){
+                $token->delete();
+            });
+        }
+
+        return response()->json([
+            "message"=>"Deconnexion"
+        ],200);
     }
     public function AllUser(){
         $user = User::where('role','client')->where('role','Client')->orderBy('id','desc')->paginate(6);

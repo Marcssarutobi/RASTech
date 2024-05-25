@@ -161,10 +161,13 @@
         },
         methods:{
             async Logout(){
-                const res = await axios.post('/logout',null)
-                if (res.status === 200) {
-                    window.location.reload();
-                }
+                const res = await axios.post('/logout',null,{
+                    headers:{
+                        Authorization: `Bearer ${localStorage.getItem('token')}`
+                    }
+                })
+                localStorage.removeItem('token')
+                this.$router.push("/signin")
             }
         },
         async created(){

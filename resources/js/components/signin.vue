@@ -80,6 +80,7 @@ import Swal from 'sweetalert2'
                             timerProgressBar: true,
                             showConfirmButton: false
                         })
+                        localStorage.setItem('token', res.data.Token);
                         
                         const users = await axios.get('/currentUser')
                         if (users.status === 200) {
@@ -87,7 +88,7 @@ import Swal from 'sweetalert2'
                             if (this.user.role === "client") {
                                 this.$router.push('/');
                             }else{
-                                localStorage.setItem('isAuthenticated',JSON.stringify(this.user))
+                                this.$router.push('/dashbord/accuiel');
                             }
                         }
                         this.login.email = ""
