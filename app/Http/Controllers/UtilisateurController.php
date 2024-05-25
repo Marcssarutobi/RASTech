@@ -27,13 +27,13 @@ class UtilisateurController extends Controller
         ]);
     }
     public function GetUtilisateur($id){
-        $utilisateur = Utilisateur::where('id',$id)->first();
+        $utilisateur = Utilisateur::where('user_id',$id)->first();
         return response()->json([
             "user"=>$utilisateur
         ]);
     }
     public function AllUtilisateur(){
-        $utilisateurs = Utilisateur::orderBy('id','desc')->paginate(6);
+        $utilisateurs = Utilisateur::orderBy('id','desc')->get();
         return response()->json([
             "alluser"=>$utilisateurs
         ]);

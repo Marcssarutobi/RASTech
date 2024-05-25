@@ -51,8 +51,16 @@ class UserController extends Controller
     }
     public function AllUser(){
         $user = User::where('role','client')->where('role','Client')->orderBy('id','desc')->paginate(6);
+        $alluser = User::where('role','!=','Client')->orderBy('id','desc')->paginate(6);
         return response()->json([
-            "users"=>$user
+            "users"=>$user,
+            "alluser"=>$alluser
+        ]);
+    }
+    public function GetUser($id){
+        $user = User::where('id',$id)->first();
+        return response()->json([
+            "user"=>$user
         ]);
     }
 }

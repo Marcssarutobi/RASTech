@@ -86,6 +86,8 @@ import Swal from 'sweetalert2'
                             this.user = users.data.user
                             if (this.user.role === "client") {
                                 this.$router.push('/');
+                            }else{
+                                localStorage.setItem('isAuthenticated',JSON.stringify(this.user))
                             }
                         }
                         this.login.email = ""

@@ -15,9 +15,7 @@
             <table class="table table-striped mb-3">
                 <thead class="table-dark">
                     <tr>
-                        <th>Nom</th>
-                        <th>Prénom</th>
-                        <th>Téléphone</th>
+                        <th>Username</th>
                         <th>Email</th>
                         <th>Role</th>
                         <th>Action</th>
@@ -25,9 +23,7 @@
                 </thead>
                 <tbody>
                     <tr v-for="user in alluser" :key="user.id">
-                        <td>{{ user.nom }}</td>
-                        <td>{{ user.prenom }}</td>
-                        <td>{{ user.tel }}</td>
+                        <td>{{ user.username }}</td>
                         <td>{{ user.email }}</td>
                         <td>{{ user.role }}</td>
                         <td>
@@ -39,13 +35,78 @@
             </table>
         </div>
 
-        <!-- Modal Enrégistrement -->
+
+
+
+
+        <!-- Modal Enrégistrement User -->
         <div v-if="addModal" class="modal fade show" tabindex="-1" style="display: block; background: rgba(0, 0, 0, .5);">
-            <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
                 <div class="modal-content" data-aos="zoom-in" data-aos-duration="300">
                     <div class="modal-header">
                         <h5 class="modal-title">Enrégistrement d'un Utilisateur</h5>
                         <button type="button" class="btn btn-white" @click="addModal = false"  data-bs-dismiss="modal" aria-label="Close"><i class="fas fa-x"></i></button>
+                    </div>
+                    <div class="modal-body">
+                    
+                        <div class="row g-3">
+
+                            <div class="col-12">
+                                <div class=" form-group ">
+                                    <label for="">Username :</label>
+                                    <input type="text" class="form-control" v-model="dataUser.username">
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class=" form-group ">
+                                    <label for="">Email :</label>
+                                    <input type="email" class="form-control" v-model="dataUser.email">
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class=" form-group ">
+                                    <label for="">Mot de passe :</label>
+                                    <input type="password" class="form-control" v-model="dataUser.password">
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class=" form-group ">
+                                    <label for="">Confirmer le mot de passe:</label>
+                                    <input type="password" class="form-control" v-model="dataUser.confirm_password">
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class=" form-group ">
+                                    <label for="">Role:</label>
+                                    <select name="" id="" class="form-control" v-model="dataUser.role">
+                                        <option selected disabled>Selectionnez un role</option>
+                                        <option v-for="role in allrole" :key="role.id" :value="role.name_role">{{ role.name_role }}</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                        </div>
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" @click="addModal = false"  data-bs-dismiss="modal">Fermer</button>
+                        <button type="button" class="btn btn-primary" @click="AddUser" >Enrégistrer</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Fin Modal Enrégistrement User -->
+
+
+
+
+        <!-- Modal Enrégistrement1 -->
+        <div v-if="userModal" class="modal fade show" tabindex="-1" style="display: block; background: rgba(0, 0, 0, .5);">
+            <div class="modal-dialog modal-dialog-centered modal-xl">
+                <div class="modal-content" data-aos="zoom-in" data-aos-duration="300">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Enrégistrement d'un Utilisateur</h5>
+                        <button type="button" class="btn btn-white"   data-bs-dismiss="modal" aria-label="Close"><i class="fas fa-x"></i></button>
                     </div>
                     <div class="modal-body">
                     
@@ -116,13 +177,13 @@
                         
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" @click="addModal = false"  data-bs-dismiss="modal">Fermer</button>
+                        <button type="button" class="btn btn-secondary"  data-bs-dismiss="modal">Fermer</button>
                         <button type="button" class="btn btn-primary" @click="CreateUser" >Enrégistrer</button>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- Fin Modal Enrégistrement -->
+        <!-- Fin Modal Enrégistrement1 -->
         <!-- Modal Modification -->
         <div v-if="updateModale" class="modal fade show" tabindex="-1" style="display: block; background: rgba(0, 0, 0, .5);">
             <div class="modal-dialog modal-dialog-centered modal-xl">
@@ -226,10 +287,20 @@
                     role:"",
                 },
                 addModal: false,
+                userModal: false,
                 allrole:{},
                 alluser:{},
                 getuser:{},
                 updateModale:false,
+                dataUser:{
+                    username:'',
+                    email:'',
+                    password:'',
+                    confirm_password:'',
+                    role:''
+                },
+                currentPage: 1,
+                totalPage: 0,
             }
         },
         mounted(){
@@ -306,16 +377,11 @@
                 }
             },
             async AllUser(){
-                const res = await axios.get('/allutili')
+                const res = await axios.get('/alluser')
                 if (res.status === 200) {
                     this.alluser = res.data.alluser.data
-                }
-            },
-            async GetUser(id){
-                this.updateModale = true
-                const res = await axios.get('/getUtili/'+id)
-                if (res.status === 200) {
-                    this.getuser = res.data.user
+                    this.currentPage = res.data.alluser.current_page
+                    this.totalPage = res.data.alluser.last_page
                 }
             },
             async handleFileImgUpdate(event){
@@ -363,7 +429,70 @@
                     this.getuser = {}
                     this.updateModale = false
                 }
-            }
+            },
+
+            //User
+            async AddUser(){
+                try {
+                    
+                    if (this.dataUser.username.trim() == "" || this.dataUser.email.trim() == "" ||this.dataUser.password.trim() == "" || this.dataUser.confirm_password.trim() == "" || this.dataUser.role.trim() == "") {
+                        
+                        Swal.fire({
+                            toast: true,
+                            position: "top-end",
+                            icon: "error",
+                            title: "Veuillez remplire tous les champs",
+                            timer: 3000,
+                            timerProgressBar: true,
+                            showConfirmButton: false
+                        })
+                        this.addModal = true
+
+                    }else if (this.dataUser.password.trim() !== this.dataUser.confirm_password.trim()) {
+                        
+                        Swal.fire({
+                            toast: true,
+                            position: "top-end",
+                            icon: "error",
+                            title: "Vous n'avez entrer le mêmen mot de passe",
+                            timer: 3000,
+                            timerProgressBar: true,
+                            showConfirmButton: false
+                        })
+                        this.addModal = true
+
+                    }else{
+                        const res = await axios.post('/createUser',this.dataUser)
+                        if (res.status === 200) {
+                            Swal.fire({
+                                toast: true,
+                                position: "top-end",
+                                icon: "success",
+                                title: "Enrégistrement effectuer avec succès",
+                                timer: 3000,
+                                timerProgressBar: true,
+                                showConfirmButton: false
+                            })
+                            this.dataUser.username = ""
+                            this.dataUser.email = ""
+                            this.dataUser.password = ""
+                            this.dataUser.confirm_password = ""
+                            this.dataUser.role = ""
+                            this.addModal = false
+                        }
+                    }
+
+                } catch (error) {
+                    console.error('Erreur ici :' , error)
+                }
+            },
+            async GetUser(id){
+                const res = await axios.get('/getUser/'+id)
+                if (res.status === 200) {
+                    this.getuser = res.data.user
+                    console.log(this.getuser)
+                }
+            },
 
         },
         created(){
