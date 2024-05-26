@@ -4,6 +4,8 @@ import App from './components/App.vue'
 import Pagination from 'v-pagination-3';
 import { createRouter, createWebHashHistory } from 'vue-router';
 
+import store from './components/store';
+
 const app = createApp({})
 
 app.component('app', App)
@@ -23,7 +25,8 @@ const routes = [
     },
     {
         path: "/panier",
-        component: ()=>import('./components/panier.vue')
+        component: ()=>import('./components/panier.vue'),
+        meta: { requiresAuth: true }
     },
     {
         path: "/contact",
@@ -49,42 +52,50 @@ const routes = [
             {
                 path: "accuiel",
                 component:()=>import('./components/Admin/accueil.vue'),
-                meta: { requiresAuth: true }
+                name: "accuiel" ,
+                meta: { requiresAuth: true, requiresRole: true}
             },
             {
                 path: "categorie",
                 component:()=>import('./components/Admin/categorie.vue'),
-                meta: { requiresAuth: true }
+                name: "categorie" ,
+                meta: { requiresAuth: true, requiresRole: true}
             },
             {
                 path: "produit",
                 component:()=>import('./components/Admin/produit.vue'),
-                meta: { requiresAuth: true }
+                name: "produit" ,
+                meta: { requiresAuth: true, requiresRole: true}
             },
             {
                 path: "client",
                 component:()=>import('./components/Admin/client.vue'),
-                meta: { requiresAuth: true }
+                name: "client" ,
+                meta: { requiresAuth: true, requiresRole: true}
             },
             {
                 path: "newsletter",
                 component:()=>import('./components/Admin/newsletter.vue'),
-                meta: { requiresAuth: true }
+                name: "newsletter" ,
+                meta: { requiresAuth: true, requiresRole: true}
             },
             {
                 path: "contact",
                 component:()=>import('./components/Admin/contact.vue'),
-                meta: { requiresAuth: true }
+                name: "contact" ,
+                meta: { requiresAuth: true, requiresRole: true}
             },
             {
                 path: "role",
                 component:()=>import('./components/Admin/role.vue'),
-                meta: { requiresAuth: true }
+                name: "role" ,
+                meta: { requiresAuth: true, requiresRole: true}
             },
             {
                 path: "user",
                 component:()=>import('./components/Admin/user.vue'),
-                meta: { requiresAuth: true }
+                name: "user" ,
+                meta: { requiresAuth: true, requiresRole: true}
             },
         ]
     },
@@ -98,7 +109,16 @@ const router = createRouter({
 function requireAuth(to, from, next){
     const isAuthenticated = localStorage.getItem('token')
     if (isAuthenticated) {
-        next();
+        const role = localStorage.getItem('role');
+        if (to.meta.requiresRole) {
+            if (role === 'client') {
+                next('/');
+            } else {
+                next();
+            }
+        } else {
+            next();
+        }
     } else {
         next('/signin');
     }
@@ -113,6 +133,7 @@ router.beforeEach((to, from, next) => {
 })
 
 app.use(router)
+app.use(store)
 
 
 app.mount('#app')

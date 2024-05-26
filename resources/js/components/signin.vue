@@ -81,6 +81,7 @@ import Swal from 'sweetalert2'
                             showConfirmButton: false
                         })
                         localStorage.setItem('token', res.data.Token);
+                        localStorage.setItem('role', res.data.User.role);
                         
                         const users = await axios.get('/currentUser')
                         if (users.status === 200) {

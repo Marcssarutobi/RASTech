@@ -111,6 +111,8 @@
                 prods:{},
                 currentPage: 1,
                 totalPage: 0,
+                user:{},
+                logger:false
             }
         },
         methods:{
@@ -121,10 +123,22 @@
                     this.currentPage = res.data.produits.current_page
                     this.totalPage = res.data.produits.last_page
                 }
+            },
+            async CurrentUser(){
+                const users = await axios.get('/currentUser')
+            if (users.status === 200) {
+                this.user = users.data.user
+                if (this.user) {
+                    this.logger = true
+                }else{
+                    this.logger = false
+                }
+            }
             }
         },
         created(){
             this.AllProduits()
+            this.CurrentUser()
         }
     }
 </script>

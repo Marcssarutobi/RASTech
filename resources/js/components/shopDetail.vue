@@ -66,8 +66,7 @@
                                     </button>
                                 </div>
                             </div>
-                            <button class="btn btn-primary px-3"><i class="fa fa-shopping-cart mr-1"></i> Add To
-                                Cart</button>
+                            <button :disabled="!logger" @click="addToCart(getid)" class="btn btn-primary px-3"><i class="fa fa-shopping-cart mr-1"></i> Add To Cart</button>
                         </div>
                         <div class="d-flex pt-2">
                             <strong class="text-dark mr-2">Share on:</strong>
@@ -165,10 +164,13 @@
 
 <script>
     import axios from 'axios';
+    import { mapMutations } from 'vuex';
     export default{
         data(){
             return{
-                getid:{}
+                getid:{},
+                user:{},
+                logger:false
             }
         },
         methods:{
@@ -178,10 +180,23 @@
                     this.getid = res.data.prod
                     console.log(this.getid)
                }
-            }
+            },
+            async CurrentUser(){
+                const users = await axios.get('/currentUser')
+                if (users.status === 200) {
+                    this.user = users.data.user
+                    if (this.user) {
+                        this.logger = true
+                    }else{
+                        this.logger = false
+                    }
+                }
+            },
+            ...mapMutations(['addToCart'])
         },
         created(){
             this.GetProduits()
+            this.CurrentUser()
         }
     }
 </script>
