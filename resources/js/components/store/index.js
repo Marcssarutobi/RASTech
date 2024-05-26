@@ -15,13 +15,12 @@ const store = createStore({
             state.cart.push({ ...product, quantity: 1 });
           }
         },
-        removeFromCart(state, product) {
-          // Supprimer le produit du panier en fonction de son identifiant
-          const index = state.cart.findIndex(item => item.id === product.id);
-          if (index !== -1) {
-            state.cart.splice(index, 1);
-          }
-        }
+        removeFromCart(state, productId) {
+            const index = state.cart.findIndex(item => item.id === productId);
+            if (index !== -1) {
+                state.cart.splice(index, 1);
+            }
+        },
     },
     getters:{
         cartItems: state => state.cart,

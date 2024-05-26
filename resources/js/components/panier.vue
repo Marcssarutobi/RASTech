@@ -98,13 +98,12 @@
         computed:{
             ...mapGetters(['cartItems','cartTotal'])
         },
-        methods:{
+        methods: {
             ...mapMutations(['removeFromCart']),
             removeProductFromCart(productId) {
-                // Appel de la mutation pour supprimer le produit du panier
                 this.removeFromCart(productId);
             }
-        }
+        },
 
     }
 </script>
