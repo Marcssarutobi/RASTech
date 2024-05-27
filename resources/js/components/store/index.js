@@ -24,7 +24,11 @@ const store = createStore({
     },
     getters:{
         cartItems: state => state.cart,
-        cartTotal: state => state.cart.reduce((total, product)=> total + product.quantity, 0)
+        cartTotal: state => state.cart.reduce((total, product)=> total + product.quantity, 0),
+        cartItemTotalPrice: state => productId => {
+            const product = state.cart.find(item => item.id === productId);
+            return product ? product.price * product.quantity : 0;
+        }
     }
 })
 

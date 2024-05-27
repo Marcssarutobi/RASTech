@@ -47,7 +47,7 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td class="align-middle">{{ item.PVente }}</td>
+                                <td class="align-middle">{{ item.PVente * item.quantity }}</td>
                                 <td class="align-middle"><button class="btn btn-sm btn-danger" @click="removeProductFromCart(item.id)"><i class="fa fa-times"></i></button></td>
                             </tr>
                         </tbody>
@@ -96,7 +96,7 @@
     export default{
 
         computed:{
-            ...mapGetters(['cartItems','cartTotal'])
+            ...mapGetters(['cartItems','cartTotal','cartItemTotalPrice'])
         },
         methods: {
             ...mapMutations(['removeFromCart']),
