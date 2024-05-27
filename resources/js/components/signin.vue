@@ -86,7 +86,7 @@ import Swal from 'sweetalert2'
                         const users = await axios.get('/currentUser')
                         if (users.status === 200) {
                             this.user = users.data.user
-                            if (this.user.role === "client") {
+                            if (this.user.role === "client" || this.user.role === "Client") {
                                 this.$router.push('/');
                             }else{
                                 this.$router.push('/dashbord/accuiel');

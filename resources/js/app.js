@@ -111,7 +111,7 @@ function requireAuth(to, from, next){
     if (isAuthenticated) {
         const role = localStorage.getItem('role');
         if (to.meta.requiresRole) {
-            if (role === 'client') {
+            if (role === 'client' || role === 'Client') {
                 next('/');
             } else {
                 next();

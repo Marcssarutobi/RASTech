@@ -48,6 +48,24 @@ class UserController extends Controller
 
         
     }
+    public function authUserVerify(){
+        // Vérifier si un utilisateur est connecté
+        if (Auth::check()) {
+        // L'utilisateur est connecté
+        // Vous pouvez accéder à l'utilisateur authentifié via auth()->user()
+        //$user = auth()->user();
+        return response()->json([
+            'connect' => true
+        ]);
+        // Faites ici ce que vous avez besoin de faire pour un utilisateur connecté
+        } else {
+        // L'utilisateur n'est pas connecté
+        // Faites ici ce que vous avez besoin de faire pour un utilisateur non connecté
+        return response()->json([
+            'connect' => false
+        ]);
+        }
+    }
     public function CurrentUser(){
         $user = Auth::user();
         

@@ -45,6 +45,7 @@ Route::post('/delpro', [ProduitsController::class, 'delProd']);
 //UtilisateurClient
 Route::post('/createUser',[UserController::class, 'signup']);
 Route::post('/login',[UserController::class, 'Login']);
+Route::get('/authUserVerify',[UserController::class, 'authUserVerify']);
 Route::get('/currentUser',[UserController::class, 'CurrentUser'])->middleware('auth');
 Route::post('/logout',[UserController::class, 'Logout'])->middleware('auth');
 Route::get('/alluser',[UserController::class, 'AllUser']);
