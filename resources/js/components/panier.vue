@@ -35,13 +35,13 @@
                                 <td class="align-middle">
                                     <div class="input-group quantity mx-auto" style="width: 100px;">
                                         <div class="input-group-btn">
-                                            <button class="btn btn-sm btn-primary btn-minus" >
+                                            <button class="btn btn-sm btn-primary btn-minus" @click="decreaseQte(item)">
                                             <i class="fa fa-minus"></i>
                                             </button>
                                         </div>
-                                        <input type="text" class="form-control form-control-sm bg-secondary border-0 text-center" :value=" item.quantity ">
+                                        <input type="text" class="form-control form-control-sm bg-secondary border-0 text-center" disabled v-model=" item.quantity ">
                                         <div class="input-group-btn">
-                                            <button class="btn btn-sm btn-primary btn-plus">
+                                            <button class="btn btn-sm btn-primary btn-plus" @click="increaseQte(item)">
                                                 <i class="fa fa-plus"></i>
                                             </button>
                                         </div>
@@ -67,7 +67,7 @@
                         <div class="border-bottom pb-2">
                             <div class="d-flex justify-content-between mb-3">
                                 <h6>Subtotal</h6>
-                                <h6>$150</h6>
+                                <h6>{{ PrixTotal }} FCFA</h6>
                             </div>
                             <div class="d-flex justify-content-between">
                                 <h6 class="font-weight-medium">Shipping</h6>
@@ -94,15 +94,30 @@
     import { mapGetters } from 'vuex';
     import { mapMutations } from 'vuex';
     export default{
-
+        data(){
+            return {
+                PrixTotal: 0
+            }
+        },
         computed:{
-            ...mapGetters(['cartItems','cartTotal','cartItemTotalPrice'])
+            ...mapGetters(['cartItems','cartTotal'])
         },
         methods: {
             ...mapMutations(['removeFromCart']),
             removeProductFromCart(productId) {
                 this.removeFromCart(productId);
-            }
+            },
+            decreaseQte(product){ // Décrementer
+                if (product.quantity > 1) {
+                    product.quantity--
+                    product.total = product.PVente * product.quantity                 
+                }
+            },
+            increaseQte(product){ //Incrémenter
+                product.quantity++
+                product.total = product.PVente * product.quantity
+            },
+            
         },
 
     }
