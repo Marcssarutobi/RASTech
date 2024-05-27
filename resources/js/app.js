@@ -106,21 +106,25 @@ const router = createRouter({
     routes
 })
 
-function requireAuth(to, from, next){
-    const isAuthenticated = localStorage.getItem('token')
-    if (isAuthenticated) {
-        const role = localStorage.getItem('role');
-        if (to.meta.requiresRole) {
-            if (role === 'client' || role === 'Client') {
-                next('/');
+async function requireAuth(to, from, next){
+
+    const res = await fetch('/authUserVerify')
+    if (res.status === 200) {
+        const data = await res.json()
+        if (data.connect) {
+            const role = localStorage.getItem('role');
+            if (to.meta.requiresRole) {
+                if (role === 'client' || role === 'Client') {
+                    next('/');
+                } else {
+                    next();
+                }
             } else {
                 next();
             }
-        } else {
-            next();
+        }else{
+            next('/signin');
         }
-    } else {
-        next('/signin');
     }
 }
 
