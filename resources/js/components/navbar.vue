@@ -138,7 +138,7 @@
                                 </a>
                                 <router-link to="/panier" class="btn px-0 ml-3">
                                     <i class="fas fa-shopping-cart text-primary"></i>
-                                    <span class="badge text-secondary border border-secondary rounded-circle" style="padding-bottom: 2px;">0</span>
+                                    <span class="badge text-secondary border border-secondary rounded-circle" style="padding-bottom: 2px;">{{ cartTotal }}</span>
                                 </router-link>
                             </div>
                         </div>
@@ -152,7 +152,11 @@
 
 <script >
     import axios from 'axios';
+    import { mapGetters } from 'vuex';
     export default{
+        computed:{
+            ...mapGetters(['cartTotal'])
+        },
         data(){
             return{
                 user:{},

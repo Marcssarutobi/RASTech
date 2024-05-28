@@ -47,7 +47,7 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td class="align-middle">{{ item.PVente * item.quantity }}</td>
+                                <td class="align-middle">{{ calculateProductTotalPrice(item) }}</td>
                                 <td class="align-middle"><button class="btn btn-sm btn-danger" @click="removeProductFromCart(item.id)"><i class="fa fa-times"></i></button></td>
                             </tr>
                         </tbody>
@@ -67,7 +67,7 @@
                         <div class="border-bottom pb-2">
                             <div class="d-flex justify-content-between mb-3">
                                 <h6>Subtotal</h6>
-                                <h6>{{ PrixTotal }} FCFA</h6>
+                                <h6>{{ calculateCartTotalPrice() }} FCFA</h6>
                             </div>
                             <div class="d-flex justify-content-between">
                                 <h6 class="font-weight-medium">Shipping</h6>
@@ -96,7 +96,8 @@
     export default{
         data(){
             return {
-                PrixTotal: 0
+                PrixTotal: 0,
+                total: 0,
             }
         },
         computed:{
@@ -117,6 +118,12 @@
                 product.quantity++
                 product.total = product.PVente * product.quantity
             },
+            calculateProductTotalPrice(product) {
+                return this.total = product.quantity * product.PVente;
+            },
+            calculateCartTotalPrice() {
+                return this.PrixTotal = this.cartItems.reduce((total, product) => total + (product.quantity * product.PVente), 0);
+            }
             
         },
 
