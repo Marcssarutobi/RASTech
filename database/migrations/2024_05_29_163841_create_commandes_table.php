@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreignId('prod_id')->constrained('produits');
             $table->integer('qte');
             $table->integer('prix');
+            $table->string('status')->default('New');
             $table->timestamps();
         });
     }
