@@ -13,4 +13,8 @@ class Produits extends Model
     public function categories(){
         return $this->belongsTo(Categories::class);
     }
+    
+    public function commandes(){
+        return $this->hasMany(Commande::class);
+    }
 }

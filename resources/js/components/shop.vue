@@ -126,14 +126,14 @@
             },
             async CurrentUser(){
                 const users = await axios.get('/currentUser')
-            if (users.status === 200) {
-                this.user = users.data.user
-                if (this.user) {
-                    this.logger = true
-                }else{
-                    this.logger = false
+                if (users.status === 200) {
+                    this.user = users.data.user
+                    if (this.user) {
+                        this.logger = true
+                    }else{
+                        this.logger = false
+                    }
                 }
-            }
             }
         },
         created(){

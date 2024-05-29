@@ -38,6 +38,7 @@
         <!-- Contact Javascript File -->
         <script src="mail/jqBootstrapValidation.min.js"></script>
         <script src="mail/contact.js"></script>
+        <script src="https://cdn.fedapay.com/checkout.js?v=1.1.7"></script>
 
         <!-- Template Javascript -->
         <script src="js/main.js"></script>

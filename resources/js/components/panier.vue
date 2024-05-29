@@ -79,10 +79,13 @@
                                 <h5>Total</h5>
                                 <h5>{{ calculateTotaldu() }} FCFA</h5>
                             </div>
-                            <button :disabled="totaldu === 1000" class="btn btn-block btn-primary font-weight-bold my-3 py-3">Proceed To Checkout</button>
+                            <button :disabled="logger || totaldu === 1000" id="pay-btn" class="btn btn-block btn-primary font-weight-bold my-3 py-3">Proceed To Checkout</button>
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="col-lg-12">
+                <p v-if="logger" class="alert-danger p-3 rounded text-center"> Veuillez s'il vous plait remplir vos information suplémentaire dans la section profil en cliquant sur My Acount en haut de page. </p>
             </div>
         </div>
         <!-- Cart End -->
@@ -91,7 +94,8 @@
 </template>
 
 <script>
-    import { mapGetters } from 'vuex';
+    import axios from 'axios';
+import { mapGetters } from 'vuex';
     import { mapMutations } from 'vuex';
     export default{
         data(){
@@ -99,7 +103,10 @@
                 PrixTotal: 0,
                 total: 0,
                 shipping: 1000,
-                totaldu: 0
+                totaldu: 0,
+                user:{},
+                userinfo:{},
+                logger: false
             }
         },
         computed:{
@@ -128,9 +135,73 @@
             },
             calculateTotaldu(){
                 return this.totaldu = this.shipping + this.PrixTotal
+            },
+            async CurrentUser(){
+                const users = await axios.get('/currentUser')
+                if (users.status === 200) {
+                    this.user = users.data.user
+                }
+            },
+            handlePayment(){
+                
+                FedaPay.init({
+                    public_key:'pk_live_M-SDNE-3VYAjsTK6fx6EgfLm',
+                    payment:{
+                        amount: this.totaldu,
+                        currency: 'XOF'
+                    },
+                    customer:{
+                        email: this.user.email
+                    },
+                    onSuccess: async (transaction)=>{
+                        console.log('Payment successful', transaction);
+                    },
+                    onError: (error) => {
+                        console.error('Payment failed', error);
+                    },
+                })
+                
             }
             
         },
+        created(){
+            this.CurrentUser()
+        },
+       async mounted(){
+            const users = await axios.get('/currentUser')
+            if (users.status === 200) {
+                this.user = users.data.user
+                const info = await axios.get('/getuserinfo/'+this.user.id)
+                if (info.status === 200) {
+                    this.userinfo = info.data.userCurrent
+                    if (this.userinfo == null) {
+                        this.logger = true
+                    }else{
+                        this.logger = false
+                    }
+                    console.log(this.userinfo)
+                }
+            }
+
+            FedaPay.init('#pay-btn',{
+                public_key:'pk_live_M-SDNE-3VYAjsTK6fx6EgfLm',
+                transaction:{
+                    amount: this.totaldu,
+                    description: 'Acheter mon produit'
+                },
+                customer:{
+                    email: this.user.email,
+                    lastname:this.userinfo.nom,
+                    firstname: this.userinfo.prenom
+                },
+                onSuccess: async (transaction)=>{
+                    console.log('Payment successful', transaction);
+                },
+                onError: (error) => {
+                    console.error('Payment failed', error);
+                },
+            })
+        }
 
     }
 </script>
