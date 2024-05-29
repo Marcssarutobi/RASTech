@@ -79,7 +79,7 @@
                                 <h5>Total</h5>
                                 <h5>{{ calculateTotaldu() }} FCFA</h5>
                             </div>
-                            <button :disabled="logger || totaldu === 1000" id="pay-btn" class="btn btn-block btn-primary font-weight-bold my-3 py-3">Proceed To Checkout</button>
+                            <button :disabled="logger || totaldu === 1000" @click="ValideAchat" id="pay-btn" class="btn btn-block btn-primary font-weight-bold my-3 py-3">Proceed To Checkout</button>
                         </div>
                     </div>
                 </div>
@@ -161,6 +161,19 @@ import { mapGetters } from 'vuex';
                     },
                 })
                 
+            },
+            async ValideAchat(){
+                const response = await Promise.all(
+                    this.cartItems.map(async (prod)=>{
+                        const venteData = {
+                            user_id : this.userinfo.id,
+                            prod_id : prod.id,
+                            qte : prod.quantity,
+                            prix : prod.PVente * prod.quantity
+                        }
+                        console.log(venteData)
+                    })
+                )
             }
             
         },
@@ -179,11 +192,10 @@ import { mapGetters } from 'vuex';
                     }else{
                         this.logger = false
                     }
-                    console.log(this.userinfo)
                 }
             }
 
-            FedaPay.init('#pay-btn',{
+            const fpInstance = FedaPay.init('#pay-btn',{
                 public_key:'pk_live_M-SDNE-3VYAjsTK6fx6EgfLm',
                 transaction:{
                     amount: this.totaldu,
@@ -194,13 +206,8 @@ import { mapGetters } from 'vuex';
                     lastname:this.userinfo.nom,
                     firstname: this.userinfo.prenom
                 },
-                onSuccess: async (transaction)=>{
-                    console.log('Payment successful', transaction);
-                },
-                onError: (error) => {
-                    console.error('Payment failed', error);
-                },
             })
+            
         }
 
     }
