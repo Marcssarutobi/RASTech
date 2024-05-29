@@ -53,20 +53,7 @@
                         <p class="mb-4" >{{ getid.description }}</p>
                         
                         <div class="d-flex align-items-center mb-4 pt-2">
-                            <div class="input-group quantity mr-3" style="width: 130px;">
-                                <div class="input-group-btn">
-                                    <button class="btn btn-primary btn-minus">
-                                        <i class="fa fa-minus"></i>
-                                    </button>
-                                </div>
-                                <input type="text" class="form-control bg-secondary border-0 text-center" value="1">
-                                <div class="input-group-btn">
-                                    <button class="btn btn-primary btn-plus">
-                                        <i class="fa fa-plus"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <button :disabled="!logger" @click="addToCart(getid)" class="btn btn-primary px-3"><i class="fa fa-shopping-cart mr-1"></i> Add To Cart</button>
+                            <button :disabled="!logger" @click="addToCart(getid)" class="btn btn-primary px-3 w-50 btn-lg"><i class="fa fa-shopping-cart mr-1"></i> Add To Cart</button>
                         </div>
                         <div class="d-flex pt-2">
                             <strong class="text-dark mr-2">Share on:</strong>
@@ -98,8 +85,7 @@
                         <div class="tab-content">
                             <div class="tab-pane fade show active" id="tab-pane-1">
                                 <h4 class="mb-3">Product Description</h4>
-                                <p>Eos no lorem eirmod diam diam, eos elitr et gubergren diam sea. Consetetur vero aliquyam invidunt duo dolores et duo sit. Vero diam ea vero et dolore rebum, dolor rebum eirmod consetetur invidunt sed sed et, lorem duo et eos elitr, sadipscing kasd ipsum rebum diam. Dolore diam stet rebum sed tempor kasd eirmod. Takimata kasd ipsum accusam sadipscing, eos dolores sit no ut diam consetetur duo justo est, sit sanctus diam tempor aliquyam eirmod nonumy rebum dolor accusam, ipsum kasd eos consetetur at sit rebum, diam kasd invidunt tempor lorem, ipsum lorem elitr sanctus eirmod takimata dolor ea invidunt.</p>
-                                <p>Dolore magna est eirmod sanctus dolor, amet diam et eirmod et ipsum. Amet dolore tempor consetetur sed lorem dolor sit lorem tempor. Gubergren amet amet labore sadipscing clita clita diam clita. Sea amet et sed ipsum lorem elitr et, amet et labore voluptua sit rebum. Ea erat sed et diam takimata sed justo. Magna takimata justo et amet magna et.</p>
+                                <p>{{ getid.description }}.</p>
                             </div>
                             <div class="tab-pane fade" id="tab-pane-3">
                                 <div class="row">
@@ -192,7 +178,7 @@
                     }
                 }
             },
-            ...mapMutations(['addToCart'])
+            ...mapMutations(['addToCart']),
         },
         created(){
             this.GetProduits()

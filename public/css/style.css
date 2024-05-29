@@ -4051,7 +4051,7 @@ input[type="button"].btn-block {
   border-color: transparent;
 }
 
-.nav-tabs .nav-link.active,
+.nav-tabs .router-link-active.nav-link,
 .nav-tabs .nav-item.show .nav-link {
   color: #495057;
   background-color: #F5F5F5;
@@ -4062,7 +4062,7 @@ input[type="button"].btn-block {
   margin-top: -1px;
 }
 
-.nav-pills .nav-link.active,
+.nav-pills .router-link-active.nav-link,
 .nav-pills .show > .nav-link {
   color: #fff;
   background-color: #FFD333;
@@ -4377,7 +4377,7 @@ input[type="button"].btn-block {
 .navbar-light .navbar-nav .show > .nav-link,
 .navbar-light .navbar-nav .active > .nav-link,
 .navbar-light .navbar-nav .nav-link.show,
-.navbar-light .navbar-nav .nav-link.active {
+.navbar-light .navbar-nav .router-link-active.nav-link {
   color: rgba(0, 0, 0, 0.9);
 }
 
@@ -4425,7 +4425,7 @@ input[type="button"].btn-block {
 .navbar-dark .navbar-nav .show > .nav-link,
 .navbar-dark .navbar-nav .active > .nav-link,
 .navbar-dark .navbar-nav .nav-link.show,
-.navbar-dark .navbar-nav .nav-link.active {
+.navbar-dark .navbar-nav .router-link-active.nav-link {
   color: #fff;
 }
 
@@ -9596,7 +9596,7 @@ a.text-dark:hover, a.text-dark:focus {
 }
 
 .navbar-dark .navbar-nav .nav-link:hover,
-.navbar-dark .navbar-nav .nav-link.active {
+.navbar-dark .navbar-nav .router-link-active.nav-link {
   color: #FFD333;
 }
 
@@ -9993,7 +9993,7 @@ a.text-dark:hover, a.text-dark:focus {
 }
 
 .sidebar .navbar .navbar-nav .nav-link:hover,
-.sidebar .navbar .navbar-nav .router-link-active.nav-link.active {
+.sidebar .navbar .navbar-nav .router-link-active.nav-link {
   color: var(--primary);
   background: #3D464D;
   border-color: var(--primary);
@@ -10010,7 +10010,7 @@ a.text-dark:hover, a.text-dark:focus {
 }
 
 .sidebar .navbar .navbar-nav .nav-link:hover i,
-.sidebar .navbar .navbar-nav .nav-link.active i {
+.sidebar .navbar .navbar-nav .router-link-active.nav-link i {
   background: var(--light);
 }
 
@@ -10051,7 +10051,7 @@ a.text-dark:hover, a.text-dark:focus {
 }
 
 .content .navbar .navbar-nav .nav-link:hover,
-.content .navbar .navbar-nav .nav-link.active {
+.content .navbar .navbar-nav .router-link-active.nav-link {
   color: var(--primary);
 }
 

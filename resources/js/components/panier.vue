@@ -71,15 +71,15 @@
                             </div>
                             <div class="d-flex justify-content-between">
                                 <h6 class="font-weight-medium">Shipping</h6>
-                                <h6 class="font-weight-medium">$10</h6>
+                                <h6 class="font-weight-medium">{{ shipping }} FCFA</h6>
                             </div>
                         </div>
                         <div class="pt-2">
                             <div class="d-flex justify-content-between mt-2">
                                 <h5>Total</h5>
-                                <h5>$160</h5>
+                                <h5>{{ calculateTotaldu() }} FCFA</h5>
                             </div>
-                            <button class="btn btn-block btn-primary font-weight-bold my-3 py-3">Proceed To Checkout</button>
+                            <button :disabled="totaldu === 1000" class="btn btn-block btn-primary font-weight-bold my-3 py-3">Proceed To Checkout</button>
                         </div>
                     </div>
                 </div>
@@ -98,6 +98,8 @@
             return {
                 PrixTotal: 0,
                 total: 0,
+                shipping: 1000,
+                totaldu: 0
             }
         },
         computed:{
@@ -123,6 +125,9 @@
             },
             calculateCartTotalPrice() {
                 return this.PrixTotal = this.cartItems.reduce((total, product) => total + (product.quantity * product.PVente), 0);
+            },
+            calculateTotaldu(){
+                return this.totaldu = this.shipping + this.PrixTotal
             }
             
         },
