@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\CommandeController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\ProduitsController;
@@ -85,3 +86,6 @@ Route::get('/getUtili/{id}',[UtilisateurController::class, 'GetUtilisateur']);
 Route::get('/allutili',[UtilisateurController::class, 'AllUtilisateur']);
 Route::post('/updateutili',[UtilisateurController::class, 'UpdateUtlisateur']);
 Route::post('/delutili',[UtilisateurController::class, 'DeleteUtilisateur']);
+
+//Commande
+Route::post('/createCmd',[CommandeController::class, 'CreateCMD']);
