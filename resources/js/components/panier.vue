@@ -95,7 +95,8 @@
 
 <script>
     import axios from 'axios';
-import { mapGetters } from 'vuex';
+    import Swal from 'sweetalert2'
+    import { mapGetters } from 'vuex';
     import { mapMutations } from 'vuex';
     export default{
         data(){
@@ -171,9 +172,27 @@ import { mapGetters } from 'vuex';
                             qte : prod.quantity,
                             prix : prod.PVente * prod.quantity
                         }
-                        console.log(venteData)
+                        const res = await axios.post('/createCmd',venteData)
+                        if (res.status === 200) {
+                            console.log("Commande enrégistrer avec succès")
+                        }
+                        return res
                     })
                 )
+                const success = response.every((res)=> res.status === 200)
+                if (success) {
+                    Swal.fire({
+                        toast: true,
+                        position: "top-end",
+                        icon: "success",
+                        title: "Commande enrégistrer avec succès",
+                        timer: 1500,
+                        timerProgressBar: true,
+                        showConfirmButton: false
+                    })
+
+                    this.cartItems = []
+                }
             }
             
         },
