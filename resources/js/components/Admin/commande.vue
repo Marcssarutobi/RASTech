@@ -28,12 +28,15 @@
             </thead>
             <tbody>
                 <tr v-for="cmd in allcmd" :key="cmd.id">
-                    <td>{{ cmd.user_id }}</td>
-                    <td>{{ cmd.prod_id }}</td>
-                    <td>{{ cmd.qte }}</td>
-                    <td>{{ cmd.prix }} FCFA</td>
-                    <td>{{ cmd.status }}</td>
-                    <td>Action</td>
+                    <td :style="cmd.status === 'New'?'font-weight: 600;':''">{{ GetUserName(cmd.user_id) }}</td>
+                    <td :style="cmd.status === 'New'?'font-weight: 600;':''">{{ GetProdName(cmd.prod_id) }}</td>
+                    <td :style="cmd.status === 'New'?'font-weight: 600;':''">{{ cmd.qte }}</td>
+                    <td :style="cmd.status === 'New'?'font-weight: 600;':''">{{ cmd.prix }} FCFA</td>
+                    <td :style="cmd.status === 'New'?'font-weight: 600;':''">{{ cmd.status }}</td>
+                    <td>
+                        <button class="btn btn-primary mr-3" ><i class="fas fa-eye"></i></button>
+                        <button class="btn btn-danger" ><i class="fas fa-trash"></i></button>
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -50,7 +53,8 @@ export default {
     data(){
         return{
             allcmd:{},
-            alluser:{}
+            alluser: {},
+            allprod:{}
         }
     },
     methods:{
@@ -61,9 +65,31 @@ export default {
                 console.log(this.allcmd)
             }
         },
+        async AllUser(){
+            const res = await axios.get('/alluserinfo')
+            if (res.status === 200) {
+                this.alluser = res.data.users
+            }
+        },
+        GetUserName(id) {
+            const userInfo = this.alluser.find(user => user.id === id)
+            return userInfo ? userInfo.nom +" "+ userInfo.prenom : ""
+        },
+        async AllProduit() {
+            const res = await axios.get('/allprod')
+            if (res.status === 200) {
+                this.allprod = res.data.prods
+            }
+        },
+        GetProdName(id) {
+            const produit = this.allprod.find(prod => prod.id === id)
+            return produit ? produit.name_prod : ""
+        },
     },
     created(){
         this.AllCmds()
+        this.AllUser()
+        this.AllProduit()
     }
 }
 </script>

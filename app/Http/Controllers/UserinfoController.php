@@ -90,5 +90,11 @@ class UserinfoController extends Controller
             "deluserinfo"=>$user
         ]);
     }
+    public function AllUserinfo(){
+        $user = Userinfo::orderBy('id','desc')->get();
+        return response()->json([
+            "users"=>$user
+        ]);
+    }
     
 }

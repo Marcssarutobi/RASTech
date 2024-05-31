@@ -54,8 +54,10 @@ class ProduitsController extends Controller
     }
     public function AllProd(){
         $prod = Produits::orderBy('id','desc')->paginate(6);
+        $prods = Produits::orderBy('id','desc')->get();
         return response()->json([
-            "produits"=>$prod
+            "produits"=>$prod,
+            "prods"=>$prods
         ]);
     }
     public function show($id){

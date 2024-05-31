@@ -57,6 +57,7 @@ Route::post('/uploadimgC', [UserinfoController::class, 'uploadImgC']);
 Route::post('/delimgC',[UserinfoController::class, 'deleteImageC']);
 Route::get('/getuserinfo/{id}',[UserinfoController::class, 'GetUserInfo']);
 Route::post('/delUserInfo', [UserinfoController::class, 'DelUserInfo']);
+Route::get('/alluserinfo',[UserinfoController::class, 'AllUserinfo']);
 
 //Newsletter
 Route::post('/createnew',[NewsletterController::class, 'CreateNew']);
