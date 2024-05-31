@@ -26,4 +26,11 @@ class CommandeController extends Controller
         ]);
 
     }
+    public function AllCMD(){
+        $cmd = Commande::orderBy('id','desc')->get();
+
+        return response()->json([
+            "cmds"=>$cmd
+        ]);
+    }
 }

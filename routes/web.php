@@ -89,3 +89,4 @@ Route::post('/delutili',[UtilisateurController::class, 'DeleteUtilisateur']);
 
 //Commande
 Route::post('/createCmd',[CommandeController::class, 'CreateCMD']);
+Route::get('/allcmd',[CommandeController::class, 'AllCMD']);

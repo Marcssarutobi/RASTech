@@ -97,6 +97,12 @@ const routes = [
                 name: "user" ,
                 meta: { requiresAuth: true, requiresRole: true}
             },
+            {
+                path: "commande",
+                component:()=>import('./components/Admin/commande.vue'),
+                name: "commande" ,
+                meta: { requiresAuth: true, requiresRole: true}
+            },
         ]
     },
 ]
