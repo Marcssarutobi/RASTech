@@ -91,10 +91,12 @@ class UserController extends Controller
         ],200);
     }
     public function AllUser(){
-        $user = User::where('role','client')->where('role','Client')->orderBy('id','desc')->paginate(6);
-        $alluser = User::where('role','!=','Client')->orderBy('id','desc')->paginate(6);
+        $user = User::where('role','Client')->orderBy('id','desc')->paginate(6);
+        $userP = User::where('role','Partenaire')->orderBy('id','desc')->paginate(6);
+        $alluser = User::where('role','!=','Client')->where('role','!=','Partenaire')->orderBy('id','desc')->paginate(6);
         return response()->json([
             "users"=>$user,
+            "userPa"=>$userP,
             "alluser"=>$alluser
         ]);
     }

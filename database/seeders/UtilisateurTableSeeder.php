@@ -32,5 +32,13 @@ class UtilisateurTableSeeder extends Seeder
                 'role'=> 'Admin',
             ]
         );
+        User::insert(
+            [
+                'username'=> 'SuperAdmin',
+                'email'=> 'superadmin@gmail.com',
+                'password'=> bcrypt('123456789'),
+                'role'=> 'Super-Admin',
+            ]
+        );
     }
 }

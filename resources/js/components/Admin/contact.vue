@@ -48,7 +48,7 @@
 
          <!-- Modal View Contact -->
          <div v-if="view" class="modal fade show" tabindex="-1" style="display: block; background: rgba(0, 0, 0, .5);">
-                <div class="modal-dialog modal-dialog-centered modal-xl modal-dialog-scrollable ">
+                <div class="modal-dialog modal-dialog-centered  modal-dialog-scrollable ">
                     <div class="modal-content" data-aos="zoom-in" data-aos-duration="300">
                         <div class="modal-header">
                             <h5 class="modal-title">{{ getctn.name }}</h5>
@@ -68,6 +68,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" @click="view = false"  data-bs-dismiss="modal">Fermer</button>
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Répondre</button>
                         </div>
                     </div>
                 </div>

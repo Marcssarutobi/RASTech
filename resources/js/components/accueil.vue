@@ -489,25 +489,17 @@
 
         <!-- Offer Start -->
         <div class="container-fluid pt-5 pb-3">
-            <div class="row px-xl-5">
-                <div class="col-md-6">
-                    <div class="product-offer mb-30" style="height: 300px;">
-                        <img class="img-fluid" src="../../../public/img/offer-1.jpg" alt="">
-                        <div class="offer-text">
-                            <h6 class="text-white text-uppercase">Save 20%</h6>
-                            <h3 class="text-white mb-3">Special Offer</h3>
-                            <a href="" class="btn btn-primary">Shop Now</a>
-                        </div>
+            <div class="container">
+                <div class="row g-3 mb-3">
+                    <div class="col-lg-5">
+                        <img src="../../../public/img/part.jpg" class="img-fluid rounded w-100 h-100" style="max-width: 100%;max-height: 100%;" alt="">
                     </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="product-offer mb-30" style="height: 300px;">
-                        <img class="img-fluid" src="../../../public/img/offer-2.jpg" alt="">
-                        <div class="offer-text">
-                            <h6 class="text-white text-uppercase">Save 20%</h6>
-                            <h3 class="text-white mb-3">Special Offer</h3>
-                            <a href="" class="btn btn-primary">Shop Now</a>
+                    <div class="col-lg-7">
+                        <div class="text-start">
+                            <h1>Devenir partenaire ?</h1>
                         </div>
+                        <p style="text-align: justify;">Plongez dans une expérience enrichissante en explorant les nombreux avantages offerts par une collaboration avec MultiShop ! En tant que partenaire privilégié, vous aurez l'opportunité exclusive d'accéder à notre gamme de produits en gros, bénéficiant ainsi de tarifs compétitifs et d'une flexibilité accrue pour répondre aux besoins de votre entreprise. Nous vous garantissons non seulement des prix avantageux, mais aussi une qualité inégalée et un service client dédié, toujours prêts à vous accompagner dans chaque étape de votre parcours.</p>
+                        <router-link to="/contact" class="btn btn-primary btn-lg">Devenir partenaire</router-link>
                     </div>
                 </div>
             </div>

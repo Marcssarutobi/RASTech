@@ -2,7 +2,7 @@
     <div class="dashboard">
         
         <!-- Sidebar Start -->
-        <div class="sidebar pe-4 pb-3">
+        <div class="sidebar pe-4 pb-3" style="height:100vh;">
             <nav class="navbar bg-light navbar-light">
                 <router-link to="/dashbord" class="text-decoration-none mb-5 mx-auto">
                     <span class="h2 text-uppercase text-primary bg-dark px-2">Multi</span>
@@ -11,15 +11,16 @@
                 
                 <div class="navbar-nav w-100">
                     <router-link to="/dashbord/accuiel" class="nav-item nav-link active"><i class="fa fa-tachometer-alt ms-3"></i>Dashboard</router-link>
-                    <router-link to="/dashbord/categorie" class="nav-item nav-link active"><i class="fas fa-tag me-2"></i>Categories</router-link>
-                    <router-link to="/dashbord/produit" class="nav-item nav-link active"><i class="fas fa-cubes me-2"></i>Produits</router-link>
-                    <router-link to="/dashbord/client" class="nav-item nav-link active"><i class="fas fa-user-tie me-2"></i>Clients</router-link>
-                    <router-link to="/dashbord/commande" class="nav-item nav-link active"><i class="fas fa-bag-shopping me-2"></i>Commande</router-link>
-                    <a href="widget.html" class="nav-item nav-link active"><i class="fas fa-users me-2"></i>Partenaire</a>
-                    <router-link to="/dashbord/newsletter" class="nav-item nav-link active"><i class="fas fa-at me-2"></i>Newsletter</router-link>
-                    <router-link to="/dashbord/contact" class="nav-item nav-link active"><i class="fas fa-envelope me-2"></i>Contact</router-link>
-                    <router-link to="/dashbord/role" class="nav-item nav-link active"><i class="fas fa-user-tag me-2"></i>Role</router-link>
-                    <router-link to="/dashbord/user" class="nav-item nav-link active"><i class="fas fa-user-gear me-2"></i>Utilisateur</router-link>
+                    <router-link v-if="user.role === 'Admin' || user.role === 'Super-Admin'" to="/dashbord/categorie" class="nav-item nav-link active"><i class="fas fa-tag me-2"></i>Categories</router-link>
+                    <router-link v-if="user.role === 'Admin' || user.role === 'Super-Admin'" to="/dashbord/produit" class="nav-item nav-link active"><i class="fas fa-cubes me-2"></i>Produits</router-link>
+                    <router-link v-if="user.role === 'Admin' || user.role === 'Super-Admin'" to="/dashbord/client" class="nav-item nav-link active"><i class="fas fa-user-tie me-2"></i>Clients</router-link>
+                    <router-link v-if="user.role === 'Admin' || user.role === 'Super-Admin'" to="/dashbord/commande" class="nav-item nav-link active"><i class="fas fa-bag-shopping me-2"></i>Commande</router-link>
+                    <router-link v-if="user.role === 'Admin' || user.role === 'Super-Admin'" to="/dashbord/partenaire" class="nav-item nav-link active"><i class="fas fa-users me-2"></i>Partenaire</router-link>
+                    <router-link v-if="user.role === 'Admin' || user.role === 'Super-Admin'" to="/dashbord/newsletter" class="nav-item nav-link active"><i class="fas fa-at me-2"></i>Newsletter</router-link>
+                    <router-link v-if="user.role === 'Admin' || user.role === 'Super-Admin'" to="/dashbord/contact" class="nav-item nav-link active"><i class="fas fa-envelope me-2"></i>Contact</router-link>
+                    <router-link v-if="user.role === 'Admin' || user.role === 'Super-Admin'" to="/dashbord/role" class="nav-item nav-link active"><i class="fas fa-user-tag me-2"></i>Role</router-link>
+                    <router-link v-if="user.role === 'Admin' || user.role === 'Super-Admin'" to="/dashbord/user" class="nav-item nav-link active"><i class="fas fa-user-gear me-2"></i>Utilisateur</router-link>
+                    <router-link v-if="user.role === 'Partenaire'" to="/dashbord/produitP" class="nav-item nav-link active"><i class="fas fa-cubes me-2"></i>Produits</router-link>
                 </div>
             </nav>
         </div>
@@ -126,21 +127,52 @@
 
 <script>
     import axios from 'axios';
-    export default {
-        methods:{
-            async Logout(){
-                await axios.post('/logout',null,{
-                    headers:{
-                        Authorization: `Bearer ${localStorage.getItem('token')}`
-                    }
-                })
-                localStorage.removeItem('token')
-                this.$router.push("/signin")
-            }
+export default {
+    data() {
+        return {
+            user: {},
+            userinfo:{}
         }
+    },
+    methods:{
+        async Logout(){
+            await axios.post('/logout',null,{
+                headers:{
+                    Authorization: `Bearer ${localStorage.getItem('token')}`
+                }
+            })
+            localStorage.removeItem('token')
+            this.$router.push("/signin")
+        },
+        async CurrentUser() {
+            const users = await axios.get('/currentUser')
+            if (users.status === 200) {
+                this.user = users.data.user
+                this.UserInfoCurrent(this.user.id)
+            }
+        },
+        async UserInfoCurrent(id) {
+            try {
+                const res = await axios.get('/getuserinfo/' + id)
+                if (res.status === 200) {
+                    this.userinfo = res.data.userCurrent
+                }
+            } catch (error) {
+                console.error('Erreur ici :', error)
+            }
+        },
+    },
+    created() {
+        this.CurrentUser()
     }
+}
 </script>
 
 <style>
-    
+    .dashboard{
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+    }
 </style>

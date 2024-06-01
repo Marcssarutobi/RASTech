@@ -38,6 +38,8 @@ class ProduitsController extends Controller
             "qte"=>"required",
             "PVente"=>"required",
             "description"=>"required",
+            "type"=>"required",
+            "dispo"=>"required",
         ]);
         $prod = Produits::create([
             "image"=>$request->image,
@@ -46,6 +48,8 @@ class ProduitsController extends Controller
             "qte"=>$request->qte,
             "PVente"=>$request->PVente,
             "description"=>$request->description,
+            "type"=>$request->type,
+            "dispo"=>$request->dispo,
         ]);
         return response()->json([
             "prod"=>$prod
@@ -53,11 +57,13 @@ class ProduitsController extends Controller
 
     }
     public function AllProd(){
-        $prod = Produits::orderBy('id','desc')->paginate(6);
+        $prod = Produits::where('type',null)->where('dispo',null)->orderBy('id','desc')->paginate(6);
+        $prodP = Produits::where('type','!=',null)->where('dispo','!=',null)->orderBy('id','desc')->paginate(6);
         $prods = Produits::orderBy('id','desc')->get();
         return response()->json([
             "produits"=>$prod,
-            "prods"=>$prods
+            "prods"=>$prods,
+            "prodP"=>$prodP
         ]);
     }
     public function show($id){

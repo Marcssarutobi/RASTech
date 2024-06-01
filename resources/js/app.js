@@ -103,6 +103,18 @@ const routes = [
                 name: "commande" ,
                 meta: { requiresAuth: true, requiresRole: true}
             },
+            {
+                path: "partenaire",
+                component:()=>import('./components/Admin/partenaire.vue'),
+                name: "partenaire" ,
+                meta: { requiresAuth: true, requiresRole: true}
+            },
+            {
+                path: "produitP",
+                component:()=>import('./components/Admin/produitP.vue'),
+                name: "produitP" ,
+                meta: { requiresAuth: true, requiresRole: true}
+            },
         ]
     },
 ]

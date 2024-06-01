@@ -4,7 +4,7 @@
         <div class="container-fluid">
             <div class="container">           
                 <h1 class="mb-3">Mon Profil</h1>
-                <div class="row g-5">
+                <div class="row g-5 mb-4">
                     <div class="col-lg-4">
                         
                         <div class="containers mx-auto" >
@@ -96,6 +96,22 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="row g-3 mb-3">
+                    <div class="col-lg-5">
+                        <img src="../../../public/img/part.jpg" class="img-fluid rounded w-100 h-100" style="max-width: 100%;max-height: 100%;" alt="">
+                    </div>
+                    <div class="col-lg-7">
+                        <div class="text-start">
+                            <h1>Devenir partenaire ?</h1>
+                        </div>
+                        <p style="text-align: justify;">Plongez dans une expérience enrichissante en explorant les nombreux avantages offerts par une collaboration avec MultiShop ! En tant que partenaire privilégié, vous aurez l'opportunité exclusive d'accéder à notre gamme de produits en gros, bénéficiant ainsi de tarifs compétitifs et d'une flexibilité accrue pour répondre aux besoins de votre entreprise. Nous vous garantissons non seulement des prix avantageux, mais aussi une qualité inégalée et un service client dédié, toujours prêts à vous accompagner dans chaque étape de votre parcours.</p>
+                        <button v-if="!btn" @click="DemandePart" class="btn btn-primary btn-lg">Devenir partenaire</button>
+                        <div class="alert-success p-3 rounded" v-if="btn">
+                            <p class="m-0">Votre demande à été envoyer avec succès. Vous recevrez bientôt une notification </p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -124,7 +140,8 @@
                 },
                 userinfo:{},
                 user:{},
-                logger:false,
+                logger: false,
+                btn: false
                 
             }
         },
@@ -221,6 +238,19 @@
                         timerProgressBar: true,
                         showConfirmButton: false
                     })
+                }
+            },
+            async DemandePart() {
+                const infos = {
+                    name: this.userinfo.nom + " " + this.userinfo.prenom,
+                    email: this.user.email,
+                    subject: "Demande de Partenariat",
+                    message: "Vous avez reçus une nouvelle demande de partenariat de monsieur " + this.userinfo.nom + " " + this.userinfo.prenom + ". Veuillez entrez en contact avec lui pour plus de renseignement.",
+                    status: 0
+                }
+                const res = await axios.post('/createcontact', infos)
+                if (res.status === 200) {
+                    this.btn = true
                 }
             }
         },
