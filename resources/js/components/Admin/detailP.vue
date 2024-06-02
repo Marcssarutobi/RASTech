@@ -15,6 +15,7 @@
                         
                             <h3 class="font-weight-semi-bold mb-4">{{ getid.PVente }} FCFA</h3>
                             <p class="mb-4" >{{ getid.description }}</p>
+                            <p class="mb-4"> Cet article sera disponible le : {{ getid.dispo }} </p>
                         
                             <div class="d-flex align-items-center mb-4 pt-2">
                                 <button  class="btn btn-primary px-3 w-50 btn-lg"><i class="fa fa-shopping-cart mr-1"></i> Add To Cart</button>
