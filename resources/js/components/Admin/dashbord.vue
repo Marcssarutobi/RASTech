@@ -2,7 +2,7 @@
     <div class="dashboard">
         
         <!-- Sidebar Start -->
-        <div class="sidebar pe-4 pb-3" style="height:100vh;">
+        <div class="sidebar pe-4 pb-3">
             <nav class="navbar bg-light navbar-light">
                 <router-link to="/dashbord" class="text-decoration-none mb-5 mx-auto">
                     <span class="h2 text-uppercase text-primary bg-dark px-2">Multi</span>

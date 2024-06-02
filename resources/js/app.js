@@ -115,6 +115,12 @@ const routes = [
                 name: "produitP" ,
                 meta: { requiresAuth: true, requiresRole: true}
             },
+            {
+                path: "detailP/:id",
+                component:()=>import('./components/Admin/detailP.vue'),
+                name: "detailP" ,
+                meta: { requiresAuth: true, requiresRole: true}
+            },
         ]
     },
 ]

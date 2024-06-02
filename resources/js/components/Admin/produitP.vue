@@ -13,30 +13,41 @@
             </div>
         </div>
 
-        <div class="container-fluid">
-        
-            <div class="col-lg-9 col-md-8 justify-content-center">
-                
-                <div class="col-lg-6 col-md-6 col-sm-6 pb-1" v-for="prod in prods" :key="prod.id">
-                    <div class="product-item bg-light mb-4">
-                        <div class="product-img position-relative overflow-hidden">
-                            <img class="img-fluid" :src="prod.image" alt="" style="max-width: 100%; max-height: 100%; height: 330.23px; width: 100%; object-fit: cover;">
-                            <div class="product-action">
-                                <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
-                                <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
-                                <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
-                                <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
+        <div class="container-fluid mb-4">
+            <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Recent Products</span></h2>
+            <div class="col-lg-11 col-md-10 mx-auto  ">
+                <div class="row pb-3">
+                    <div class="col-lg-4 col-md-6 col-sm-6 pb-1" v-for="prod in prods" :key="prod.id">
+                        <div class="product-item bg-light mb-4">
+                            <div class="product-img position-relative overflow-hidden">
+                                <img class="img-fluid" :src="prod.image" alt="" style="max-width: 100%; max-height: 100%; height: 330.23px; width: 100%; object-fit: cover;">
+                                <div class="product-action">
+                                    <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
+                                    <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
+                                    <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
+                                    <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
+                                </div>
                             </div>
-                        </div>
-                        <div class="text-center py-4">
-                            <router-link class="h6 text-decoration-none text-truncate" :to="'/shopDetail/'+prod.id">{{ prod.name_prod }}</router-link>
-                            <div class="d-flex align-items-center justify-content-center mt-2">
-                                <h5>{{ prod.PVente }} FCFA</h5>
+                            <div class="text-center py-4">
+                                <router-link class="h6 text-decoration-none text-truncate" :to="'/dashbord/detailP/'+prod.id">{{ prod.name_prod }}</router-link>
+                                <div class="d-flex align-items-center justify-content-center mt-2">
+                                    <h5>{{ prod.PVente }} FCFA</h5>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
+                <div class="col-lg-12 justify-content-center p-4">
+                    <paginate
+                    :page-count="totalPage"
+                    :click-handler="AllProduits"
+                    :prev-text="'Prev'"
+                    :next-text="'Next'"
+                    :container-class="'pagination justify-content-center '"
+                    :page-class="'page-item'"
+                    >
+                    </paginate>
+                </div>
             </div>
 
         </div>
@@ -45,7 +56,12 @@
 </template>
 
 <script>
+import axios from 'axios';
+import Paginate from "vuejs-paginate-next";
 export default {
+    components: {
+        Paginate
+    },
     data() {
         return {
             prods: {},

@@ -9886,6 +9886,7 @@ a.text-dark:hover, a.text-dark:focus {
   gap: 0px;
   width: 100%;
   height: 100vh;
+  position: relative;
 }
 .sidebar {
 
@@ -9895,6 +9896,7 @@ a.text-dark:hover, a.text-dark:focus {
   background: var(--light);
   transition: 0.5s;
   z-index: 999;
+  position: fixed;
 }
 .dashboard .contente {
   width: 100%;
@@ -9903,6 +9905,9 @@ a.text-dark:hover, a.text-dark:focus {
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
+  width: calc(100% - 300px);
+  position: absolute;
+  left: 300px;
 }
 .contente .views {
   width: 100%;
