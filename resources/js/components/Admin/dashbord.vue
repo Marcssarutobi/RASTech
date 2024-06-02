@@ -5,8 +5,8 @@
         <div class="sidebar pe-4 pb-3">
             <nav class="navbar bg-light navbar-light">
                 <router-link to="/dashbord" class="text-decoration-none mb-5 mx-auto">
-                    <span class="h2 text-uppercase text-primary bg-dark px-2">Multi</span>
-                    <span class="h2 text-uppercase text-dark bg-primary px-2 ml-n1">Shop</span>
+                    <span class="h2 text-uppercase text-primary bg-dark px-2">RAS</span>
+                    <span class="h2 text-uppercase text-dark bg-primary px-2 ml-n1">TECH</span>
                 </router-link>
                 
                 <div class="navbar-nav w-100">

@@ -32,7 +32,10 @@
                         <p class="mb-4" >{{ getid.description }}</p>
                         
                         <div class="d-flex align-items-center mb-4 pt-2">
-                            <button :disabled="!logger" @click="addToCart(getid)" class="btn btn-primary px-3 w-50 btn-lg"><i class="fa fa-shopping-cart mr-1"></i> Add To Cart</button>
+                            <button :disabled="!logger" @click="addToCart(getid)" class="btn btn-primary px-3 mr-2 w-50 btn-lg"><i class="fa fa-shopping-cart mr-1"></i> Add To Cart</button>
+                            <div class="alert-danger p-3 rounded " v-if="!logger">
+                                <p class="text-center m-0">Veuillez d'abord vous connecter </p>
+                            </div>
                         </div>
                         <div class="d-flex pt-2">
                             <strong class="text-dark mr-2">Share on:</strong>
