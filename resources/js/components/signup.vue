@@ -7,10 +7,10 @@
                         <div class="bg-light rounded p-4 p-sm-5 my-4 mx-3">
                             <div class="d-flex flex-column align-items-center justify-content-between mb-3">
                                 <router-link to="/" class="text-decoration-none mb-3">
-                                    <span class="h1 text-uppercase text-primary bg-dark px-2">Multi</span>
-                                    <span class="h1 text-uppercase text-dark bg-primary px-2 ml-n1">Shop</span>
+                                    <span class="h1 text-uppercase text-primary bg-dark px-2">RAS</span>
+                                    <span class="h1 text-uppercase text-dark bg-primary px-2 ml-n1">TECH</span>
                                 </router-link>
-                                <h3>Sign Up</h3>
+                                <h3>Inscription</h3>
                             </div>
                             <div class="form-group mb-3">
                                 <label for="">Username</label>
@@ -31,8 +31,8 @@
                                 </div>
                                 <a href="">Forgot Password</a>
                             </div> -->
-                            <button type="submit" class="btn btn-primary py-3 w-100 mb-4" @click="Singnup">Sign Up</button>
-                            <p class="text-center mb-0">Already have an Account? <router-link to="/signin">Sign In</router-link></p>
+                            <button type="submit" class="btn btn-primary py-3 w-100 mb-4" @click="Singnup">S'inscrire</button>
+                            <p class="text-center mb-0">Vous avez déjà un compte ? <router-link to="/signin">Connexion</router-link></p>
                         </div>
                     </div>
                 </div>
