@@ -40,6 +40,7 @@ class ProduitsController extends Controller
             "description"=>"required",
             "type"=>"",
             "dispo"=>"",
+            "surface"=>"required",
         ]);
         $prod = Produits::create([
             "image"=>$request->image,
@@ -50,6 +51,7 @@ class ProduitsController extends Controller
             "description"=>$request->description,
             "type"=>$request->type,
             "dispo"=>$request->dispo,
+            "surface"=>$request->surface,
         ]);
         return response()->json([
             "prod"=>$prod

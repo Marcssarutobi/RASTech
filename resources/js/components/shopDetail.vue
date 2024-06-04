@@ -32,7 +32,8 @@
                         <p class="mb-4" >{{ getid.description }}</p>
                         
                         <div class="d-flex align-items-center mb-4 pt-2">
-                            <button :disabled="!logger" @click="addToCart(getid)" class="btn btn-primary px-3 mr-2 w-50 btn-lg"><i class="fa fa-shopping-cart mr-1"></i> Add To Cart</button>
+                            <!-- <button :disabled="!logger" @click="addToCart(getid)" class="btn btn-primary px-3 mr-2 w-50 btn-lg"><i class="fa fa-shopping-cart mr-1"></i> Add To Cart</button> -->
+                            <button :disabled="!logger" @click="GetProduit(getid.id)" class="btn btn-primary px-3 mr-2 w-50 btn-lg"><i class="fa fa-shopping-cart mr-1"></i> Add To Cart</button>
                             <div class="alert-danger p-3 rounded " v-if="!logger">
                                 <p class="text-center m-0">Veuillez d'abord vous connecter </p>
                             </div>
@@ -127,6 +128,86 @@
             </div>
         </div>
         <!-- Shop Detail End -->
+
+        <!-- Modal Enrégistrement -->
+        <div v-if="addModal" class="modal fade show" tabindex="-1" style="display: block; background: rgba(0, 0, 0, .5);">
+                <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable ">
+                    <div class="modal-content"  data-aos-duration="300">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Commander ce produits</h5>
+                            <button type="button" class="btn btn-white" @click="addModal = false"  data-bs-dismiss="modal" aria-label="Close"><i class="fas fa-x"></i></button>
+                        </div>
+                        <div class="modal-body">
+                
+                            <div class="row gx-3">
+                                <div class="col-12 col-lg-6">
+                                    <div class="form-group">
+                                        <label for="">Nom du produit</label>
+                                        <input type="text" name="" id="" disabled v-model="getProd.name_prod" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-6">
+                                    <div class="form-group">
+                                        <label for="">Superficie (m2)</label>
+                                        <input type="text" name="" id="" disabled v-model="getProd.surface" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-12" v-for="(input, index) in data.mesure" :key="index">
+                                    <div class="row d-flex align-items-center">
+                                        <div class="col-lg-5">
+                                            <div class="form-group">
+                                                <label for="">Longueur :</label>
+                                                <input type="number" name="" id="" class="form-control" v-model="input.long" step="0.01">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-5">
+                                                <div class="form-group">
+                                                <label for="">largeur :</label>
+                                                <input type="number" name="" id="" class="form-control" v-model="input.larg" step="0.01" >
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-2 mt-3">
+                                            <button @click="remove(index)" v-show="index || (!index && data.mesure.length > 1)" class="btn btn-danger mr-2"> <i class="fas fa-trash"></i></button>
+                                            <button @click="add(index)" v-show="index == data.mesure.length - 1" class="btn btn-success"> <i class="fas fa-plus"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-6">
+                                    <div class="form-group">
+                                        <label for="">Surface Total (m2)</label>
+                                        <input type="number" name="" id="" disabled class="form-control" v-model="totalArea">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-6">
+                                    <div class="form-group">
+                                        <label for="">Quantité à acheter</label>
+                                        <input type="number" disabled name="" id="" class="form-control" v-model="results">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-6">
+                                    <div class="form-group">
+                                        <label for="">Prix de Vente</label>
+                                        <input type="number" disabled name="" id="" class="form-control" v-model="getProd.PVente">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-6">
+                                    <div class="form-group">
+                                        <label for="">Montant à Payer</label>
+                                        <input type="number" disabled name="" id="" class="form-control" v-model="TotalPayer">
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" @click="addModal = false"  data-bs-dismiss="modal">Fermer</button>
+                            <button type="button" class="btn btn-primary" @click="handlepaiy" >Commander</button>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        <!-- Fin Modal Enrégistrement -->
     </div>
 </template>
 
@@ -138,7 +219,34 @@
             return{
                 getid:{},
                 user:{},
-                logger:false
+                logger: false,
+                addModal: false,
+                getProd: {},
+                userinfo:{},
+                data: {
+                    mesure: [
+                        {
+                            long: "",
+                            larg: ""
+                        }
+                    ],
+                    Stotal: 0,
+                    qte: 0,
+                    TotalP: 0
+                }
+            }
+        },
+        computed: {
+            totalArea() {
+                return this.data.mesure.reduce((sum, item) => {
+                    return this.data.Stotal = sum + (item.long * item.larg);
+                }, 0);
+            },
+            results() {
+                return this.data.qte = this.data.Stotal / this.getProd.surface;
+            },
+            TotalPayer() {
+                return this.data.TotalP = this.data.qte * this.getProd.PVente
             }
         },
         methods:{
@@ -161,11 +269,52 @@
                 }
             },
             ...mapMutations(['addToCart']),
+            async GetProduit(id) {
+                this.addModal = true
+                const res = await axios.get('/getpro/' + id)
+                if (res.status === 200) {
+                    this.getProd = res.data.prod
+                }
+            },
+            add(index) {
+                this.data.mesure.push({ long: "", larg: "" })
+            },
+            remove(index) {
+                this.data.mesure.splice(index, 1)
+            },
+            async UserInfoCurrent() {
+                try {
+                    const info = await axios.get('/getuserinfo/' + this.user.id)
+                    if (info.status === 200) {
+                        this.userinfo = info.data.info
+                        console.log(this.userinfo)
+                    }
+                } catch (error) {
+                    console.error('Erreur ici :', error)
+                }
+            },
+            handlepaiy() {
+                const widget = FedaPay.init({
+                    public_key: 'pk_sandbox_L4pS0w5ats9iXVhDv44P3OkY',
+                    transaction: {
+                        amount: this.data.TotalP,
+                        description: 'Acheter mon produit'
+                    },
+                    customer: {
+                        email: this.user.email,
+                        lastname: this.userinfo.nom,
+                        firstname: this.userinfo.prenom
+                    },
+                });
+                widget.open()
+            }
         },
         created(){
             this.GetProduits()
+            this.UserInfoCurrent()
             this.CurrentUser()
-        }
+        },
+       
     }
 </script>
 

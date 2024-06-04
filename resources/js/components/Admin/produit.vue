@@ -171,6 +171,10 @@
                                 <input type="number" class="form-control" v-model="data.PVente">
                             </div>
                             <div class="form-group mb-3">
+                                <label for="">Surface en m2</label>
+                                <input type="number" name="" step="0.1" id="" class="form-control" v-model="data.surface">
+                            </div>
+                            <div class="form-group mb-3">
                                 <label for="">Description :</label>
                                 <textarea  class="form-control"  cols="30" v-model="data.description" rows="10"></textarea>
                             </div>
@@ -250,6 +254,10 @@
                             <div class="form-group mb-3">
                                 <label for="">Prix de vente (FCFA) :</label>
                                 <input type="number" class="form-control" v-model="data.PVente">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="">Surface en m2</label>
+                                <input type="number" name="" step="0.1" id="" class="form-control" v-model="data.surface">
                             </div>
                             <div class="form-group mb-3">
                                 <label for="">Description :</label>
@@ -383,7 +391,8 @@ import Paginate from "vuejs-paginate-next";
                     PVente:"",
                     description:"",
                     type:"",
-                    dispo:""
+                    dispo: "",
+                    surface:""
                 },
                 percent: "",
                 names:"",

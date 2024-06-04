@@ -43,84 +43,84 @@
         </div>
 
         <!-- Modal Enrégistrement -->
-            <div v-if="addModal" class="modal fade show" tabindex="-1" style="display: block; background: rgba(0, 0, 0, .5);">
-                    <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable ">
-                        <div class="modal-content"  data-aos-duration="300">
-                            <div class="modal-header">
-                                <h5 class="modal-title">Commander ce produits</h5>
-                                <button type="button" class="btn btn-white" @click="addModal = false"  data-bs-dismiss="modal" aria-label="Close"><i class="fas fa-x"></i></button>
-                            </div>
-                            <div class="modal-body">
-                        
-                               <div class="row gx-3">
-                                    <div class="col-12 col-lg-6">
-                                        <div class="form-group">
-                                            <label for="">Nom du produit</label>
-                                            <input type="text" name="" id="" disabled v-model="getProd.name_prod" class="form-control">
-                                        </div>
+        <div v-if="addModal" class="modal fade show" tabindex="-1" style="display: block; background: rgba(0, 0, 0, .5);">
+                <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable ">
+                    <div class="modal-content"  data-aos-duration="300">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Commander ce produits</h5>
+                            <button type="button" class="btn btn-white" @click="addModal = false"  data-bs-dismiss="modal" aria-label="Close"><i class="fas fa-x"></i></button>
+                        </div>
+                        <div class="modal-body">
+                    
+                            <div class="row gx-3">
+                                <div class="col-12 col-lg-6">
+                                    <div class="form-group">
+                                        <label for="">Nom du produit</label>
+                                        <input type="text" name="" id="" disabled v-model="getProd.name_prod" class="form-control">
                                     </div>
-                                    <div class="col-12 col-lg-6">
-                                        <div class="form-group">
-                                            <label for="">Superficie (m2)</label>
-                                            <input type="text" name="" id="" disabled v-model="getProd.surface" class="form-control">
-                                        </div>
+                                </div>
+                                <div class="col-12 col-lg-6">
+                                    <div class="form-group">
+                                        <label for="">Superficie (m2)</label>
+                                        <input type="text" name="" id="" disabled v-model="getProd.surface" class="form-control">
                                     </div>
-                                    <div class="col-12" v-for="(input,index) in data.mesure" :key="index">
-                                        <div class="row d-flex align-items-center">
-                                            <div class="col-lg-5">
+                                </div>
+                                <div class="col-12" v-for="(input,index) in data.mesure" :key="index">
+                                    <div class="row d-flex align-items-center">
+                                        <div class="col-lg-5">
+                                            <div class="form-group">
+                                                <label for="">Longueur :</label>
+                                                <input type="number" name="" id="" class="form-control" v-model="input.long" step="0.01">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-5">
                                                 <div class="form-group">
-                                                    <label for="">Longueur :</label>
-                                                    <input type="number" name="" id="" class="form-control" v-model="input.long" step="0.01">
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-5">
-                                                 <div class="form-group">
-                                                    <label for="">largeur :</label>
-                                                    <input type="number" name="" id="" class="form-control" v-model="input.larg" step="0.01" >
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-2 mt-3">
-                                                <button @click="remove(index)" v-show="index || (!index && data.mesure.length > 1)" class="btn btn-danger mr-2"> <i class="fas fa-trash"></i></button>
-                                                <button @click="add(index)" v-show="index == data.mesure.length-1 " class="btn btn-success"> <i class="fas fa-plus"></i></button>
+                                                <label for="">largeur :</label>
+                                                <input type="number" name="" id="" class="form-control" v-model="input.larg" step="0.01" >
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-12 col-lg-6">
-                                        <div class="form-group">
-                                            <label for="">Surface Total (m2)</label>
-                                            <input type="number" name="" id="" disabled class="form-control" v-model="totalArea">
+                                        <div class="col-lg-2 mt-3">
+                                            <button @click="remove(index)" v-show="index || (!index && data.mesure.length > 1)" class="btn btn-danger mr-2"> <i class="fas fa-trash"></i></button>
+                                            <button @click="add(index)" v-show="index == data.mesure.length-1 " class="btn btn-success"> <i class="fas fa-plus"></i></button>
                                         </div>
                                     </div>
-                                    <div class="col-12 col-lg-6">
-                                        <div class="form-group">
-                                            <label for="">Quantité à acheter</label>
-                                            <input type="number" disabled name="" id="" class="form-control" v-model="results">
-                                        </div>
+                                </div>
+                                <div class="col-12 col-lg-6">
+                                    <div class="form-group">
+                                        <label for="">Surface Total (m2)</label>
+                                        <input type="number" name="" id="" disabled class="form-control" v-model="totalArea">
                                     </div>
-                                    <div class="col-12 col-lg-6">
-                                        <div class="form-group">
-                                            <label for="">Prix de Vente</label>
-                                            <input type="number" disabled name="" id="" class="form-control" v-model="getProd.PVente">
-                                        </div>
+                                </div>
+                                <div class="col-12 col-lg-6">
+                                    <div class="form-group">
+                                        <label for="">Quantité à acheter</label>
+                                        <input type="number" disabled name="" id="" class="form-control" v-model="results">
                                     </div>
-                                    <div class="col-12 col-lg-6">
-                                        <div class="form-group">
-                                            <label for="">Montant à Payer</label>
-                                            <input type="number" disabled name="" id="" class="form-control" v-model="TotalPayer">
-                                        </div>
+                                </div>
+                                <div class="col-12 col-lg-6">
+                                    <div class="form-group">
+                                        <label for="">Prix de Vente</label>
+                                        <input type="number" disabled name="" id="" class="form-control" v-model="getProd.PVente">
                                     </div>
-
+                                </div>
+                                <div class="col-12 col-lg-6">
+                                    <div class="form-group">
+                                        <label for="">Montant à Payer</label>
+                                        <input type="number" disabled name="" id="" class="form-control" v-model="TotalPayer">
+                                    </div>
                                 </div>
 
                             </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" @click="addModal = false"  data-bs-dismiss="modal">Fermer</button>
-                                <button type="button" class="btn btn-primary" >Enrégistrer</button>
-                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" @click="addModal = false"  data-bs-dismiss="modal">Fermer</button>
+                            <button type="button" class="btn btn-primary" >Enrégistrer</button>
                         </div>
                     </div>
-            </div>
-            <!-- Fin Modal Enrégistrement -->
+                </div>
+        </div>
+        <!-- Fin Modal Enrégistrement -->
 
     </div>
 </template>
