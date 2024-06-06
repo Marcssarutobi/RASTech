@@ -121,6 +121,18 @@ const routes = [
                 name: "detailP" ,
                 meta: { requiresAuth: true, requiresRole: true}
             },
+            {
+                path: "panier",
+                component:()=>import('./components/Admin/panier.vue'),
+                name: "panier" ,
+                meta: { requiresAuth: true, requiresRole: true}
+            },
+            {
+                path: "profilP",
+                component:()=>import('./components/Admin/profilP.vue'),
+                name: "profilP" ,
+                meta: { requiresAuth: true, requiresRole: true}
+            },
         ]
     },
 ]

@@ -21,6 +21,7 @@
                     <router-link v-if="user.role === 'Admin' || user.role === 'Super-Admin'" to="/dashbord/role" class="nav-item nav-link active"><i class="fas fa-user-tag me-2"></i>Role</router-link>
                     <router-link v-if="user.role === 'Admin' || user.role === 'Super-Admin'" to="/dashbord/user" class="nav-item nav-link active"><i class="fas fa-user-gear me-2"></i>Utilisateur</router-link>
                     <router-link v-if="user.role === 'Partenaire'" to="/dashbord/produitP" class="nav-item nav-link active"><i class="fas fa-cubes me-2"></i>Produits</router-link>
+                    <router-link v-if="user.role === 'Partenaire'" to="/dashbord/panier" class="nav-item nav-link active"><i class="fas fa-bag-shopping me-2"></i>Panier <span class="badge bg-danger text-white rounded">{{ cartTotal }}</span></router-link>
                 </div>
             </nav>
         </div>
@@ -107,7 +108,7 @@
                             <span class="d-none d-lg-inline-flex">John Doe</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                            <a href="#" class="dropdown-item">My Profile</a>
+                            <router-link to="/dashbord/profilP" class="dropdown-item">My Profile</router-link>
                             <a href="#" class="dropdown-item">Settings</a>
                             <span style="cursor: pointer;" @click="Logout" class="dropdown-item">Log Out</span>
                         </div>
@@ -127,7 +128,11 @@
 
 <script>
     import axios from 'axios';
+    import { mapGetters } from 'vuex';
 export default {
+    computed: {
+        ...mapGetters(['cartTotal'])
+    },
     data() {
         return {
             user: {},

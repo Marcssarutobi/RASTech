@@ -13,13 +13,15 @@ class CommandeController extends Controller
             "user_id"=>"required",
             "prod_id"=>"required",
             "qte"=>"required",
-            "prix"=>"required"
+            "prix"=>"required",
+            "livraison"=>"required"
         ]);
         $cmd = Commande::create([
             "user_id"=>$request->user_id,
             "prod_id"=>$request->prod_id,
             "qte"=>$request->qte,
             "prix"=>$request->prix,
+            "livraison"=>$request->livraison,
         ]);
         return response()->json([
             "cmds" => $cmd

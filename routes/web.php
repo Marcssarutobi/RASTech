@@ -87,6 +87,7 @@ Route::get('/getUtili/{id}',[UtilisateurController::class, 'GetUtilisateur']);
 Route::get('/allutili',[UtilisateurController::class, 'AllUtilisateur']);
 Route::post('/updateutili',[UtilisateurController::class, 'UpdateUtlisateur']);
 Route::post('/delutili',[UtilisateurController::class, 'DeleteUtilisateur']);
+Route::get('/getutili/{id}',[UtilisateurController::class, 'GetUtiliInfo']);
 
 //Commande
 Route::post('/createCmd',[CommandeController::class, 'CreateCMD']);

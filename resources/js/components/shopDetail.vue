@@ -196,6 +196,15 @@
                                         <input type="number" disabled name="" id="" class="form-control" v-model="TotalPayer">
                                     </div>
                                 </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="">Se fais livrer ?</label>
+                                        <select name="" id="" class="form-control" v-model="data.livraison">
+                                            <option value="Oui">Oui</option>
+                                            <option value="Non">Non</option>
+                                        </select>
+                                    </div>
+                                </div>
 
                             </div>
 
@@ -213,6 +222,7 @@
 
 <script>
     import axios from 'axios';
+    import Swal from 'sweetalert2'
     import { mapMutations } from 'vuex';
     export default{
         data(){
@@ -232,7 +242,8 @@
                     ],
                     Stotal: 0,
                     qte: 0,
-                    TotalP: 0
+                    TotalP: 0,
+                    livraison:""
                 }
             }
         },
@@ -293,7 +304,7 @@
                     console.error('Erreur ici :', error)
                 }
             },
-            handlepaiy() {
+            async handlepaiy() {
                 const widget = FedaPay.init({
                     public_key: 'pk_sandbox_L4pS0w5ats9iXVhDv44P3OkY',
                     transaction: {
@@ -307,7 +318,30 @@
                     },
                 });
                 widget.open()
-            }
+
+                const datas = {
+                    user_id: this.userinfo.id,
+                    prod_id: this.getProd.id,
+                    qte: this.data.qte,
+                    prix: this.data.TotalP,
+                    status: "New",
+                    livraison: this.data.livraison
+                }
+                const res = await axios.post('/createCmd', datas)
+                if (res.status === 200) {
+                    Swal.fire({
+                        toast: true,
+                        position: "top-end",
+                        icon: "success",
+                        title: "Commande enrégistrer avec succès",
+                        timer: 1500,
+                        timerProgressBar: true,
+                        showConfirmButton: false
+                    })
+                    
+                }
+            },
+            
         },
         created(){
             this.GetProduits()

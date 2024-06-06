@@ -13,6 +13,8 @@ class UtilisateurController extends Controller
             "prenom"=>"required",
             "photo"=>"required",
             "phone"=>"required",
+            "ville"=>"required",
+            "quartier"=>"required",
             "user_id"=>"required",
         ]);
         $utilisateur = Utilisateur::create([
@@ -20,6 +22,8 @@ class UtilisateurController extends Controller
             "prenom"=>$request->prenom,
             "photo"=>$request->photo,
             "phone"=>$request->phone,
+            "ville"=>$request->ville,
+            "quartier"=>$request->quartier,
             "user_id"=>$request->user_id,
         ]);
         return response()->json([
@@ -39,12 +43,20 @@ class UtilisateurController extends Controller
         ]);
 
     }
+    public function GetUtiliInfo($id){
+        $user = Utilisateur::where('user_id',$id)->first();
+        return response()->json([
+            "user"=>$user
+        ]);
+    }
     public function UpdateUtlisateur(Request $request){
         $request->validate([
             "nom"=>"required",
             "prenom"=>"required",
             "photo"=>"required",
             "phone"=>"required",
+            "ville"=>"required",
+            "quartier"=>"required",
             "user_id"=>"required",
         ]);
         $utilisateur = Utilisateur::where('id',$request->id)->update([
@@ -52,6 +64,8 @@ class UtilisateurController extends Controller
             "prenom"=>$request->prenom,
             "photo"=>$request->photo,
             "phone"=>$request->phone,
+            "ville"=>$request->ville,
+            "quartier"=>$request->quartier,
             "user_id"=>$request->user_id,
         ]);
         return response()->json([
