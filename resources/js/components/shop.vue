@@ -84,15 +84,15 @@
                             </div>
                         </div>
                         <div class="col-12">
-                            <nav>
-                              <ul class="pagination justify-content-center">
-                                <li class="page-item disabled"><a class="page-link" href="#"> Previous </a></li>
-                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                              </ul>
-                            </nav>
+                            <paginate
+                            :page-count="totalPage"
+                            :click-handler="AllProduits"
+                            :prev-text="'Prev'"
+                            :next-text="'Next'"
+                            :container-class="'pagination justify-content-center'"
+                            :page-class="'page-item'"
+                            >
+                            </paginate>
                         </div>
                     </div>
                 </div>
@@ -105,7 +105,11 @@
 
 <script>
     import axios from 'axios';
+    import Paginate from "vuejs-paginate-next";
     export default{
+        components: {
+            Paginate
+        },
         data(){
             return{
                 prods:{},

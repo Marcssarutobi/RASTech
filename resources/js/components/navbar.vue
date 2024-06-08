@@ -116,13 +116,13 @@
                                 <router-link to="/contact" class="nav-item nav-link">Contact</router-link>
                             </div>
                             <div class="navbar-nav ml-auto py-0 d-none d-lg-block">
-                                <router-link to="/cmdC" class="btn px-0" v-if="logger">
+                                <router-link to="/cmdC" class="btn px-0 btn-lg" v-if="logger">
                                     <i class="fas fa-shop text-primary"></i>
                                 </router-link>
-                                <router-link to="/panier" class="btn px-0 ml-3">
+                                <!-- <router-link to="/panier" class="btn px-0 ml-3">
                                     <i class="fas fa-shopping-cart text-primary"></i>
                                     <span class="badge text-secondary border border-secondary rounded-circle" style="padding-bottom: 2px;">{{ cartTotal }}</span>
-                                </router-link>
+                                </router-link> -->
                             </div>
                         </div>
                     </nav>

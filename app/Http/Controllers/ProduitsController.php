@@ -60,10 +60,12 @@ class ProduitsController extends Controller
     }
     public function AllProd(){
         $prod = Produits::where('type',null)->where('dispo',null)->orderBy('id','desc')->paginate(8);
+        $prod2 = Produits::where('type',null)->where('dispo',null)->orderBy('id','asc')->paginate(8);
         $prodP = Produits::where('type','!=',null)->where('dispo','!=',null)->orderBy('id','desc')->paginate(6);
         $prods = Produits::orderBy('id','desc')->get();
         return response()->json([
             "produits"=>$prod,
+            "produits2"=>$prod2,
             "prods"=>$prods,
             "prodP"=>$prodP
         ]);
