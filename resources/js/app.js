@@ -29,6 +29,11 @@ const routes = [
         meta: { requiresAuth: true }
     },
     {
+        path: "/cmdC",
+        component: ()=>import('./components/cmdC.vue'),
+        meta: { requiresAuth: true }
+    },
+    {
         path: "/contact",
         component: ()=>import('./components/contact.vue')
     },
@@ -131,6 +136,12 @@ const routes = [
                 path: "profilP",
                 component:()=>import('./components/Admin/profilP.vue'),
                 name: "profilP" ,
+                meta: { requiresAuth: true, requiresRole: true}
+            },
+            {
+                path: "cmdP",
+                component:()=>import('./components/Admin/cmdP.vue'),
+                name: "cmdP" ,
                 meta: { requiresAuth: true, requiresRole: true}
             },
         ]

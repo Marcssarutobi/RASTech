@@ -320,7 +320,7 @@
                 widget.open()
 
                 const datas = {
-                    user_id: this.userinfo.id,
+                    user_id: this.user.id,
                     prod_id: this.getProd.id,
                     qte: this.data.qte,
                     prix: this.data.TotalP,

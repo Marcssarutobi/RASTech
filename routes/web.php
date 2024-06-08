@@ -51,6 +51,7 @@ Route::get('/currentUser',[UserController::class, 'CurrentUser'])->middleware('a
 Route::post('/logout',[UserController::class, 'Logout'])->middleware('auth');
 Route::get('/alluser',[UserController::class, 'AllUser']);
 Route::get('/getUser/{id}',[UserController::class, 'GetUser']);
+Route::post('/deluser',[UserController::class, 'DelUser']);
 //UserinfoClient
 Route::post('/usercreateinfo',[UserinfoController::class, 'CreateInfoUser']);
 Route::post('/uploadimgC', [UserinfoController::class, 'uploadImgC']);
@@ -92,3 +93,7 @@ Route::get('/getutili/{id}',[UtilisateurController::class, 'GetUtiliInfo']);
 //Commande
 Route::post('/createCmd',[CommandeController::class, 'CreateCMD']);
 Route::get('/allcmd',[CommandeController::class, 'AllCMD']);
+Route::get('/getcmd/{id}',[CommandeController::class, 'GetCMD']);
+Route::post('/delcmd',[CommandeController::class, 'DelCMD']);
+Route::post('/updatecmd',[CommandeController::class, 'UpdateCMD']);
+Route::get('/allcmds/{id}',[CommandeController::class, 'CMDP']);

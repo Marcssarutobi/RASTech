@@ -106,4 +106,10 @@ class UserController extends Controller
             "user"=>$user
         ]);
     }
+    public function DelUser(Request $request){
+        $user = User::where('id',$request->id)->first();
+        return response()->json([
+            "user"=>$user
+        ]);
+    }
 }

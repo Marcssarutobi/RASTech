@@ -22,6 +22,7 @@
                     <router-link v-if="user.role === 'Admin' || user.role === 'Super-Admin'" to="/dashbord/user" class="nav-item nav-link active"><i class="fas fa-user-gear me-2"></i>Utilisateur</router-link>
                     <router-link v-if="user.role === 'Partenaire'" to="/dashbord/produitP" class="nav-item nav-link active"><i class="fas fa-cubes me-2"></i>Produits</router-link>
                     <router-link v-if="user.role === 'Partenaire'" to="/dashbord/panier" class="nav-item nav-link active"><i class="fas fa-bag-shopping me-2"></i>Panier <span class="badge bg-danger text-white rounded">{{ cartTotal }}</span></router-link>
+                    <router-link v-if="user.role === 'Partenaire'" to="/dashbord/cmdP" class="nav-item nav-link active"><i class="fas fa-shop me-2"></i>Commande</router-link>
                 </div>
             </nav>
         </div>

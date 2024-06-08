@@ -48,8 +48,9 @@
                 <div class="col-lg-4">
                     <form class="mb-30" action="">
                         <div class="form-group">
-                            <label for="">Livraison</label>
+                            <label for="">Se fais Livré ?</label>
                             <select name="" class="form-control" id="" v-model="data.livraison">
+                                <option selected disabled>Selectionnez une valeur</option>
                                 <option value="Oui">Oui</option>
                                 <option value="Non">Non</option>
                             </select>
@@ -153,48 +154,60 @@ export default {
         },
         async handlePayment() {
 
-            const widget = FedaPay.init({
-                public_key: 'pk_sandbox_L4pS0w5ats9iXVhDv44P3OkY',
-                transaction: {
-                    amount: this.totaldu,
-                    currency: 'XOF'
-                },
-                customer: {
-                    email: this.user.email,
-                    lastname: this.userinfo.nom,
-                    firstname: this.userinfo.prenom
-                },
-            })
-            widget.open()
-
-            const response = await Promise.all(
-                this.cartItems.map(async (prod) => {
-                    const venteData = {
-                        user_id: this.userinfo.id,
-                        prod_id: prod.id,
-                        qte: prod.quantity,
-                        prix: prod.PVente * prod.quantity,
-                        status: 'New',
-                        livraison: this.data.livraison
-                    }
-                    const res = await axios.post('/createCmd', venteData)
-                    if (res.status === 200) {
-                        console.log("Commande enrégistrer avec succès")
-                    }
-                    return res
-                })
-            )
-            const success = response.every((res) => res.status === 200)
-            if (success) {
+            if (this.data.livraison.trim() == "") {
                 Swal.fire({
                     toast: true,
                     position: "top-end",
-                    icon: "success",
-                    title: "Commande enrégistrer avec succès",
+                    icon: "error",
+                    title: "le champs livraison est vide",
                     timer: 1500,
                     timerProgressBar: true,
                     showConfirmButton: false
                 })
+            } else {
+                const widget = FedaPay.init({
+                    public_key: 'pk_sandbox_L4pS0w5ats9iXVhDv44P3OkY',
+                    transaction: {
+                        amount: this.totaldu,
+                        description: 'Acheter mon produit'
+                    },
+                    customer: {
+                        email: this.user.email,
+                        lastname: this.userinfo.nom,
+                        firstname: this.userinfo.prenom
+                    },
+                })
+                widget.open()
+
+                const response = await Promise.all(
+                    this.cartItems.map(async (prod) => {
+                        const venteData = {
+                            user_id: this.user.id,
+                            prod_id: prod.id,
+                            qte: prod.quantity,
+                            prix: prod.PVente * prod.quantity,
+                            status: 'New',
+                            livraison: this.data.livraison
+                        }
+                        const res = await axios.post('/createCmd', venteData)
+                        if (res.status === 200) {
+                            console.log("Commande enrégistrer avec succès")
+                        }
+                        return res
+                    })
+                )
+                const success = response.every((res) => res.status === 200)
+                if (success) {
+                    Swal.fire({
+                        toast: true,
+                        position: "top-end",
+                        icon: "success",
+                        title: "Commande enrégistrer avec succès",
+                        timer: 1500,
+                        timerProgressBar: true,
+                        showConfirmButton: false
+                    })
+                }
             }
 
         },
