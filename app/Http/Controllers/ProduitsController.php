@@ -70,6 +70,12 @@ class ProduitsController extends Controller
             "prodP"=>$prodP
         ]);
     }
+    public function AllProdCat($id){
+        $prods = Produits::where('categorie_id',$id)->orderBy('id','desc')->paginate(9);
+        return response()->json([
+            "prodCat"=>$prods
+        ]);
+    }
     public function show($id){
         $prod = Produits::where('id',$id)->first();
         return response()->json([

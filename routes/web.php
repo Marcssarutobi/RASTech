@@ -42,6 +42,7 @@ Route::get('/getpro/{id}',[ProduitsController::class, 'show']);
 Route::post('/delimg',[ProduitsController::class, 'deleteImage']);
 Route::post('/updatepro',[ProduitsController::class, 'updateProduits']);
 Route::post('/delpro', [ProduitsController::class, 'delProd']);
+Route::get('/prodcat/{id}',[ProduitsController::class, 'AllProdCat']);
 
 //UtilisateurClient
 Route::post('/createUser',[UserController::class, 'signup']);

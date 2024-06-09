@@ -89,7 +89,7 @@
                     </a>
                     <nav class="collapse position-absolute navbar navbar-vertical navbar-light align-items-start p-0 bg-light" id="navbar-vertical" style="width: calc(100% - 30px); z-index: 999;">
                         <div class="navbar-nav w-100">
-                            <a href="#" v-for="cat in Cats" :key="cat.id" class="nav-item nav-link">{{ cat.name_cat }}</a>
+                            <router-link :to="'/catProd/'+cat.id" v-for="cat in Cats" :key="cat.id" class="nav-item nav-link">{{ cat.name_cat }}</router-link >
                         </div>
                     </nav>
                 </div>

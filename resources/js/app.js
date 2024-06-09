@@ -38,6 +38,10 @@ const routes = [
         component: ()=>import('./components/contact.vue')
     },
     {
+        path: "/catProd/:id",
+        component: ()=>import('./components/catProd.vue')
+    },
+    {
         path: "/signin",
         component: ()=>import('./components/signin.vue')
     },
