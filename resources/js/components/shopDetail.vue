@@ -29,6 +29,7 @@
                         <h3 class="mb-4">{{ getid.name_prod }}</h3>
                         
                         <h3 class="font-weight-semi-bold mb-4">{{ getid.PVente }} FCFA</h3>
+                        <h3 class="font-weight-semi-bold mb-4">Superficie : {{ getid.surface }} m²</h3>
                         <p class="mb-4" >{{ getid.description }}</p>
                         
                         <div class="d-flex align-items-center mb-4 pt-2">

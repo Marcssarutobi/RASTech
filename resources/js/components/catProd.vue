@@ -90,7 +90,6 @@ export default {
                     this.allProdCat = res.data.prodCat.data
                     this.currentPage = res.data.prodCat.current_page
                     this.totalPage = res.data.prodCat.last_page
-                    console.log(this.allProdCat)
                 }
             }
         },
