@@ -13,6 +13,7 @@
     },
     "dependencies": {
         "@vitejs/plugin-vue": "^5.0.4",
+        "kkiapay": "^2.0.26",
         "sweetalert2": "^11.10.8",
         "v-pagination-3": "^0.1.7",
         "vue": "^3.4.26",

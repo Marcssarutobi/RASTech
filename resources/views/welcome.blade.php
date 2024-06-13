@@ -41,6 +41,7 @@
         <script src="https://cdn.fedapay.com/checkout.js?v=1.1.7"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment-with-locales.min.js" integrity="sha512-4F1cxYdMiAW98oomSLaygEwmCnIP38pb4Kx70yQYqRwLVCs3DbRumfBq82T08g/4LJ/smbFGFpmeFlQgoDccgg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
+        <script src="https://cdn.kkiapay.me/k.js">
         <!-- Template Javascript -->
         <script src="js/main.js"></script>
     </body>

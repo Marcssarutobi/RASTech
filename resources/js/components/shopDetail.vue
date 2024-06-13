@@ -244,8 +244,9 @@
                     Stotal: 0,
                     qte: 0,
                     TotalP: 0,
-                    livraison:""
-                }
+                    livraison: ""
+                },
+                paid: false
             }
         },
         computed: {
@@ -305,21 +306,7 @@
                     console.error('Erreur ici :', error)
                 }
             },
-            async handlepaiy() {
-                const widget = FedaPay.init({
-                    public_key: 'pk_sandbox_L4pS0w5ats9iXVhDv44P3OkY',
-                    transaction: {
-                        amount: this.data.TotalP,
-                        description: 'Acheter mon produit'
-                    },
-                    customer: {
-                        email: this.user.email,
-                        lastname: this.userinfo.nom,
-                        firstname: this.userinfo.prenom
-                    },
-                });
-                widget.open()
-
+            async ValidCommande() {
                 const datas = {
                     user_id: this.user.id,
                     prod_id: this.getProd.id,
@@ -332,18 +319,57 @@
                 if (res.status === 200) {
                     Swal.fire({
                         toast: true,
-                        position: "top-end",
+                        position: "top-start",
                         icon: "success",
                         title: "Commande enrégistrer avec succès",
                         timer: 1500,
                         timerProgressBar: true,
                         showConfirmButton: false
                     })
-                    
+                    this.addModal = false
+                    this.getProd = false
+                    this.paid = false
                 }
             },
+            successHandler(response) {
+                console.log('Paiement réussi', response);
+                if (response) {
+                    this.paid = true
+                    console.log(this.paid)
+                    this.ValidCommande()
+                }
+                // Traitez le succès du paiement ici
+            },
+            async handlepaiy() {
+               /* const widget = FedaPay.init({
+                    public_key: 'pk_sandbox_L4pS0w5ats9iXVhDv44P3OkY',
+                    transaction: {
+                        amount: this.data.TotalP,
+                        description: 'Acheter mon produit'
+                    },
+                    customer: {
+                        email: this.user.email,
+                        lastname: this.userinfo.nom,
+                        firstname: this.userinfo.prenom
+                    },
+                });
+                widget.open()*/
+
+                openKkiapayWidget({
+                    amount: this.data.TotalP,
+                    position: "right",
+                    callback: this.successHandler(),
+                    sandbox: true,
+                    key:"28d5a9f028f311efb086931beae204b3"
+                })
+            },
             
-        },
+            
+            
+    },
+    mounted() {
+        addKkiapayListener('success', this.successHandler);
+    },
         created(){
             this.GetProduits()
             this.UserInfoCurrent()
