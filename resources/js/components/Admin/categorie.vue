@@ -69,31 +69,31 @@
                     </div>
                 </div>
             </div>
-            <!-- Fin Modal Enrégistrement -->
-               <!-- Modal Enrégistrement -->
-                <div v-if="updateModal" class="modal fade show" tabindex="-1" style="display: block; background: rgba(0, 0, 0, .5);">
-                    <div class="modal-dialog modal-dialog-centered ">
-                        <div class="modal-content" data-aos="zoom-in" data-aos-duration="300">
-                            <div class="modal-header">
-                                <h5 class="modal-title">Modifier une catégorie</h5>
-                                <button type="button" class="btn btn-white" @click="updateModal = false"  data-bs-dismiss="modal" aria-label="Close"><i class="fas fa-x"></i></button>
-                            </div>
-                            <div class="modal-body">
-                        
-                                <div class="form-group mb-3">
-                                    <label for="">Nom Catégorie :</label>
-                                    <input type="text" class="form-control" v-model="catId.name_cat">
-                                </div>
-
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" @click="updateModal = false"  data-bs-dismiss="modal">Fermer</button>
-                                <button type="button" class="btn btn-primary" @click="Update" >Modifier</button>
-                            </div>
+        <!-- Fin Modal Enrégistrement -->
+        <!-- Modal Enrégistrement -->
+        <div v-if="updateModal" class="modal fade show" tabindex="-1" style="display: block; background: rgba(0, 0, 0, .5);">
+            <div class="modal-dialog modal-dialog-centered ">
+                <div class="modal-content" data-aos="zoom-in" data-aos-duration="300">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Modifier une catégorie</h5>
+                        <button type="button" class="btn btn-white" @click="updateModal = false"  data-bs-dismiss="modal" aria-label="Close"><i class="fas fa-x"></i></button>
+                    </div>
+                    <div class="modal-body">
+                
+                        <div class="form-group mb-3">
+                            <label for="">Nom Catégorie :</label>
+                            <input type="text" class="form-control" v-model="catId.name_cat">
                         </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" @click="updateModal = false"  data-bs-dismiss="modal">Fermer</button>
+                        <button type="button" class="btn btn-primary" @click="Update" >Modifier</button>
                     </div>
                 </div>
-                <!-- Fin Modal Enrégistrement -->
+            </div>
+        </div>
+        <!-- Fin Modal Enrégistrement -->
 
     </div>
 </template>

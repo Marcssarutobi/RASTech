@@ -106,6 +106,22 @@ class UserController extends Controller
             "user"=>$user
         ]);
     }
+    public function UpdateUser(Request $request){
+        $this->validate($request,[
+            "username"=>"required",
+            "email"=>["required"],
+            "role"=>"required",
+        ]);
+        $user = User::where('id',$request->id)->update([
+            "username"=>$request->username,
+            "email"=>$request->email,
+            "role"=>$request->role,
+        ]);
+        return response()->json([
+            "user"=>$user
+        ]);
+
+    }
     public function DelUser(Request $request){
         $user = User::where('id',$request->id)->first();
         return response()->json([

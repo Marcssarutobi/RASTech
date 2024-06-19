@@ -52,6 +52,7 @@ Route::get('/currentUser',[UserController::class, 'CurrentUser'])->middleware('a
 Route::post('/logout',[UserController::class, 'Logout'])->middleware('auth');
 Route::get('/alluser',[UserController::class, 'AllUser']);
 Route::get('/getUser/{id}',[UserController::class, 'GetUser']);
+Route::post('/updateuser',[UserController::class, 'UpdateUser']);
 Route::post('/deluser',[UserController::class, 'DelUser']);
 //UserinfoClient
 Route::post('/usercreateinfo',[UserinfoController::class, 'CreateInfoUser']);

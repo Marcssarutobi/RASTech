@@ -37,6 +37,9 @@
               <button class="btn btn-primary mr-3" @click="GetUser(user.id)">
                 <i class="fas fa-eye"></i>
               </button>
+               <button class="btn btn-dark mr-3" @click="GetUserUpdate(user.id)">
+                  <i class="fas fa-pen-to-square"></i>
+                </button>
               <button class="btn btn-danger" @click="DelUser(user.id)">
                 <i class="fas fa-trash"></i>
               </button>
@@ -98,6 +101,43 @@
       </div>
     </div>
     <!-- Fin Modal Enrégistrement -->
+
+    <!-- Modal Enrégistrement -->
+    <div v-if="updateModal" class="modal fade show" tabindex="-1" style="display: block; background: rgba(0, 0, 0, .5);">
+        <div class="modal-dialog modal-dialog-centered ">
+            <div class="modal-content" data-aos="zoom-in" data-aos-duration="300">
+                <div class="modal-header">
+                    <h5 class="modal-title">Modifier un client</h5>
+                    <button type="button" class="btn btn-white" @click="updateModal = false"  data-bs-dismiss="modal" aria-label="Close"><i class="fas fa-x"></i></button>
+                </div>
+                <div class="modal-body">
+          
+                    <div class="form-group mb-3">
+                        <label for="">Username:</label>
+                        <input type="text" class="form-control" v-model="getuser.username" disabled>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="">Email:</label>
+                        <input type="text" class="form-control" v-model="getuser.email" disabled>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="">Role:</label>
+                        <select name="" class="form-control" id="" v-model="getuser.role">
+                          <option value="" selected disabled>Selectionnez un role</option>
+                          <option v-for="role in allrole" :key="role.id" :value="role.name_role">{{ role.name_role }}</option>
+                        </select>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" @click="updateModal = false"  data-bs-dismiss="modal">Fermer</button>
+                    <button type="button" class="btn btn-primary" @click="UpdateUser" >Modifier</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Fin Modal Enrégistrement -->
+
   </div>
 </template>
 
@@ -112,6 +152,8 @@ export default {
       getuser: {},
       addModal: false,
       getuserinfo: {},
+      updateModal: false,
+      allrole: {},
     };
   },
   methods: {
@@ -129,6 +171,13 @@ export default {
         this.GetUserInfo(this.getuser.id);
       }
     },
+
+    async AllRole() {
+      const res = await axios.get('/allrole')
+      if (res.status === 200) {
+        this.allrole = res.data.rolesT
+      }
+    },
     
     async GetUserInfo(id) {
       const res = await axios.get("/getuserinfo/" + id);
@@ -144,6 +193,13 @@ export default {
             timer: 1500,
           });
         }
+      }
+    },
+    async GetUserUpdate(id) {
+      this.updateModal = true;
+      const res = await axios.get("/getUser/" + id);
+      if (res.status === 200) {
+        this.getuser = res.data.user;
       }
     },
     
@@ -181,9 +237,28 @@ export default {
         });
       }
     },
+    async UpdateUser() {
+      const res = await axios.post('/updateuser', this.getuser)
+      if (res.status === 200) {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Modification effectuer avec succès",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        const index = this.alluser.findIndex(user => user.id === this.getuser.id)
+        if (index !== -1) {
+          this.alluser[index] = this.getuser
+        }
+        this.getuser = {}
+        this.updateModal = false
+      }
+    }
   },
   created() {
     this.GetAllUser();
+    this.AllRole()
   },
 };
 </script>
