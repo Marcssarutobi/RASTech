@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Contact;
+use App\Mail\DemandeEmail;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 
 class ContactController extends Controller
@@ -66,5 +68,20 @@ class ContactController extends Controller
         return response()->json([
             "delctn"=>$ctn
         ]);
+    }
+
+    public function Email(Request $request){
+        $user = $request->validate([
+            "message"=>"required",
+            "email"=>"required",
+            "name"=>"required",
+        ]);
+
+        try {
+            Mail::to($user['email'])->send(new DemandeEmail($user));
+            return response()->json(['message' => 'Email sent successfully.'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Failed to send email. Please try again.'], 500);
+        }
     }
 }

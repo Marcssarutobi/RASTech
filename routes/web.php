@@ -74,6 +74,7 @@ Route::post('/updatecontact',[ContactController::class, 'UpdateContact']);
 Route::get('/allContact',[ContactController::class, 'AllContact']);
 Route::get('/getcontact/{id}',[ContactController::class, 'GetContact']);
 Route::post('/delcontact', [ContactController::class, 'DelContact']);
+Route::post('/mail',[ContactController::class, 'Email']);
 
 //Role
 Route::post('/createrole',[RoleController::class, 'CreateRole']);

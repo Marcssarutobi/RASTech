@@ -68,13 +68,46 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" @click="view = false"  data-bs-dismiss="modal">Fermer</button>
-                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Répondre</button>
+                            <button type="button" class="btn btn-primary" @click="SendBtn">Répondre</button>
                         </div>
                     </div>
                 </div>
         </div>
         <!-- Fin Modal View Contact -->
 
+
+         <!-- Modal View Contact -->
+             <div v-if="send" class="modal fade show" tabindex="-1" style="display: block; background: rgba(0, 0, 0, .5);">
+                    <div class="modal-dialog modal-dialog-centered  modal-dialog-scrollable ">
+                        <div class="modal-content" data-aos="zoom-in" data-aos-duration="300">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Répondre au message</h5>
+                                <button type="button" class="btn btn-white" @click="send = false"  data-bs-dismiss="modal" aria-label="Close"><i class="fas fa-x"></i></button>
+                            </div>
+                            <div class="modal-body">
+                        
+                                <div class="form-group">
+                                    <label for="">Nom complet du client</label>
+                                    <input type="text" class="form-control" v-model="getctn.name" disabled>
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Adresse email du client</label>
+                                    <input type="text" class="form-control" v-model="getctn.email" disabled>
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Message</label>
+                                    <textarea name="" class="form-control" v-model="data.message" id="" cols="30" rows="5"></textarea>
+                                </div>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" @click="send = false"  data-bs-dismiss="modal">Fermer</button>
+                                <button type="button" class="btn btn-primary" @click="SendEmails">Envoyer</button>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            <!-- Fin Modal View Contact -->
 
     </div>
 </template>
@@ -93,7 +126,13 @@ import Paginate from "vuejs-paginate-next";
                 getctn:{},
                 currentPage: 1,
                 totalPage: 0,
-                view : false
+                view : false,
+                send: false,
+                data: {
+                    name: "",
+                    email: "",
+                    message: "",
+                }
             }
         },
         methods:{
@@ -162,6 +201,29 @@ import Paginate from "vuejs-paginate-next";
                         }
                     });
 
+                }
+            },
+            SendBtn() {
+                this.view = !this.view
+                this.send = !this.send
+            },
+            async SendEmails() {
+                try {
+                    this.data.email = this.getctn.email
+                    this.data.name = this.getctn.name
+                    const res = await axios.post('/mail', this.data)
+                    if (res.status === 200) {
+                        Swal.fire({
+                            position: "center",
+                            icon: "success",
+                            title: res.data.message,
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                        this.send = false
+                    }
+                } catch (error) {
+                    console.log(error)
                 }
             }
         },
