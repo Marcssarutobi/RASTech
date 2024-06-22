@@ -221,6 +221,8 @@ import Paginate from "vuejs-paginate-next";
                             timer: 1500
                         })
                         this.send = false
+                        this.getctn = {}
+                        this.data.message = ""
                     }
                 } catch (error) {
                     console.log(error)
