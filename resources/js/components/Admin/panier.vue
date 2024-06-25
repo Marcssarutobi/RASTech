@@ -152,6 +152,47 @@ export default {
                 this.userinfo = res.data.user
             }
         },
+        successHandler(response) {
+            console.log('Paiement réussi', response);
+            if (response) {
+                this.paid = true
+                console.log(this.paid)
+                this.ValidCommande()
+            }
+            // Traitez le succès du paiement ici
+        },
+        async ValidCommande() {
+            const response = await Promise.all(
+                this.cartItems.map(async (prod) => {
+                    const venteData = {
+                        user_id: this.user.id,
+                        prod_id: prod.id,
+                        qte: prod.quantity,
+                        prix: prod.PVente * prod.quantity,
+                        status: 'New',
+                        livraison: this.data.livraison
+                    }
+                    const res = await axios.post('/createCmd', venteData)
+                    if (res.status === 200) {
+                        console.log("Commande enrégistrer avec succès")
+                    }
+                    return res
+                })
+            )
+            const success = response.every((res) => res.status === 200)
+            if (success) {
+                Swal.fire({
+                    toast: true,
+                    position: "top-start",
+                    icon: "success",
+                    title: "Commande enrégistrer avec succès",
+                    timer: 1500,
+                    timerProgressBar: true,
+                    showConfirmButton: false
+                })
+                this.cartItems = {}
+            }
+        },
         async handlePayment() {
 
             if (this.data.livraison.trim() == "") {
@@ -165,49 +206,13 @@ export default {
                     showConfirmButton: false
                 })
             } else {
-                const widget = FedaPay.init({
-                    public_key: 'pk_sandbox_L4pS0w5ats9iXVhDv44P3OkY',
-                    transaction: {
-                        amount: this.totaldu,
-                        description: 'Acheter mon produit'
-                    },
-                    customer: {
-                        email: this.user.email,
-                        lastname: this.userinfo.nom,
-                        firstname: this.userinfo.prenom
-                    },
+                openKkiapayWidget({
+                    amount: this.totaldu,
+                    position: "right",
+                    callback: this.successHandler(),
+                    sandbox: true,
+                    key: "28d5a9f028f311efb086931beae204b3"
                 })
-                widget.open()
-
-                const response = await Promise.all(
-                    this.cartItems.map(async (prod) => {
-                        const venteData = {
-                            user_id: this.user.id,
-                            prod_id: prod.id,
-                            qte: prod.quantity,
-                            prix: prod.PVente * prod.quantity,
-                            status: 'New',
-                            livraison: this.data.livraison
-                        }
-                        const res = await axios.post('/createCmd', venteData)
-                        if (res.status === 200) {
-                            console.log("Commande enrégistrer avec succès")
-                        }
-                        return res
-                    })
-                )
-                const success = response.every((res) => res.status === 200)
-                if (success) {
-                    Swal.fire({
-                        toast: true,
-                        position: "top-end",
-                        icon: "success",
-                        title: "Commande enrégistrer avec succès",
-                        timer: 1500,
-                        timerProgressBar: true,
-                        showConfirmButton: false
-                    })
-                }
             }
 
         },
@@ -243,6 +248,9 @@ export default {
             }
         }
 
+    },
+    mounted() {
+        addKkiapayListener('success', this.successHandler);
     },
     created() {
         this.CurrentUser()
