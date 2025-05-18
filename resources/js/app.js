@@ -113,6 +113,12 @@ const routes = [
                 meta: { requiresAuth: true, requiresRole: true}
             },
             {
+                path: "codepromo",
+                component:()=>import('./components/Admin/codePromo.vue'),
+                name: "Code Promo" ,
+                meta: { requiresAuth: true, requiresRole: true}
+            },
+            {
                 path: "partenaire",
                 component:()=>import('./components/Admin/partenaire.vue'),
                 name: "partenaire" ,

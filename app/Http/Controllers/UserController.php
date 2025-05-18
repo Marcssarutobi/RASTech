@@ -14,13 +14,15 @@ class UserController extends Controller
             "email"=>["required","email","unique:users,email"],
             "password"=>["required","string","min:8","max:30"],
             "role"=>"required",
-            
+            "points"=>"required",
+
         ]);
         $user = User::create([
             "username"=>$request->username,
             "email"=>$request->email,
             "password"=>bcrypt($request->password),
             "role"=>$request->role,
+            "points"=>$request->points,
         ]);
         return response()->json([
             "user"=>$user
@@ -38,7 +40,7 @@ class UserController extends Controller
             $token = $user->createToken("CLE_SECRETE")->plainTextToken;
             return response()->json([
                 "User" => $user,
-                "Token" => $token      
+                "Token" => $token
             ],200);
         }else{
             return response()->json([
@@ -46,7 +48,7 @@ class UserController extends Controller
             ],401);
         }
 
-        
+
     }
     public function authUserVerify(){
         // Vérifier si un utilisateur est connecté
@@ -68,7 +70,7 @@ class UserController extends Controller
     }
     public function CurrentUser(){
         $user = Auth::user();
-        
+
         if ($user) {
             return response()->json([
                 'user' => $user,
@@ -78,7 +80,7 @@ class UserController extends Controller
     }
     public function Logout(Request $request){
         $user = Auth::user();
-        
+
         if ($user) {
             Auth::logout();
             $user->tokens->each(function($token){

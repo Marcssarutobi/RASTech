@@ -52,7 +52,7 @@
                         <button type="button" class="btn btn-white" @click="addModal = false"  data-bs-dismiss="modal" aria-label="Close"><i class="fas fa-x"></i></button>
                     </div>
                     <div class="modal-body">
-                    
+
                         <div class="row gx-3 mb-3">
                             <div class="col-12 col-lg-6">
                                 <h4>Client : <span>{{ GetUserName(getcmd.user_id) || GetUtiliName(getcmd.user_id) }}</span></h4>

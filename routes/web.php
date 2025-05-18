@@ -2,8 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\CodePromoController;
 use App\Http\Controllers\CommandeController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\LoyaltyTransactionController;
 use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\ProduitsController;
 use App\Http\Controllers\RoleController;
@@ -100,3 +102,15 @@ Route::get('/getcmd/{id}',[CommandeController::class, 'GetCMD']);
 Route::post('/delcmd',[CommandeController::class, 'DelCMD']);
 Route::post('/updatecmd',[CommandeController::class, 'UpdateCMD']);
 Route::get('/allcmds/{id}',[CommandeController::class, 'CMDP']);
+
+//CodePromoController
+Route::get('/allcodepromo',[CodePromoController::class, 'index']);
+Route::get('/showcodepromo/{id}',[CodePromoController::class, 'showCodePromo']);
+Route::post('/createcodepromo',[CodePromoController::class, 'createCodePromo']);
+Route::put('/updatecodepromo/{id}',[CodePromoController::class, 'updateCodePromo']);
+Route::delete('/deletecodepromo/{id}',[CodePromoController::class, 'deleteCodePromo']);
+
+//Loyalty Transaction
+Route::post('/addpoint', [LoyaltyTransactionController::class, 'addPoint']);
+Route::post('/send-promo-code', [LoyaltyTransactionController::class, 'sendPromoCodeManually']);
+

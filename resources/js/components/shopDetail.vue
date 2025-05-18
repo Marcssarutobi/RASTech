@@ -18,7 +18,7 @@
         <div class="container-fluid pb-5">
             <div class="row px-xl-5">
                 <div class="col-lg-5 mb-30">
-                   
+
                     <div class="images w-100 h-100 d-flex align-items-center justify-content-center">
                         <img class="" :src="getid.image" alt="Image" style="max-width: 100%; max-height: 100%; width: 100%; height: 100%; object-fit: cover;">
                     </div>
@@ -27,11 +27,11 @@
                 <div class="col-lg-7 h-auto mb-30">
                     <div class="h-100 bg-light p-30">
                         <h3 class="mb-4">{{ getid.name_prod }}</h3>
-                        
+
                         <h3 class="font-weight-semi-bold mb-4">{{ getid.PVente }} FCFA</h3>
                         <h3 class="font-weight-semi-bold mb-4">Superficie : {{ getid.surface }} m²</h3>
                         <p class="mb-4" >{{ getid.description }}</p>
-                        
+
                         <div class="d-flex align-items-center mb-4 pt-2">
                             <!-- <button :disabled="!logger" @click="addToCart(getid)" class="btn btn-primary px-3 mr-2 w-50 btn-lg"><i class="fa fa-shopping-cart mr-1"></i> Add To Cart</button> -->
                             <button :disabled="!logger" @click="GetProduit(getid.id)" class="btn btn-primary px-3 mr-2 w-50 btn-lg"><i class="fa fa-shopping-cart mr-1"></i> Add To Cart</button>
@@ -139,7 +139,7 @@
                             <button type="button" class="btn btn-white" @click="addModal = false"  data-bs-dismiss="modal" aria-label="Close"><i class="fas fa-x"></i></button>
                         </div>
                         <div class="modal-body">
-                
+
                             <div class="row gx-3">
                                 <div class="col-12 col-lg-6">
                                     <div class="form-group">
@@ -317,18 +317,28 @@
                 }
                 const res = await axios.post('/createCmd', datas)
                 if (res.status === 200) {
-                    Swal.fire({
-                        toast: true,
-                        position: "top-start",
-                        icon: "success",
-                        title: "Commande enrégistrer avec succès",
-                        timer: 1500,
-                        timerProgressBar: true,
-                        showConfirmButton: false
-                    })
-                    this.addModal = false
-                    this.getProd = false
-                    this.paid = false
+
+                    const dataLoyale = {
+                        user_id: this.user.id,
+                        amount: this.data.TotalP,
+                    }
+
+                    const resLoyale = await axios.post('/addpoint', dataLoyale)
+                        if (resLoyale.status === 200) {
+                            Swal.fire({
+                            toast: true,
+                            position: "top-start",
+                            icon: "success",
+                            title: "Commande enrégistrer avec succès",
+                            timer: 1500,
+                            timerProgressBar: true,
+                            showConfirmButton: false
+                        })
+                        this.addModal = false
+                        this.getProd = false
+                        this.paid = false
+                    }
+
                 }
             },
             successHandler(response) {
@@ -360,12 +370,12 @@
                     position: "right",
                     callback: this.successHandler(),
                     sandbox: true,
-                    key:"28d5a9f028f311efb086931beae204b3"
+                    key:"5e501f10652111efbf02478c5adba4b8"
                 })
             },
-            
-            
-            
+
+
+
     },
     mounted() {
         addKkiapayListener('success', this.successHandler);
@@ -375,10 +385,10 @@
             this.UserInfoCurrent()
             this.CurrentUser()
         },
-       
+
     }
 </script>
 
 <style>
-    
+
 </style>

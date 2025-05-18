@@ -1,6 +1,6 @@
 <template>
     <div class="dashboard">
-        
+
         <!-- Sidebar Start -->
         <div class="sidebar pe-4 pb-3">
             <nav class="navbar bg-light navbar-light">
@@ -8,13 +8,14 @@
                     <span class="h2 text-uppercase text-primary bg-dark px-2">RAS</span>
                     <span class="h2 text-uppercase text-dark bg-primary px-2 ml-n1">TECH</span>
                 </router-link>
-                
+
                 <div class="navbar-nav w-100">
                     <router-link to="/dashbord/accuiel" class="nav-item nav-link active"><i class="fa fa-tachometer-alt ms-3"></i>Dashboard</router-link>
                     <router-link v-if="user.role === 'Admin' || user.role === 'Super-Admin'" to="/dashbord/categorie" class="nav-item nav-link active"><i class="fas fa-tag me-2"></i>Categories</router-link>
                     <router-link v-if="user.role === 'Admin' || user.role === 'Super-Admin'" to="/dashbord/produit" class="nav-item nav-link active"><i class="fas fa-cubes me-2"></i>Produits</router-link>
                     <router-link v-if="user.role === 'Admin' || user.role === 'Super-Admin'" to="/dashbord/client" class="nav-item nav-link active"><i class="fas fa-user-tie me-2"></i>Clients</router-link>
                     <router-link v-if="user.role === 'Admin' || user.role === 'Super-Admin'" to="/dashbord/commande" class="nav-item nav-link active"><i class="fas fa-bag-shopping me-2"></i>Commande</router-link>
+                    <router-link v-if="user.role === 'Admin' || user.role === 'Super-Admin'" to="/dashbord/codepromo" class="nav-item nav-link active"><i class="fa-solid fa-hashtag"></i>Code Promo</router-link>
                     <router-link v-if="user.role === 'Admin' || user.role === 'Super-Admin'" to="/dashbord/partenaire" class="nav-item nav-link active"><i class="fas fa-users me-2"></i>Partenaire</router-link>
                     <router-link v-if="user.role === 'Admin' || user.role === 'Super-Admin'" to="/dashbord/newsletter" class="nav-item nav-link active"><i class="fas fa-at me-2"></i>Newsletter</router-link>
                     <router-link v-if="user.role === 'Admin' || user.role === 'Super-Admin'" to="/dashbord/contact" class="nav-item nav-link active"><i class="fas fa-envelope me-2"></i>Contact</router-link>
@@ -29,10 +30,10 @@
         <!-- Sidebar End -->
 
         <div class="contente">
-            
+
             <!-- Navbar Start -->
             <nav class="navbar navbar-expand w-100 align-item-center justify-content-between bg-light navbar-light sticky-top px-5 py-0">
-                    
+
                 <a href="#" class="sidebar-toggler  flex-shrink-0">
                     <i class="fa fa-bars"></i>
                 </a>

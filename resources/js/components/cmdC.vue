@@ -1,11 +1,17 @@
 <template>
     <div>
-        
+
         <div class="container">
-            
-            <div class="headers mb-5">
-                <i class="fas fa-shop text-primary bg-dark"></i>
-                <span class="headers_title">Vos Commande</span>
+
+            <div class="headers mb-5" style="display: flex; align-items: center; justify-content: space-between;">
+                <div class="icon" style="display: flex; align-items: center; justify-content: center; gap: 10px;">
+                    <i class="fas fa-shop text-primary bg-dark"></i>
+                    <span class="headers_title">Vos Commande</span>
+                </div>
+                <div class="user" style="display: flex; align-items: center; justify-content: center; gap: 10px;">
+                    <h5 class="mb-0">Points: <span class="points">{{ user.points }}/20000 Points</span></h5>
+                    <button class="btn btn-primary" @click="sendMail">Obtenir un code promo</button>
+                </div>
             </div>
 
             <div class="tableau">
@@ -40,6 +46,7 @@
 
 <script>
     import axios from "axios";
+import Swal from "sweetalert2";
     export default {
         data() {
             return {
@@ -77,12 +84,78 @@
                 const date = new Date(dateString)
                 moment.locale('fr')
                 return moment(date).fromNow()
+            },
+            async sendMail(){
+
+                Swal.fire({
+                    title: `Vous avez actuellement `+ this.user.points +` points.`,
+                    text: "Souhaitez-vous recevoir un code promo maintenant ou attendre pour un meilleur pourcentage ?",
+                    icon: "warning",
+                    showCancelButton: true,
+                    cancelButtonColor: "#d33",
+                    confirmButtonColor: "#3085d6",
+                    confirmButtonText: "Supprimer",
+                    cancelButtonText: "Fermer"
+                }).then(async (result) => {
+                    if (result.isConfirmed) {
+
+                        // Affiche un loader pendant l'envoi
+                        Swal.fire({
+                            title: 'Envoi en cours...',
+                            text: 'Veuillez patienter pendant l\'envoi du code promo.',
+                            allowOutsideClick: false,
+                            didOpen: () => {
+                                Swal.showLoading();
+                            }
+                        });
+
+                        try {
+                            const res = await axios.post('/send-promo-code',{
+                                user_id: this.user.id,
+                            })
+                            if (res.status === 200) {
+                                Swal.fire({
+                                    icon: "success",
+                                    title: "Code Promo Envoyé",
+                                    text: "Le code promo a été envoyé avec succès !",
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                })
+                            }
+
+                        } catch (error) {
+                            console.log(error)
+                            if (error.response.status === 403) {
+                                Swal.fire({
+                                    icon: "error",
+                                    text: error.response.data.message,
+                                    text: error.response.data.message,
+                                    showConfirmButton: false,
+                                    timer: 2000
+                                })
+                            } else {
+                                Swal.fire({
+                                    icon: "error",
+                                    title: "Erreur",
+                                    text: "Une erreur s'est produite lors de l'envoi du code promo.",
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                })
+
+                            }
+                        }
+
+                    }
+                })
+
+
             }
         },
         created() {
             this.CurrentUser()
             this.AllProduit()
-        }
+        },
+
     }
 </script>
 

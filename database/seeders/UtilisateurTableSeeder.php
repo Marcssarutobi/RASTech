@@ -21,7 +21,8 @@ class UtilisateurTableSeeder extends Seeder
                 'username'=>'Client',
                 'email'=>'client@gmail.com',
                 'password'=>bcrypt('123456789'),
-                'role'=>'Client'
+                'role'=>'Client',
+                'points'=> 0,
             ]
         );
         User::insert(
@@ -30,6 +31,7 @@ class UtilisateurTableSeeder extends Seeder
                 'email'=> 'admin@gmail.com',
                 'password'=> bcrypt('123456789'),
                 'role'=> 'Admin',
+                'points'=> 0,
             ]
         );
         User::insert(
@@ -38,6 +40,7 @@ class UtilisateurTableSeeder extends Seeder
                 'email'=> 'superadmin@gmail.com',
                 'password'=> bcrypt('123456789'),
                 'role'=> 'Super-Admin',
+                'points'=> 0,
             ]
         );
     }
