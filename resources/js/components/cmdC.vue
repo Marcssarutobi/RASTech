@@ -94,8 +94,8 @@ import Swal from "sweetalert2";
                     showCancelButton: true,
                     cancelButtonColor: "#d33",
                     confirmButtonColor: "#3085d6",
-                    confirmButtonText: "Supprimer",
-                    cancelButtonText: "Fermer"
+                    confirmButtonText: "Recevoir le code",
+                    cancelButtonText: "Attendre",
                 }).then(async (result) => {
                     if (result.isConfirmed) {
 
