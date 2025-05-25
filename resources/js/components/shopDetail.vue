@@ -193,11 +193,23 @@
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <div class="form-group">
+                                        <label for="">Code promo (Optionnelle)</label>
+                                        <div class="input-group">
+                                            <input type="text" :class="isEmptyCode.code ? 'border border-red-500' : ''" v-model="code" class="form-control" placeholder="Code promo">
+                                            <button class="btn btn-primary" @click="verifyCodePromo" type="button">Valider</button>
+                                        </div>
+                                        <div style="font-size: 15px;" v-if="isEmptyCode.code" class="text-danger mt-2">
+                                            {{ msgInputCode.code }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-6">
+                                    <div class="form-group">
                                         <label for="">Montant à Payer</label>
                                         <input type="number" disabled name="" id="" class="form-control" v-model="TotalPayer">
                                     </div>
                                 </div>
-                                <div class="col-12">
+                                <div class="col-12 col-lg-6">
                                     <div class="form-group">
                                         <label for="">Se fais livrer ?</label>
                                         <select name="" id="" class="form-control" v-model="data.livraison">
@@ -246,7 +258,12 @@
                     TotalP: 0,
                     livraison: ""
                 },
-                paid: false
+                paid: false,
+                code : '',
+                codePromo: {},
+                porcentage: 0,
+                isEmptyCode:{},
+                msgInputCode:{}
             }
         },
         computed: {
@@ -259,7 +276,12 @@
                 return this.data.qte = this.data.Stotal / this.getProd.surface;
             },
             TotalPayer() {
-                return this.data.TotalP = this.data.qte * this.getProd.PVente
+                if (this.porcentage === 0) {
+                   return this.data.TotalP = this.data.qte * this.getProd.PVente
+                } else {
+                    const montant = this.data.qte * this.getProd.PVente
+                    return this.data.TotalP = (montant * this.porcentage) / 100
+                }
             }
         },
         methods:{
@@ -295,6 +317,45 @@
             remove(index) {
                 this.data.mesure.splice(index, 1)
             },
+
+            inputEmtyCode(){
+                if (this.code === "") {
+                    this.isEmptyCode.code = true
+                    this.msgInputCode.code = "Veuillez entrer un code promo"
+                } else {
+                    this.isEmptyCode.code = false
+                    this.msgInputCode.code = ""
+                }
+            },
+
+            async verifyCodePromo(){
+                this.inputEmtyCode()
+                const allEmpty = Object.values(this.isEmptyCode).every(value => value === false)
+                if (allEmpty) {
+                    try {
+                        const res = await axios.get('/getcode/'+this.code)
+                        if (res.status === 200) {
+                            this.codePromo = res.data.CodePromo
+
+                            if (this.codePromo === null || this.codePromo.used === 1) {
+                                this.porcentage = 0
+
+                            }else {
+                                this.porcentage = this.codePromo.pourcentage
+                                this.data.TotalP = (this.data.TotalP * this.porcentage) / 100
+                            }
+
+                        }
+                    } catch (error) {
+                        console.log(error)
+                        if (error.response.status === 401) {
+                            this.isEmptyCode.code = true
+                            this.msgInputCode.code = error.response.data.message
+                        }
+                    }
+                }
+            },
+
             async UserInfoCurrent() {
                 try {
                     const info = await axios.get('/getuserinfo/' + this.user.id)
@@ -324,7 +385,7 @@
                     }
 
                     const resLoyale = await axios.post('/addpoint', dataLoyale)
-                        if (resLoyale.status === 200) {
+                    if (resLoyale.status === 200) {
                             Swal.fire({
                             toast: true,
                             position: "top-start",
@@ -338,6 +399,17 @@
                         this.getProd = false
                         this.paid = false
                     }
+
+                    if (this.codePromo) {
+                        const updateCode = await axios.put('/updatecodepromo/'+this.codePromo.id, {
+                            used: 1
+                        })
+                        if (updateCode.status === 200) {
+                            this.codePromo = {}
+                        }
+                    }
+
+
 
                 }
             },
@@ -370,9 +442,10 @@
                     position: "right",
                     callback: this.successHandler(),
                     sandbox: true,
-                    key:"5e501f10652111efbf02478c5adba4b8"
+                    key:"38bd24163a6ec0d7e7af721e89c3ae2f657e6256"
                 })
             },
+
 
 
 

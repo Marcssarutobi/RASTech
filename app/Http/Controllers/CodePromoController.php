@@ -21,12 +21,14 @@ class CodePromoController extends Controller
             'code'=>'required',
             'pourcentage'=>'required',
             'expire'=>'required',
+            'used'=>'required',
         ]);
 
         $CodePromo = CodePromo::create([
             'code'=>$request->code,
             'pourcentage'=>$request->pourcentage,
             'expire'=>$request->expire,
+            'used'=>$request->used,
         ]);
 
         return response()->json([
@@ -60,9 +62,9 @@ class CodePromoController extends Controller
     public function getCodepromo($code){
         $CodePromo = CodePromo::where('code',$code)->first();
 
-        if (!$CodePromo) {
+        if (!$CodePromo || $CodePromo->used === 1) {
             return response()->json([
-                "message"=>"Ce code promo n'existe pas"
+                "message"=>"Ce code Promo n'est pas valide ou a déjà été utilisé"
             ],401);
         }
 

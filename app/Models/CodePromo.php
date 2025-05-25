@@ -9,5 +9,5 @@ class CodePromo extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['code','pourcentage','expire'];
+    protected $fillable = ['code','pourcentage','expire','used'];
 }

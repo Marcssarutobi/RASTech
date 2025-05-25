@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('code');
             $table->string('pourcentage');
             $table->date('expire');
+            $table->boolean('used')->default(false);
             $table->timestamps();
         });
     }

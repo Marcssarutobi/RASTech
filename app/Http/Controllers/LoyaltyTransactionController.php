@@ -72,6 +72,7 @@ class LoyaltyTransactionController extends Controller
             'code' => $code,
             'pourcentage' => $pourcentage,
             'expire' => now()->addDays(15),
+            'used' => false,
         ]);
 
         // Envoyer le mail

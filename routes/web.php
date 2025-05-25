@@ -109,6 +109,7 @@ Route::get('/showcodepromo/{id}',[CodePromoController::class, 'showCodePromo']);
 Route::post('/createcodepromo',[CodePromoController::class, 'createCodePromo']);
 Route::put('/updatecodepromo/{id}',[CodePromoController::class, 'updateCodePromo']);
 Route::delete('/deletecodepromo/{id}',[CodePromoController::class, 'deleteCodePromo']);
+Route::get('/getcode/{code}', [CodePromoController::class, 'getCodepromo']);
 
 //Loyalty Transaction
 Route::post('/addpoint', [LoyaltyTransactionController::class, 'addPoint']);
