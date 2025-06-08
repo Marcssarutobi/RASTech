@@ -18,7 +18,7 @@ class LoyaltyTransactionController extends Controller
         //Exemple 50000FCFA = 1point
 
         if ($amount >= 50000) {
-            $points = floor($amount / 50000);
+            $points = floor($amount / 50000) * 100;
 
             $user->points += $points;
             $user->save();

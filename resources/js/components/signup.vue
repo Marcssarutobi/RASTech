@@ -51,17 +51,18 @@
                     username: "",
                     email: "",
                     password: "",
-                    role:"client"
+                    role:"client",
+                    points:0
                 },
-                
+
             }
         },
         methods: {
             async Singnup(){
                 try {
-                    
+
                     if (this.data.username.trim() == "" || this.data.email.trim() == "" || this.data.password.trim() == "" || this.data.role.trim() == "") {
-                        
+
                         Swal.fire({
                             toast: true,
                             position: "top-end",
@@ -73,7 +74,7 @@
                         })
 
                     } else {
-                        
+
                         const res = await axios.post('/createUser',this.data)
                         if (res.status === 200) {
                             Swal.fire({
